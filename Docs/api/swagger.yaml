@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: TG-Feed Mobile API
+  description: HTTP API for the mobile PWA frontend to access TG-Feed backend.
+  version: 1.0.0
+servers:
+  - url: http://0.0.0.0:7474
+    description: Local Mobile Server
+paths:
+  /api/ping:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  service:
+                    type: string
+  /api/feed:
+    get:
+      summary: Get feed messages
+      parameters:
+        - name: folder
+          in: query
+          schema:
+            type: string
+          description: Folder ID (or 'all')
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Max messages to return (default 30, max 100)
+        - name: before_date
+          in: query
+          schema:
+            type: integer
+          description: Timestamp for pagination
+        - name: before_msg_id
+          in: query
+          schema:
+            type: integer
+          description: Message ID for pagination
+      responses:
+        '200':
+          description: List of messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/mark-read:
+    post:
+      summary: Mark messages as read
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chat_id:
+                  type: integer
+                message_ids:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+  /api/media/{file_id}:
+    get:
+      summary: Get media by file ID
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: File bytes
+          content:
+            image/jpeg: {}
+            image/png: {}
+            image/webp: {}
+            image/gif: {}
+            video/mp4: {}
+        '404':
+          description: File not found
