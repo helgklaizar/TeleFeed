@@ -5,9 +5,8 @@ import {
     formatTime,
     formatTimeShort,
     formatDatePrefix,
-    shiftEntities,
     renderEntities,
-} from '../frontend/shared/utils/helpers.js';
+} from '../shared/utils/helpers.js';
 
 describe('getTextFromContent', () => {
     it('returns empty string for null/undefined', () => {
@@ -97,29 +96,6 @@ describe('formatDatePrefix', () => {
         const ts = 1705325400;
         const result = formatDatePrefix(ts);
         expect(result).toMatch(/24\.01\.15/);
-    });
-});
-
-describe('shiftEntities', () => {
-    it('returns unchanged for empty/null', () => {
-        expect(shiftEntities(null, 5)).toBe(null);
-        expect(shiftEntities([], 5)).toEqual([]);
-    });
-
-    it('shifts offsets by given amount', () => {
-        const entities = [
-            { offset: 0, length: 3 },
-            { offset: 10, length: 5 },
-        ];
-        const result = shiftEntities(entities, 7);
-        expect(result[0].offset).toBe(7);
-        expect(result[1].offset).toBe(17);
-    });
-
-    it('preserves original entities', () => {
-        const entities = [{ offset: 5, length: 2 }];
-        shiftEntities(entities, 3);
-        expect(entities[0].offset).toBe(5); // original unchanged
     });
 });
 

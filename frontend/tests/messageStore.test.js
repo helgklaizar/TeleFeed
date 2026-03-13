@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useMessageStore } from '../frontend/features/chat/stores/messageStore.js';
+import { useMessageStore } from '../features/chat/stores/messageStore.js';
 
 describe('messageStore', () => {
     beforeEach(() => {

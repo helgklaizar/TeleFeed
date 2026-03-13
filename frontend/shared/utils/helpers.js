@@ -66,16 +66,6 @@ export function formatDatePrefix(timestamp) {
     return `${yy}.${mm}.${dd} ${hh}:${min}`;
 }
 
-/**
- * Сдвигает offset всех entities на заданную величину.
- * Нужно при добавлении prefix к тексту.
- */
-export function shiftEntities(entities, offset) {
-    if (!entities || !entities.length || !offset) return entities;
-    return entities.map((e) => ({ ...e, offset: e.offset + offset }));
-}
-
-
 // ── HTML sanitization ──
 
 function escapeHtml(str) {

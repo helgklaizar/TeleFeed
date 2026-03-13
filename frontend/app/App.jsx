@@ -85,7 +85,6 @@ function AppShell() {
   const authState = useAuthStore((s) => s.state);
   const navigate = useNavigate();
   const location = useLocation();
-  const [showArchive, setShowArchive] = useState(false);
   const [mediaModal, setMediaModal] = useState(null);
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -105,7 +104,6 @@ function AppShell() {
   // Current path info
   const path = location.pathname;
   const isChannels = path === '/' || path.startsWith('/channels');
-  const isFeed = path === '/feed';
   const isMessages = path.startsWith('/messages');
   const isAiChat = path.startsWith('/ai');
   const isInChat = !!path.match(/\/messages\/\-?\d/);

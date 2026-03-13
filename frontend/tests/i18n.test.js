@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useI18nStore, t } from '../frontend/app/i18n.js';
+import { useI18nStore, t } from '../app/i18n.js';
 
 describe('i18n', () => {
     beforeEach(() => {
