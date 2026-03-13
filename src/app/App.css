@@ -1,0 +1,13 @@
+/* ═══════════════════════════════════════════
+   TG-Feed v3 — CSS Index
+   ═══════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import '../shared/styles/tokens.css';
+@import '../shared/styles/layout.css';
+@import '../shared/styles/auth.css';
+@import '../features/feed/components/feed.css';
+@import '../features/chat/components/chat.css';
+@import '../shared/styles/overlays.css';
+@import '../shared/styles/animations.css';

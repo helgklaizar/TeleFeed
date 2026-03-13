@@ -1,0 +1,79 @@
+/* ── Theme Tokens ── */
+
+:root {
+    --bg-color: #17212b;
+    --card-bg: #242f3d;
+    --card-bg-glass: rgba(36, 47, 61, 0.9);
+    --text-main: #f5f5f5;
+    --text-muted: #7f91a4;
+    --accent: #5288c1;
+    --link-color: #5288c1;
+    --font-family: 'Inter', -apple-system, sans-serif;
+}
+
+:root.theme-green {
+    --bg-color: #0d1a0e;
+    --card-bg: #264228;
+    --card-bg-glass: rgba(26, 53, 32, 0.85);
+    --text-main: #f3fcf2;
+    --text-muted: #95af93;
+    --accent: #5ab847;
+    --link-color: #6a9c72;
+}
+
+:root.theme-bordeaux {
+    --bg-color: #1a0b0e;
+    --card-bg: #3d2028;
+    --card-bg-glass: rgba(51, 26, 32, 0.85);
+    --text-main: #fcf2f4;
+    --text-muted: #b39199;
+    --accent: #c23b56;
+    --link-color: #ba5f74;
+}
+
+/* ── Reset ── */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
+    overflow-anchor: none;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    overflow-anchor: none;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+input,
+textarea {
+    font-family: inherit;
+}
+
+/* ── Scrollbar — hidden ── */
+
+::-webkit-scrollbar {
+    display: none;
+}

@@ -1,0 +1,211 @@
+/* ── Layout ── */
+
+/* Блокировка прокрутки при открытом чате */
+html.scroll-locked,
+html.scroll-locked body {
+    overflow: hidden;
+}
+
+
+.app-container {
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* ── Top Bar ── */
+
+.top-bar-container {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    height: 52px;
+    padding: 0 16px;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-color);
+}
+
+.header-nav-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--text-muted);
+    background: transparent;
+    border-radius: 8px;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.header-nav-btn:hover {
+    color: var(--text-main);
+}
+
+.header-nav-btn.active {
+    color: var(--accent);
+}
+
+/* ── Header sub-elements ── */
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.header-title-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.header-title-text {
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.topbar-update-btn {
+    background: #5ab847;
+    color: #fff;
+    border: none;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+}
+
+.topbar-update-btn:hover {
+    opacity: 0.85;
+}
+
+.header-avatar-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Flash animation для heart/eye кнопок (заменяет JS setTimeout) ── */
+
+@keyframes flash-accent {
+    0% {
+        color: var(--accent);
+        transform: scale(1.2);
+    }
+
+    60% {
+        color: var(--accent);
+        transform: scale(1.0);
+    }
+
+    100% {
+        color: inherit;
+    }
+}
+
+/* Кнопка с data-flash="true" → иконка анимируется */
+.header-nav-btn[data-flash="true"] .header-flash-icon {
+    animation: flash-accent 0.8s ease-out forwards;
+}
+
+/* ── Media modal body (центрирует контент) ── */
+
+.media-modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 16px;
+}
+
+/* ── Suspense fallback ── */
+
+.suspense-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30vh;
+}
+
+/* ── Bottom Navigation (Telegram-style tab bar) ── */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    background: rgba(23, 33, 43, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+    z-index: 100;
+}
+
+.bottom-nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 4px 0;
+    color: var(--text-muted);
+    background: transparent;
+    transition: color 0.2s;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.bottom-nav-btn svg {
+    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottom-nav-btn:active svg {
+    transform: scale(0.82);
+}
+
+.bottom-nav-btn.active {
+    color: var(--accent);
+}

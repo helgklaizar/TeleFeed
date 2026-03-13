@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0d0d0f">
+  <title>TG-Feed</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    :root {
+      --bg: #0d0d0f;
+      --bg2: #141417;
+      --bg3: #1c1c21;
+      --card: #18181d;
+      --accent: #5eb5f7;
+      --green: #5ab847;
+      --red: #ff4757;
+      --text: #f0f0f0;
+      --muted: #888;
+      --border: rgba(255, 255, 255, 0.07);
+      --radius: 14px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden
+    }
+
+    /* Setup screen */
+    #setup {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 32px;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    #setup.hidden {
+      display: none
+    }
+
+    .setup-logo {
+      font-size: 56px;
+      line-height: 1
+    }
+
+    .setup-title {
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center
+    }
+
+    .setup-sub {
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5
+    }
+
+    .setup-input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--bg3);
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .setup-input:focus {
+      border-color: var(--accent)
+    }
+
+    .setup-btn {
+      width: 100%;
+      padding: 15px;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+
+    .setup-btn:active {
+      opacity: 0.8
+    }
+
+    .setup-err {
+      color: var(--red);
+      font-size: 13px;
+      text-align: center;
+      min-height: 18px
+    }
+
+    /* Main app */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding-top: var(--safe-top)
+    }
+
+    #app.hidden {
+      display: none
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 10px;
+      background: rgba(13, 13, 15, .92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    .header-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-btn:active {
+      background: var(--bg3)
+    }
+
+    /* Feed */
+    #feed {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0 calc(8px + var(--safe-bottom));
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Pull to refresh */
+    .ptr {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 12px;
+      transition: all .2s
+    }
+
+    /* Empty state */
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 80px 32px;
+      color: var(--muted)
+    }
+
+    .empty svg {
+      opacity: .25
+    }
+
+    .empty span {
+      font-size: 15px;
+      text-align: center
+    }
+
+    /* Loader */
+    .loader {
+      display: flex;
+      justify-content: center;
+      padding: 24px
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2.5px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      margin: 6px 10px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform .15s, opacity .15s;
+    }
+
+    .card.removing {
+      transform: translateX(-110%);
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .card.removing-right {
+      transform: translateX(110%);
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 12px 8px
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .card-meta {
+      flex: 1;
+      min-width: 0
+    }
+
+    .card-channel {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .card-date {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 4px
+    }
+
+    .act-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 6px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      transition: color .15s, background .15s;
+    }
+
+    .act-btn:active {
+      background: var(--bg3)
+    }
+
+    .act-btn.eye:active,
+    .act-btn.eye.done {
+      color: var(--accent)
+    }
+
+    .act-btn.heart:active,
+    .act-btn.heart.fav {
+      color: var(--red)
+    }
+
+    .card-body {
+      padding: 0 12px 12px
+    }
+
+    .card-text {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      word-break: break-word
+    }
+
+    .card-text.collapsed {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden
+    }
+
+    .card-more {
+      color: var(--accent);
+      font-size: 13px;
+      margin-top: 6px;
+      cursor: pointer;
+      display: inline-block
+    }
+
+    .fwd-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin: 0 12px 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .fwd-badge a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .card-media {
+      margin: 0 12px 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg3);
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .card-media-icon {
+      color: var(--muted);
+      opacity: .4
+    }
+
+    /* End of feed */
+    .eod {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 20px
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Setup screen -->
+  <div id="setup">
+    <div class="setup-logo">📡</div>
+    <div class="setup-title">TG-Feed Mobile</div>
+    <div class="setup-sub">Введи IP-адрес Mac&#8209;а в локальной сети</div>
+    <input id="ip-input" class="setup-input" type="text" placeholder="192.168.1.100" inputmode="decimal"
+      autocapitalize="none" autocorrect="off">
+    <div class="setup-err" id="setup-err"></div>
+    <button class="setup-btn" id="connect-btn">Подключиться</button>
+  </div>
+
+  <!-- Main app -->
+  <div id="app" class="hidden">
+    <div class="header">
+      <div class="header-title">
+        <div class="header-dot"></div>
+        TG-Feed
+      </div>
+      <div style="display:flex;gap:4px">
+        <button class="header-btn" id="refresh-btn" title="Обновить">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path
+              d="M17.65 6.35A7.958 7.958 0 0012 4C7.58 4 4 7.58 4 12s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+          </svg>
+        </button>
+        <button class="header-btn" id="settings-btn" title="Настройки">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path
+              d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-7.43 2.52c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="feed">
+      <div class="loader" id="initial-loader">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PORT = 7474;
+    let serverUrl = '';
+    let groups = [];
+    let loadingMore = false;
+    let hasMore = true;
+    let lastGroup = null;
+
+    // ── Utils ────────────────────────────────────────────────────────────────────
+
+    function getInitials(title = '') {
+      return title.split(/\s+/).slice(0, 2).map(w => w[0] || '').join('').toUpperCase() || '?';
+    }
+
+    function colorForId(id) {
+      const colors = ['#5eb5f7', '#5ab847', '#f7a35e', '#e05ef7', '#f75e5e', '#5ef7d8', '#f7e05e'];
+      const n = Math.abs(parseInt(id)) % colors.length;
+      return colors[n];
+    }
+
+    function formatDate(unix) {
+      if (!unix) return '';
+      const d = new Date(unix * 1000);
+      const now = new Date();
+      const diff = now - d;
+      if (diff < 60000) return 'только что';
+      if (diff < 3600000) return Math.floor(diff / 60000) + ' мин';
+      if (diff < 86400000) {
+        return d.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' });
+      }
+      return d.toLocaleDateString('ru', { day: 'numeric', month: 'short' });
+    }
+
+    function getPostText(posts, mainPost) {
+      const c = mainPost?.content;
+      if (!c) return '';
+      const t = c['@type'];
+      if (t === 'messageText') return c.text?.text || '';
+      if (t === 'messagePhoto' || t === 'messageVideo' || t === 'messageAnimation') return c.caption?.text || '';
+      if (t === 'messageWebPage') return c.text?.text || '';
+      return '';
+    }
+
+    function getMediaFile(mainPost) {
+      const c = mainPost?.content;
+      if (!c) return null;
+      const t = c['@type'];
+      if (t === 'messagePhoto') {
+        const sizes = c.photo?.sizes || [];
+        if (!sizes.length) return null;
+        return { type: 'image', id: sizes[sizes.length - 1].photo.id };
+      }
+      if (t === 'messageVideo') {
+        return { type: 'video', id: c.video?.video?.id };
+      }
+      if (t === 'messageAnimation') {
+        return { type: 'video', id: c.animation?.animation?.id };
+      }
+      return null;
+    }
+
+    function getForwardLabel(mainPost) {
+      const fi = mainPost?.forward_info;
+      if (!fi?.origin) return null;
+      const o = fi.origin;
+      if (o['@type'] === 'messageOriginChannel') return o.author_signature || 'канал';
+      if (o['@type'] === 'messageOriginChat') return o.author_signature || 'чат';
+      if (o['@type'] === 'messageOriginUser' || o['@type'] === 'messageOriginHiddenUser') return o.sender_name || '';
+      return null;
+    }
+
+    // ── API ──────────────────────────────────────────────────────────────────────
+
+    async function apiFetch(path, opts = {}) {
+      const r = await fetch(serverUrl + path, { signal: AbortSignal.timeout(8000), ...opts });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }
+
+    async function loadFeed({ beforeDate = null, beforeMsgId = null } = {}) {
+      let url = '/api/feed?limit=30';
+      if (beforeDate) url += `&before_date=${beforeDate}&before_msg_id=${beforeMsgId}`;
+      return apiFetch(url);
+    }
+
+    async function markRead(chatId, messageIds) {
+      return apiFetch('/api/mark-read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, message_ids: messageIds })
+      });
+    }
+
+    // ── Render ───────────────────────────────────────────────────────────────────
+
+    function renderCard(group) {
+      const { mainPost, posts, channel, isAlbum } = group;
+      const chatId = mainPost?.chat_id;
+      const msgIds = posts.map(p => p.id);
+      const text = getPostText(posts, mainPost);
+      const title = channel?.title || `Chat ${chatId}`;
+      const date = formatDate(mainPost?.date);
+      const color = colorForId(chatId || 0);
+      const fwd = getForwardLabel(mainPost);
+      const mediaFile = getMediaFile(mainPost);
+      const key = isAlbum ? `album_${chatId}_${mainPost?.media_album_id}` : `${chatId}_${mainPost?.id}`;
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.key = key;
+
+      card.innerHTML = `
+    <div class="card-header">
+      <div class="avatar" style="background:${color}">
+        ${getInitials(title)}
+      </div>
+      <div class="card-meta">
+        <div class="card-channel">${escHtml(title)}</div>
+        <div class="card-date">${date}</div>
+      </div>
+      <div class="card-actions">
+        <button class="act-btn eye" data-cid="${chatId}" data-ids="${msgIds.join(',')}" title="Прочитано">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    ${fwd ? `<div class="fwd-badge"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12 8V4l8 8-8 8v-4H4V8z"/></svg><span>Переслано от ${escHtml(fwd)}</span></div>` : ''}
+    <div class="card-body">
+      ${mediaFile ? `<div class="card-media">
+        ${mediaFile.type === 'video'
+            ? `<video src="/api/media/${mediaFile.id}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover"></video>`
+            : `<img src="/api/media/${mediaFile.id}" loading="lazy" style="width:100%;height:100%;object-fit:cover" alt="" />`}
+      </div>` : ''}
+      ${text ? `<div class="card-text collapsed" id="ct_${key}">${escHtml(text)}</div>
+        <span class="card-more" data-key="${key}">Читать далее</span>` : ''}
+    </div>
+  `;
+
+      // Eye → mark as read
+      card.querySelector('.act-btn.eye').addEventListener('click', async (e) => {
+        e.currentTarget.classList.add('done');
+        card.classList.add('removing');
+        setTimeout(() => card.remove(), 300);
+        try { await markRead(parseInt(chatId), msgIds.map(Number)); } catch (ex) { }
+      });
+
+      // Expand text
+      const more = card.querySelector('.card-more');
+      if (more) {
+        const textEl = card.querySelector('.card-text');
+        // Check if actually truncated after render
+        setTimeout(() => {
+          if (textEl && textEl.scrollHeight <= textEl.clientHeight + 2) more.style.display = 'none';
+        }, 50);
+        more.addEventListener('click', () => {
+          textEl.classList.remove('collapsed');
+          more.remove();
+        });
+      }
+
+      return card;
+    }
+
+    function escHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function appendGroups(newGroups) {
+      const feed = document.getElementById('feed');
+      for (const g of newGroups) {
+        feed.appendChild(renderCard(g));
+      }
+    }
+
+    // ── App logic ────────────────────────────────────────────────────────────────
+
+    async function initFeed() {
+      const feed = document.getElementById('feed');
+      document.getElementById('initial-loader').style.display = 'flex';
+
+      try {
+        groups = await loadFeed();
+        document.getElementById('initial-loader').remove();
+        if (groups.length === 0) {
+          feed.innerHTML = `<div class="empty">
+        <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+        <span>Нет новых постов.<br>Дождись пока Mac-приложение загрузит ленту.</span>
+      </div>`;
+          return;
+        }
+        appendGroups(groups);
+        lastGroup = groups[groups.length - 1];
+        setupInfiniteScroll();
+      } catch (e) {
+        document.getElementById('initial-loader').innerHTML = `<div style="color:var(--red);text-align:center;padding:24px;font-size:14px">
+      Не удалось загрузить ленту<br><span style="color:var(--muted);font-size:12px">${e.message}</span>
+    </div>`;
+      }
+    }
+
+    async function loadMoreFeed() {
+      if (loadingMore || !hasMore || !lastGroup) return;
+      loadingMore = true;
+
+      const sentinel = document.createElement('div');
+      sentinel.className = 'loader';
+      sentinel.innerHTML = '<div class="spinner"></div>';
+      document.getElementById('feed').appendChild(sentinel);
+
+      try {
+        const mp = lastGroup.mainPost;
+        const more = await loadFeed({ beforeDate: mp.date, beforeMsgId: mp.id });
+        sentinel.remove();
+        if (more.length === 0) {
+          hasMore = false;
+          document.getElementById('feed').insertAdjacentHTML('beforeend', '<div class="eod">Вы всё прочитали 🎉</div>');
+        } else {
+          appendGroups(more);
+          lastGroup = more[more.length - 1];
+          if (more.length < 30) hasMore = false;
+        }
+      } catch (e) {
+        sentinel.remove();
+      }
+      loadingMore = false;
+    }
+
+    function setupInfiniteScroll() {
+      const feed = document.getElementById('feed');
+      feed.addEventListener('scroll', () => {
+        if (feed.scrollTop + feed.clientHeight > feed.scrollHeight - 300) {
+          loadMoreFeed();
+        }
+      }, { passive: true });
+    }
+
+    async function refreshFeed() {
+      const feed = document.getElementById('feed');
+      const btn = document.getElementById('refresh-btn');
+      btn.style.animation = 'spin .6s linear infinite';
+      try {
+        const fresh = await loadFeed();
+        // Add new cards at top
+        const existingKeys = new Set([...feed.querySelectorAll('.card')].map(c => c.dataset.key));
+        const newGroups = fresh.filter(g => {
+          const k = g.isAlbum ? `album_${g.mainPost.chat_id}_${g.mainPost.media_album_id}` : `${g.mainPost.chat_id}_${g.mainPost.id}`;
+          return !existingKeys.has(k);
+        });
+        if (newGroups.length > 0) {
+          const frag = document.createDocumentFragment();
+          newGroups.forEach(g => frag.prepend(renderCard(g)));
+          feed.prepend(frag);
+        }
+      } catch (e) { }
+      btn.style.animation = '';
+    }
+
+    // ── Setup screen ─────────────────────────────────────────────────────────────
+
+    function showApp() {
+      document.getElementById('setup').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+    }
+
+    async function tryConnect(ip) {
+      const url = `http://${ip}:${PORT}`;
+      const r = await fetch(url + '/api/ping', { signal: AbortSignal.timeout(4000) });
+      const j = await r.json();
+      if (j.ok) return url;
+      throw new Error('bad response');
+    }
+
+    document.getElementById('connect-btn').addEventListener('click', async () => {
+      const ip = document.getElementById('ip-input').value.trim();
+      const err = document.getElementById('setup-err');
+      if (!ip) { err.textContent = 'Введи IP-адрес'; return; }
+      err.textContent = '';
+      document.getElementById('connect-btn').textContent = 'Подключаюсь...';
+      document.getElementById('connect-btn').disabled = true;
+      try {
+        serverUrl = await tryConnect(ip);
+        localStorage.setItem('tg_mobile_server', serverUrl);
+        showApp();
+        initFeed();
+      } catch (e) {
+        err.textContent = `Не могу подключиться. Убедись что Mac-приложение запущено и оба устройства в одной сети.`;
+        document.getElementById('connect-btn').textContent = 'Подключиться';
+        document.getElementById('connect-btn').disabled = false;
+      }
+    });
+
+    document.getElementById('ip-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('connect-btn').click();
+    });
+
+    document.getElementById('refresh-btn').addEventListener('click', refreshFeed);
+
+    document.getElementById('settings-btn').addEventListener('click', () => {
+      if (confirm('Изменить IP-адрес Mac-а?')) {
+        localStorage.removeItem('tg_mobile_server');
+        location.reload();
+      }
+    });
+
+    // ── Init ─────────────────────────────────────────────────────────────────────
+
+    // Если страница открыта с самого сервера — берём origin автоматически
+    const originUrl = window.location.origin;
+    const isFromServer = !originUrl.startsWith('file://') && !originUrl.includes('localhost') && window.location.port === '7474';
+
+    if (isFromServer) {
+      serverUrl = originUrl;
+      localStorage.setItem('tg_mobile_server', serverUrl);
+      showApp();
+      initFeed();
+    } else {
+      const saved = localStorage.getItem('tg_mobile_server');
+      if (saved) {
+        serverUrl = saved;
+        const ip = new URL(saved).hostname;
+        document.getElementById('ip-input').value = ip;
+        tryConnect(ip)
+          .then(url => { serverUrl = url; showApp(); initFeed(); })
+          .catch(() => {
+            document.getElementById('setup-err').textContent = 'Предыдущий сервер недоступен. Проверь соединение.';
+          });
+      }
+    }
+  </script>
+</body>
+
+</html>

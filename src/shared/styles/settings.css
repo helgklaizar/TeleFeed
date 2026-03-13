@@ -1,0 +1,347 @@
+/* ── Settings Pages (Menu, AI Agents, Instructions) ── */
+
+.settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.settings-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-header-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.settings-back-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+.settings-add-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* ── Profile Card ── */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profile-name {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.profile-detail {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* ── Menu Items ── */
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 15px;
+    color: var(--text-main);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.menu-item--danger {
+    color: #ff4757;
+    border-bottom: none;
+}
+
+.menu-item--disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.menu-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.menu-item-label {
+    flex: 1;
+}
+
+.menu-chevron {
+    flex-shrink: 0;
+}
+
+.menu-section {
+    margin-top: 8px;
+}
+
+.menu-version {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* ── Agent List ── */
+
+.agent-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.agent-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.agent-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.agent-name {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.agent-provider {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.agent-delete-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 71, 87, 0.4);
+    background: rgba(255, 71, 87, 0.1);
+    color: #ff4757;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.agent-empty {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ── Form ── */
+
+.settings-form {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.settings-form-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.form-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    border-color: var(--accent);
+}
+
+.form-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-main);
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+.form-textarea:focus {
+    border-color: var(--accent);
+}
+
+.form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.btn-secondary {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: var(--text-main);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.btn-save {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-save--saved {
+    background: #5ab847;
+}
+
+/* ── Section Labels ── */
+
+.section-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.settings-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ── Hidden Chats Page ── */
+
+.hidden-chat-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.hidden-chat-title {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hidden-chat-unhide-btn {
+    padding: 4px 12px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 1px solid rgba(90, 184, 71, 0.4);
+    background: rgba(90, 184, 71, 0.1);
+    color: #5ab847;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.hidden-chat-unhide-btn:hover {
+    background: rgba(90, 184, 71, 0.2);
+}

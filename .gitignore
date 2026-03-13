@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+
+# Build
+dist
+storybook-static
+target/
+src-tauri/target/
+
+# Environment
+.env
+.tasks/
+
+# System
+.DS_Store
+*.log
+
+# IDE
+.idea
+.vscode
+*.sw?
+
+# Old versions
+v3/
+Dev/
+release/
+.husky/
+.claude/

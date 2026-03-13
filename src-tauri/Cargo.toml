@@ -1,0 +1,25 @@
+[package]
+name = "tg-feed"
+version = "1.0.0-rc.1"
+description = "TG-Feed v3"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "tg_feed_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-opener = "2"
+tauri-plugin-window-state = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+libloading = "0.9.0"
+tauri-plugin-http = "2.5.7"
+axum = "0.7"
+tower-http = { version = "0.5", features = ["cors"] }

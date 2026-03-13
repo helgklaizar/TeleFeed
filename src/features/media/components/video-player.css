@@ -1,0 +1,210 @@
+/* ── Video Player ── */
+
+.vp-wrap {
+    position: relative;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-height: 70vh;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.vp-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+}
+
+/* ── Центральная кнопка Play ── */
+
+.vp-big-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.vp-big-play:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.vp-big-play svg {
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+/* ── Контролы ── */
+
+.vp-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 6px 10px 10px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+}
+
+.vp-controls--visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.vp-wrap:hover .vp-controls {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Fullscreen — всегда показывать */
+:fullscreen .vp-controls,
+:-webkit-full-screen .vp-controls {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ── Progress bar ── */
+
+.vp-progress {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 2px;
+    transition: height 0.15s;
+}
+
+.vp-progress:hover {
+    height: 5px;
+}
+
+.vp-progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--accent, #5288c1);
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+.vp-progress-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.vp-progress:hover .vp-progress-thumb {
+    opacity: 1;
+}
+
+/* ── Bottom row ── */
+
+.vp-bottom {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.vp-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    opacity: 0.9;
+    transition: opacity 0.15s, transform 0.1s;
+    flex-shrink: 0;
+}
+
+.vp-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.vp-btn:active {
+    transform: scale(0.9);
+}
+
+.vp-time {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+    white-space: nowrap;
+    margin-left: 2px;
+    font-variant-numeric: tabular-nums;
+}
+
+.vp-spacer {
+    flex: 1;
+}
+
+/* ── Volume slider ── */
+
+.vp-volume {
+    width: 64px;
+    height: 3px;
+    cursor: pointer;
+    accent-color: white;
+    border-radius: 3px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+    flex-shrink: 0;
+}
+
+.vp-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.vp-volume::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    border: none;
+}
+
+/* Fullscreen адаптация */
+:fullscreen .vp-wrap,
+:-webkit-full-screen .vp-wrap {
+    max-height: 100vh;
+    border-radius: 0;
+}
+
+:fullscreen .vp-video,
+:-webkit-full-screen .vp-video {
+    max-height: 100vh;
+    height: 100vh;
+}

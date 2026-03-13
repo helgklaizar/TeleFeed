@@ -1,0 +1,95 @@
+/* ── Animations ── */
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.slide-out-left {
+    animation: slideOutLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slide-out-right {
+    animation: slideOutRight 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes breatheWait {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes slideDownPost {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+        background-color: var(--accent);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        background-color: var(--card-bg);
+    }
+}
+
+.post-card-new {
+    animation: slideDownPost 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.fade-in-image {
+    animation: fadeIn 0.4s ease-in forwards;
+}
