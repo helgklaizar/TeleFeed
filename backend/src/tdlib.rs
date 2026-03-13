@@ -30,7 +30,7 @@ impl TdlibManager {
 
         tokio::spawn(async move {
             let lib_path = format!(
-                "{}/../node_modules/@prebuilt-tdlib/darwin-arm64/libtdjson.dylib",
+                "{}/../frontend/node_modules/@prebuilt-tdlib/darwin-arm64/libtdjson.dylib",
                 env!("CARGO_MANIFEST_DIR")
             );
             // SAFETY: Loading TDLib shared library via FFI. The .dylib path is
