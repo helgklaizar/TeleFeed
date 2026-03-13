@@ -17,7 +17,7 @@ Desktop Telegram client for reading channels, groups, and private chats. Built o
 
 ```bash
 # 1. Clone and navigate to project
-cd v3/Dev/ui
+cd tg-feed
 
 # 2. Install dependencies
 npm install
@@ -45,8 +45,8 @@ Get them at [my.telegram.org/apps](https://my.telegram.org/apps).
 ## Project Structure
 
 ```
-v3/Dev/ui/
-├── src/
+tg-feed/
+├── frontend/
 │   ├── components/     # UI components (FeedCard, MediaFile, BubbleMessage...)
 │   ├── pages/          # Pages (Channels, Groups, Private, Chat, Menu...)
 │   ├── stores/         # Zustand stores (auth, chat, message, file, ui)
@@ -56,7 +56,7 @@ v3/Dev/ui/
 │   ├── i18n.js         # Localization (en/ru)
 │   ├── App.jsx         # Root + Router + Header
 │   └── main.jsx        # Entry point
-├── src-tauri/
+├── backend/
 │   └── src/
 │       ├── lib.rs      # IPC commands (Tauri)
 │       ├── tdlib.rs    # TDLib FFI manager

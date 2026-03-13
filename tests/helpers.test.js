@@ -7,7 +7,7 @@ import {
     formatDatePrefix,
     shiftEntities,
     renderEntities,
-} from '../src/shared/utils/helpers.js';
+} from '../frontend/shared/utils/helpers.js';
 
 describe('getTextFromContent', () => {
     it('returns empty string for null/undefined', () => {
