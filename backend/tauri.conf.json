@@ -4,9 +4,9 @@
   "version": "1.0.0-rc.1",
   "identifier": "com.tgfeed.v3",
   "build": {
-    "beforeDevCommand": "npm run dev --prefix ../frontend",
+    "beforeDevCommand": "npm run dev --prefix frontend",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "npm run build --prefix ../frontend",
+    "beforeBuildCommand": "npm run build --prefix frontend",
     "frontendDist": "../frontend/dist"
   },
   "app": {
