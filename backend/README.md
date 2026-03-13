@@ -1,4 +1,4 @@
-# Backend (src-tauri)
+# Backend (backend)
 
 Тут хранится логика на стороне системы (Rust) для Tauri-приложения.
 

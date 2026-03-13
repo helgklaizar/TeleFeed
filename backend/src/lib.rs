@@ -305,8 +305,8 @@ async fn sync_chats(state: State<'_, AppState>) -> Result<(), String> {
 async fn check_local_update(app_handle: tauri::AppHandle) -> Result<bool, String> {
     let app_version = app_handle.package_info().version.to_string();
 
-    // CARGO_MANIFEST_DIR → src-tauri/, поднимаемся на уровень выше в tauri/
-    let src_package_path = format!("{}/../../tauri/package.json", env!("CARGO_MANIFEST_DIR"));
+    // CARGO_MANIFEST_DIR → backend/, поднимаемся на уровень выше
+    let src_package_path = format!("{}/../frontend/package.json", env!("CARGO_MANIFEST_DIR"));
     if let Ok(content) = std::fs::read_to_string(&src_package_path) {
         if let Ok(json) = serde_json::from_str::<serde_json::Value>(&content) {
             if let Some(src_version) = json["version"].as_str() {
@@ -323,10 +323,10 @@ async fn apply_local_update() -> Result<(), String> {
     use std::process::Command;
 
     let manifest_dir = env!("CARGO_MANIFEST_DIR");
-    let src_dir = format!("{}/../../tauri", manifest_dir);
-    let updater_script = format!("{}/src-tauri/local_updater.sh", src_dir);
+    let src_dir = format!("{}/..", manifest_dir);
+    let updater_script = format!("{}/backend/local_updater.sh", src_dir);
     let dest_app = "/Applications/TG-Feed.app";
-    let bundle_path = format!("{}/src-tauri/target/release/bundle/macos/TG-Feed.app", src_dir);
+    let bundle_path = format!("{}/backend/target/release/bundle/macos/TG-Feed.app", src_dir);
 
     let _ = Command::new("chmod")
         .arg("+x")
