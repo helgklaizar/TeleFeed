@@ -1,35 +1,27 @@
 #!/bin/bash
 
-# Arguments
-APP_SRC_DIR=$1
-APP_DEST_APP=$2
-APP_BUNDLE_PATH=$3
+PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+APP_BUNDLE="$PROJECT_DIR/backend/target/release/bundle/macos/TG-Feed.app"
+APP_DEST="/Applications/TG-Feed.app"
 
-# Wait a moment for the main app to close
-sleep 2
+echo "📦 Building TG-Feed from $PROJECT_DIR..."
+cd "$PROJECT_DIR" || exit 1
 
-echo "Starting local update from $APP_SRC_DIR..."
-cd "$APP_SRC_DIR" || exit 1
-
-echo "Building new version..."
-# We assume the user uses nvm or npm from standard path. Path might need to be set since this runs from detached process.
-export PATH=$PATH:/usr/local/bin:/opt/homebrew/bin:$HOME/.nvm/versions/node/v20.x*/bin:$HOME/.nvm/versions/node/v18.x*/bin
-source ~/.bashrc 2>/dev/null || source ~/.zshrc 2>/dev/null || true
-
-# Just in case nvm is there
+# Ensure npm/nvm available
+export PATH=$PATH:/usr/local/bin:/opt/homebrew/bin
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null || true
 
 npm run tauri build
 
 if [ $? -eq 0 ]; then
-    echo "Build successful! Replacing $APP_DEST_APP..."
-    rm -rf "$APP_DEST_APP"
-    cp -R "$APP_BUNDLE_PATH" "$APP_DEST_APP"
-    
-    echo "Restarting app..."
-    open "$APP_DEST_APP"
+    echo "✅ Build successful! Copying to $APP_DEST..."
+    rm -rf "$APP_DEST"
+    cp -R "$APP_BUNDLE" "$APP_DEST"
+    echo "🚀 Launching..."
+    open "$APP_DEST"
 else
-    echo "Build failed! Automatically restarting old app..."
-    open "$APP_DEST_APP"
+    echo "❌ Build failed! Relaunching old version..."
+    open "$APP_DEST"
 fi
