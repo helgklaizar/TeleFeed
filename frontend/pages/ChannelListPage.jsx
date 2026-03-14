@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { ChatAvatar } from '../shared/ui/ChatAvatar';
-import { invoke } from '@tauri-apps/api/core';
+import { ipcLeaveChat } from '../shared/ipc/index';
 import { t } from '../app/i18n';
 
 export function ChannelListPage() {
@@ -20,7 +20,7 @@ export function ChannelListPage() {
         if (!confirm(t('unsubscribeConfirm'))) return;
         setLeaving((prev) => new Set(prev).add(chatId));
         try {
-            await invoke('leave_chat', { chatId });
+            await ipcLeaveChat(chatId);
         } catch (e) {
             console.error('Leave error:', e);
             alert(t('errorPrefix') + e);

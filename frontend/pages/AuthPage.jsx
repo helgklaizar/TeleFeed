@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { invoke } from '@tauri-apps/api/core';
+import { ipcInitTdlib, ipcSubmitPhone, ipcSubmitCode, ipcSubmitPassword } from '../shared/ipc/index';
 import { useAuthStore } from '../stores/authStore';
 import { t } from '../app/i18n';
 
@@ -29,7 +29,7 @@ export function AuthPage() {
         if (!needsSetup && hasCredentials()) {
             const id = parseInt(localStorage.getItem('tg_api_id'), 10);
             const hash = localStorage.getItem('tg_api_hash');
-            invoke('init_tdlib', { apiId: id, apiHash: hash }).catch((e) => {
+            ipcInitTdlib(id, hash).catch((e) => {
                 console.error('Init error:', e);
                 setError(String(e));
             });
@@ -163,9 +163,9 @@ export function AuthPage() {
     const handleSubmit = async () => {
         if (!input.trim()) return;
         try {
-            if (authState === 'wait_phone') await invoke('submit_phone', { phone: input });
-            else if (authState === 'wait_code') await invoke('submit_code', { code: input });
-            else if (authState === 'wait_password') await invoke('submit_password', { password: input });
+            if (authState === 'wait_phone') await ipcSubmitPhone(input);
+            else if (authState === 'wait_code') await ipcSubmitCode(input);
+            else if (authState === 'wait_password') await ipcSubmitPassword(input);
             setInput('');
         } catch (e) {
             console.error('Auth error:', e);

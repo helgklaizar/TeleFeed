@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useLayoutEffect, useRef, useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { invoke } from '@tauri-apps/api/core';
+import { ipcMarkAsRead, ipcLoadMoreHistory, ipcSendReply } from '../shared/ipc/index';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { useMessageStore } from '../features/chat/stores/messageStore';
 import { useUserStore } from '../features/chat/stores/userStore';
@@ -53,7 +53,7 @@ export function ChatViewPage() {
         const msgs = useMessageStore.getState().messages[chatIdNum] || [];
         const latestMsg = msgs[0]; // messages sorted desc
         if (latestMsg?.id) {
-            invoke('mark_as_read', { chatId: chatIdNum, messageIds: [latestMsg.id] }).catch((e) => {
+            ipcMarkAsRead(chatIdNum, [latestMsg.id]).catch((e) => {
                 console.error('mark_as_read error:', e);
                 showToast(t('actionFailed'), { type: 'error' });
             });
@@ -67,7 +67,7 @@ export function ChatViewPage() {
         if (rawMessages.length < MIN_MESSAGES_THRESHOLD) {
             setLoadingMore(true);
             const countBefore = useMessageStore.getState().messages[chatIdNum]?.length ?? 0;
-            invoke('load_more_history', { chatId: chatIdNum, fromMessageId: 0 })
+            ipcLoadMoreHistory(chatIdNum, 0)
                 .catch((e) => {
                     console.error('load_more_history error:', e);
                     showToast(t('actionFailed'), { type: 'error' });
@@ -95,7 +95,7 @@ export function ChatViewPage() {
         if (!oldestMsg) return;
         const countBefore = useMessageStore.getState().messages[chatIdNum]?.length ?? 0;
         setLoadingMore(true);
-        invoke('load_more_history', { chatId: chatIdNum, fromMessageId: oldestMsg.id })
+        ipcLoadMoreHistory(chatIdNum, oldestMsg.id)
             .catch((e) => {
                 console.error('load_more_history error:', e);
                 showToast(t('actionFailed'), { type: 'error' });
@@ -156,11 +156,7 @@ export function ChatViewPage() {
     const handleSend = async () => {
         if (!replyText.trim()) return;
         try {
-            await invoke('send_reply', {
-                chatId: chatIdNum,
-                replyToId: replyTo?.id || 0,
-                text: replyText,
-            });
+            await ipcSendReply(chatIdNum, replyTo?.id || 0, replyText);
             setReplyText('');
             setReplyTo(null);
             inputRef.current?.focus();

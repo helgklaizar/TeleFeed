@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { invoke } from '@tauri-apps/api/core';
+import { ipcGetContacts } from '../../shared/ipc/index';
 import { useUserStore } from '../../features/chat/stores/userStore';
 import { ChatAvatar } from './ChatAvatar';
 
@@ -14,7 +14,7 @@ export function ContactPickerModal({ onClose, onSelect }) {
     // При первом открытии запросить контакты
     useEffect(() => {
         setLoading(true);
-        invoke('get_contacts').catch(() => { }).finally(() => setLoading(false));
+        ipcGetContacts().catch(() => { }).finally(() => setLoading(false));
     }, []);
 
     // Close on Escape

@@ -1,8 +1,8 @@
 import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
-import { invoke } from '@tauri-apps/api/core';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { useUiStore } from '../stores/uiStore';
 import { usePostActionsStore } from '../stores/postActionsStore';
+import { ipcMarkAsRead, ipcForwardToStena, ipcDeleteLocalFile } from '../shared/ipc/index';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { FeedCard } from '../features/feed/components/FeedCard';
 import { FeedPage } from './FeedPage';
@@ -70,13 +70,13 @@ export function ChannelsPage({ setMediaModal }) {
         if (markAllAsRead.count === lastMarkCount.current) return;
         lastMarkCount.current = markAllAsRead.count;
         if (markAllAsRead.type && markAllAsRead.type !== 'channel') return;
-        const store = useUiStore.getState();
+        const store = usePostActionsStore.getState();
         filteredGroupedFeed.forEach((group) => {
             group.posts.forEach((p) => {
                 const key = buildPostKey(p.chat_id, p.id);
                 store.addHidden(key);
             });
-            invoke('mark_as_read', { chatId: group.mainPost.chat_id, messageIds: group.posts.map((p) => p.id) }).catch((e) => {
+            ipcMarkAsRead(group.mainPost.chat_id, group.posts.map((p) => p.id)).catch((e) => {
                 console.error('mark_as_read error:', e);
             });
         });
@@ -89,13 +89,13 @@ export function ChannelsPage({ setMediaModal }) {
         triggerFlashEye();
 
         try {
-            await invoke('mark_as_read', { chatId, messageIds });
+            await ipcMarkAsRead(chatId, messageIds);
         } catch (e) {
             console.error(e);
             showToast(t('actionFailed'), { type: 'error' });
         }
         for (const fileId of mediaFileIds) {
-            invoke('delete_local_file', { fileId }).catch(() => { });
+            ipcDeleteLocalFile(fileId).catch(() => { });
         }
     }, [addHidden, triggerFlashEye]);
 
@@ -113,10 +113,10 @@ export function ChannelsPage({ setMediaModal }) {
         triggerFlashHeart();
 
         // Форвард в Saved Messages (chat_id пользователя = userId в TDLib)
-        const profile = useUiStore.getState().profile;
+        const profile = usePostActionsStore.getState().profile || useUiStore.getState().profile;
         if (profile?.userId) {
             try {
-                await invoke('forward_to_stena', { stenaChatId: profile.userId, fromChatId: chatId, messageIds });
+                await ipcForwardToStena(profile.userId, chatId, messageIds);
             } catch (e) {
                 console.error(e);
                 showToast(t('actionFailed'), { type: 'error' });

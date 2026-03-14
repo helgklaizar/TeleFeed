@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { invoke } from '@tauri-apps/api/core';
+import { ipcGetUser, ipcGetChatInfo } from '../../../shared/ipc/index';
 import { useUserStore } from '../stores/userStore';
 import { useChatStore } from '../stores/chatStore';
 
@@ -13,10 +13,10 @@ export function useSenderInfo(senderIdObj) {
 
     useEffect(() => {
         if (isUser && senderIdObj.user_id && !user) {
-            invoke('get_user', { userId: senderIdObj.user_id }).catch(() => { });
+            ipcGetUser(senderIdObj.user_id).catch(() => { });
         }
         if (isChat && senderIdObj.chat_id && !chat) {
-            invoke('get_chat_info', { chatId: senderIdObj.chat_id }).catch(() => { });
+            ipcGetChatInfo(senderIdObj.chat_id).catch(() => { });
         }
     }, [isUser, isChat, senderIdObj, user, chat]);
 

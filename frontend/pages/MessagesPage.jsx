@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { invoke } from '@tauri-apps/api/core';
+import { ipcMarkAsRead } from '../shared/ipc/index';
 import { ChatListContainer } from '../features/chat/components/ChatListContainer';
 
 const EMPTY_ICON = (
@@ -16,7 +16,7 @@ export function MessagesPage() {
     // markAction для messages требует передачи last_message.id (в отличие от groups/private)
     const markAction = useCallback((chat) => {
         if (chat.last_message?.id) {
-            invoke('mark_as_read', { chatId: chat.id, messageIds: [chat.last_message.id] }).catch(() => { });
+            ipcMarkAsRead(chat.id, [chat.last_message.id]).catch(() => { });
         }
     }, []);
 

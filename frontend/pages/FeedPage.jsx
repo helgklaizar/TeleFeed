@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { useUiStore } from '../stores/uiStore';
+import { usePostActionsStore } from '../stores/postActionsStore';
+import { ipcMarkAsRead, ipcForwardToStena } from '../shared/ipc/index';
 import { getTextFromContent, formatDatePrefix, buildPostKey } from '../shared/utils/helpers';
 import { MediaFile } from '../features/media/components/MediaFile';
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { invoke } from '@tauri-apps/api/core';
 import { t } from '../app/i18n';
 import './FeedPage.css';
 
@@ -113,10 +114,10 @@ export function FeedPage({ feedItems }) {
   
   // UiStore state
   const profile = useUiStore((s) => s.profile);
-  const favoritePosts = useUiStore((s) => s.favoritePosts);
-  const addHidden = useUiStore((s) => s.addHidden);
-  const addFavorite = useUiStore((s) => s.addFavorite);
-  const removeFavorite = useUiStore((s) => s.removeFavorite);
+  const favoritePosts = usePostActionsStore((s) => s.favoritePosts);
+  const addHidden = usePostActionsStore((s) => s.addHidden);
+  const addFavorite = usePostActionsStore((s) => s.addFavorite);
+  const removeFavorite = usePostActionsStore((s) => s.removeFavorite);
   const triggerFlashEye = useUiStore((s) => s.triggerFlashEye);
   const triggerFlashHeart = useUiStore((s) => s.triggerFlashHeart);
   const textScale = useUiStore((s) => s.textScale);
@@ -224,7 +225,7 @@ export function FeedPage({ feedItems }) {
     triggerFlashEye();
     
     try {
-      await invoke('mark_as_read', { chatId: mPost.chat_id, messageIds: [mPost.id] });
+      await ipcMarkAsRead(mPost.chat_id, [mPost.id]);
     } catch (e) {
       console.error(e);
     }
@@ -250,11 +251,7 @@ export function FeedPage({ feedItems }) {
 
     if (profile?.userId) {
       try {
-        await invoke('forward_to_stena', { 
-            stenaChatId: profile.userId, 
-            fromChatId: mPost.chat_id, 
-            messageIds: [mPost.id] 
-        });
+        await ipcForwardToStena(profile.userId, mPost.chat_id, [mPost.id]);
       } catch (e) {
         console.error(e);
       }
