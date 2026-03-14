@@ -1,15 +1,20 @@
 import { create } from 'zustand';
 
 const loadSet = (key) => {
-    try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); }
+    try {
+        const v = JSON.parse(localStorage.getItem(key) || '[]');
+        return new Set(Array.isArray(v) ? v : []);
+    }
     catch { return new Set(); }
 };
 const saveSet = (key, s) => {
     try { localStorage.setItem(key, JSON.stringify([...s])); } catch { }
 };
 const loadArr = (key) => {
-    try { return JSON.parse(localStorage.getItem(key) || '[]'); }
-    catch { return []; }
+    try {
+        const v = JSON.parse(localStorage.getItem(key) || '[]');
+        return Array.isArray(v) ? v : [];
+    } catch { return []; }
 };
 
 /** Стор пользовательских действий: скрытые посты, избранное, чёрный список */
