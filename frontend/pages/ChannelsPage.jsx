@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { useUiStore } from '../stores/uiStore';
 import { usePostActionsStore } from '../stores/postActionsStore';
