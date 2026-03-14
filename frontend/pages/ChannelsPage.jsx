@@ -1,11 +1,12 @@
-import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { useUiStore } from '../stores/uiStore';
 import { usePostActionsStore } from '../stores/postActionsStore';
-import { ipcMarkAsRead, ipcForwardToStena, ipcDeleteLocalFile } from '../shared/ipc/index';
+import { ipcMarkAsRead, ipcDeleteLocalFile } from '../shared/ipc/index';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { FeedCard } from '../features/feed/components/FeedCard';
 import { FeedPage } from './FeedPage';
+import { useFeedActions } from '../features/feed/hooks/useFeedActions';
 import { buildPostKey } from '../shared/utils/helpers';
 import { Virtuoso } from 'react-virtuoso';
 import { t } from '../app/i18n';
@@ -15,18 +16,13 @@ export function ChannelsPage({ setMediaModal }) {
     const chats = useChatStore((s) => s.chats);
     const folders = useChatStore((s) => s.folders);
     const hiddenPosts = usePostActionsStore((s) => s.hiddenPosts);
-    const favoritePosts = usePostActionsStore((s) => s.favoritePosts);
     const blacklist = usePostActionsStore((s) => s.blacklist);
-    const addHidden = usePostActionsStore((s) => s.addHidden);
-    const addFavorite = usePostActionsStore((s) => s.addFavorite);
-    const removeFavorite = usePostActionsStore((s) => s.removeFavorite);
     const markAllAsRead = useUiStore((s) => s.markAllAsRead);
-    const triggerFlashEye = useUiStore((s) => s.triggerFlashEye);
-    const triggerFlashHeart = useUiStore((s) => s.triggerFlashHeart);
     const folderBarVisible = useUiStore((s) => s.folderBarVisible);
     const feedViewMode = useUiStore((s) => s.feedViewMode);
 
     const { groups, isLoading, loadInitial, loadMore } = useFeedStore();
+    const { handleMarkAsRead, handleToggleFavorite } = useFeedActions();
 
     const [selectedFolder, setSelectedFolder] = useState(() => {
         try {
@@ -82,48 +78,7 @@ export function ChannelsPage({ setMediaModal }) {
         });
     }, [markAllAsRead, filteredGroupedFeed]);
 
-    // Actions
-    const handleMarkAsRead = useCallback(async (chatId, messageIds, mediaFileIds = []) => {
-        const keys = messageIds.map((id) => buildPostKey(chatId, id));
-        keys.forEach((k) => { addHidden(k); });
-        triggerFlashEye();
 
-        try {
-            await ipcMarkAsRead(chatId, messageIds);
-        } catch (e) {
-            console.error(e);
-            showToast(t('actionFailed'), { type: 'error' });
-        }
-        for (const fileId of mediaFileIds) {
-            ipcDeleteLocalFile(fileId).catch(() => { });
-        }
-    }, [addHidden, triggerFlashEye]);
-
-    const handleToggleFavorite = useCallback(async (chatId, messageIds) => {
-        const keys = messageIds.map((id) => buildPostKey(chatId, id));
-        const firstKey = keys[0];
-
-        if (favoritePosts.has(firstKey)) {
-            keys.forEach((k) => removeFavorite(k));
-            triggerFlashHeart();
-            return;
-        }
-
-        keys.forEach((k) => addFavorite(k));
-        triggerFlashHeart();
-
-        // Форвард в Saved Messages (chat_id пользователя = userId в TDLib)
-        const profile = usePostActionsStore.getState().profile || useUiStore.getState().profile;
-        if (profile?.userId) {
-            try {
-                await ipcForwardToStena(profile.userId, chatId, messageIds);
-            } catch (e) {
-                console.error(e);
-                showToast(t('actionFailed'), { type: 'error' });
-            }
-        }
-        keys.forEach((k) => addHidden(k));
-    }, [favoritePosts, addFavorite, removeFavorite, addHidden, triggerFlashHeart]);
 
     // Only show folders that contain channels
     const channelFolders = useMemo(() => {

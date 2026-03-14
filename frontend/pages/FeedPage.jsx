@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { useUiStore } from '../stores/uiStore';
-import { usePostActionsStore } from '../stores/postActionsStore';
-import { ipcMarkAsRead, ipcForwardToStena } from '../shared/ipc/index';
+import { useFeedActions } from '../features/feed/hooks/useFeedActions';
 import { getTextFromContent, formatDatePrefix, buildPostKey } from '../shared/utils/helpers';
 import { MediaFile } from '../features/media/components/MediaFile';
 import { openUrl } from '@tauri-apps/plugin-opener';
@@ -112,16 +111,8 @@ const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
 
 export function FeedPage({ feedItems }) {
   const { isLoading, loadMore } = useFeedStore();
-  
-  // UiStore state
-  const profile = useUiStore((s) => s.profile);
-  const favoritePosts = usePostActionsStore((s) => s.favoritePosts);
-  const addHidden = usePostActionsStore((s) => s.addHidden);
-  const addFavorite = usePostActionsStore((s) => s.addFavorite);
-  const removeFavorite = usePostActionsStore((s) => s.removeFavorite);
-  const triggerFlashEye = useUiStore((s) => s.triggerFlashEye);
-  const triggerFlashHeart = useUiStore((s) => s.triggerFlashHeart);
   const textScale = useUiStore((s) => s.textScale);
+  const { handleMarkAsRead, handleToggleFavorite, favoritePosts } = useFeedActions();
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [animOut, setAnimOut] = useState(null); // { id: '...', dir: 'left' | 'right' }
@@ -214,55 +205,22 @@ export function FeedPage({ feedItems }) {
   // Выбираем активный пост для правых контролов
   const activeGroup = feedItems[activeIndex] || null;
   const mPost = activeGroup?.mainPost;
-  
-  // Actions
   const isFavorite = mPost ? favoritePosts.has(buildPostKey(mPost.chat_id, mPost.id)) : false;
 
-  const handleMarkAsRead = async () => {
+  const onMarkAsRead = async () => {
     if (!mPost || animOut) return;
     const key = buildPostKey(mPost.chat_id, mPost.id);
-    
     setAnimOut({ id: key, dir: 'left' });
-    triggerFlashEye();
-    
-    try {
-      await ipcMarkAsRead(mPost.chat_id, [mPost.id]);
-    } catch (e) {
-      console.error(e);
-    }
-    
-    setTimeout(() => {
-      addHidden(key);
-      setAnimOut(null);
-    }, 280);
+    await handleMarkAsRead(mPost.chat_id, [mPost.id]);
+    setTimeout(() => setAnimOut(null), 280);
   };
 
-  const handleToggleFavorite = async () => {
-    if (!mPost || animOut) return;
+  const onToggleFavorite = async () => {
+    if (!mPost || (animOut && !isFavorite)) return;
     const key = buildPostKey(mPost.chat_id, mPost.id);
-
-    if (favoritePosts.has(key)) {
-      removeFavorite(key);
-      triggerFlashHeart();
-      return;
-    }
-
-    setAnimOut({ id: key, dir: 'right' });
-    triggerFlashHeart();
-
-    if (profile?.userId) {
-      try {
-        await ipcForwardToStena(profile.userId, mPost.chat_id, [mPost.id]);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    
-    setTimeout(() => {
-      addFavorite(key);
-      addHidden(key);
-      setAnimOut(null);
-    }, 280);
+    if (!isFavorite) setAnimOut({ id: key, dir: 'right' });
+    await handleToggleFavorite(mPost.chat_id, [mPost.id]);
+    setTimeout(() => setAnimOut(null), 280);
   };
 
   return (
@@ -308,7 +266,7 @@ export function FeedPage({ feedItems }) {
         <button 
           className={`feed-control-btn action-btn icon-heart ${isFavorite ? 'active favorited' : ''}`} 
           title={t('saveToSavedMessages')} 
-          onClick={handleToggleFavorite}
+          onClick={onToggleFavorite}
           style={{ marginBottom: '15px' }}
         >
           <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
@@ -328,7 +286,7 @@ export function FeedPage({ feedItems }) {
         <button 
           className="feed-control-btn action-btn icon-eye" 
           title={t('markAsReadOrHide')} 
-          onClick={handleMarkAsRead}
+          onClick={onMarkAsRead}
           style={{ marginTop: '15px' }}
         >
           <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
