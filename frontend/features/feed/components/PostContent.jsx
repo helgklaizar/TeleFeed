@@ -29,9 +29,8 @@ export function PostContent({ message, onMediaClick }) {
         const best = c.photo.sizes[c.photo.sizes.length - 1];
         const caption = c.caption?.text || '';
         const captionEnts = c.caption?.entities || [];
-
         return (
-            <>
+            <div className="media-overlay-container">
                 <div className="post-media">
                     <MediaFile
                         fileId={best.photo.id}
@@ -44,8 +43,15 @@ export function PostContent({ message, onMediaClick }) {
                         })}
                     />
                 </div>
-                {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
-            </>
+                {caption && (
+                    <div className="caption-overlay">
+                        <div className="caption-spacer" />
+                        <div className="post-caption">
+                            <ExpandableText text={caption} entities={captionEnts} />
+                        </div>
+                    </div>
+                )}
+            </div>
         );
     }
 
@@ -54,12 +60,19 @@ export function PostContent({ message, onMediaClick }) {
         const captionEnts = c.caption?.entities || [];
 
         return (
-            <>
+            <div className="media-overlay-container">
                 <div className="post-media">
                     <MediaFile fileId={c.video.video.id} initialFile={c.video.video} type="video" className="media-file" />
                 </div>
-                {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
-            </>
+                {caption && (
+                    <div className="caption-overlay">
+                        <div className="caption-spacer" />
+                        <div className="post-caption">
+                            <ExpandableText text={caption} entities={captionEnts} />
+                        </div>
+                    </div>
+                )}
+            </div>
         );
     }
 
@@ -68,12 +81,19 @@ export function PostContent({ message, onMediaClick }) {
         const captionEnts = c.caption?.entities || [];
 
         return (
-            <>
+            <div className="media-overlay-container">
                 <div className="post-media">
                     <MediaFile fileId={c.animation.animation.id} initialFile={c.animation.animation} type="animation" className="media-file" />
                 </div>
-                {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
-            </>
+                {caption && (
+                    <div className="caption-overlay">
+                        <div className="caption-spacer" />
+                        <div className="post-caption">
+                            <ExpandableText text={caption} entities={captionEnts} />
+                        </div>
+                    </div>
+                )}
+            </div>
         );
     }
 

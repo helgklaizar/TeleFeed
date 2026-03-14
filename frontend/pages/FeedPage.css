@@ -50,31 +50,12 @@
   background-color: var(--card-bg);
 }
 
-.feed-card-media-block {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: #0c1218; /* темный фон для медиа */
-  overflow: hidden;
-}
-
-.feed-card-media-block > * {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Картинка не обрезается */
-  object-position: top; /* Прижимаем кверху */
-}
-
-
-
 /* Заголовок + дата — вверху с собственным фоном */
 .feed-card-header {
   padding: 12px 20px;
   background: var(--card-bg-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   display: flex;
   flex-direction: column;
@@ -83,19 +64,90 @@
   z-index: 2;
 }
 
-/* Текст снизу — ровно 50% высоты относительно медиа (flex: 1) */
-.feed-card-text-block {
-  flex: 1; /* Делит пополам пространство с медиа-блоком */
+/* Область медиа и контента поверх */
+.feed-card-body {
+  position: relative;
+  flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  padding: 14px 20px 20px;
-  background: var(--card-bg);
-  border-top: 1px solid rgba(255,255,255,0.07);
-  will-change: transform;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Медиа на фоне (не обрезается) */
+.feed-bg-preview {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  background-color: #0c1218;
+}
 
+.feed-bg-preview > * {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Картинка не обрезается */
+  object-position: top; /* Прижимаем кверху */
+}
 
+/* Оверлей текста снизу */
+.feed-card-overlay {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 20px;
+}
+
+/* Пустое место, чтобы контент сдвигался вниз */
+.feed-card-flex-spacer {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Блок текста в рамочке (до 50% высоты) */
+.feed-ai-summary {
+  background: rgba(36, 47, 61, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  max-height: 50%;
+  overflow-y: auto;
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.feed-ai-summary::-webkit-scrollbar {
+  width: 6px;
+}
+.feed-ai-summary::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 3px;
+}
+
+.feed-slider-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feed-slider-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+.feed-slider-btn:active {
+  transform: scale(0.95);
+}
 .feed-metadata {
   display: flex;
   gap: 15px;

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, memo, useMemo } from 'react';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { useUiStore } from '../stores/uiStore';
 import { useFeedActions } from '../features/feed/hooks/useFeedActions';
@@ -30,11 +30,28 @@ function getPostMedia(post) {
 
 const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
   const mPost = group.mainPost;
-  const media = getPostMedia(mPost);
+
+  // Collect all media from the group instead of just the mainPost
+  const mediaList = useMemo(() => {
+    return group.posts.map(p => getPostMedia(p)).filter(Boolean);
+  }, [group.posts]);
+
+  // Find the post with text (usually only one post in an album has the caption)
+  const postWithText = useMemo(() => {
+    return group.posts.find(p => getTextFromContent(p.content)) || mPost;
+  }, [group.posts, mPost]);
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const hasMultipleMedia = mediaList.length > 1;
+  const activeMedia = mediaList[currentSlide] || mediaList[0];
+
   const channel = group.channel;
   const title = channel?.title || 'Channel';
-  const date = formatDatePrefix(mPost.date) || '';
-  const text = getTextFromContent(mPost.content) || '';
+  const date = formatDatePrefix(postWithText.date || mPost.date) || '';
+  
+  const text = getTextFromContent(postWithText.content) || '';
+  const entities = postWithText.content?.text?.entities || postWithText.content?.caption?.entities || [];
 
   // URL для открытия канала
   const channelUsername = channel?.username
@@ -53,40 +70,76 @@ const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
 
         {/* Заголовок + дата — вверху с bg */}
         <div className="feed-card-header">
-          <h1
-            className="feed-title"
-            style={{ cursor: 'pointer', fontSize: `${1.4 * textScale}rem`, margin: 0 }}
-            onClick={() => openUrl(postUrl).catch(() => {})}
-            title={t('openPostInTelegram')}
-          >
-            {title}
-          </h1>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '10px' }}>
+            <h1
+              className="feed-title"
+              style={{ cursor: 'pointer', fontSize: `${1.4 * textScale}rem`, margin: 0, flex: 1 }}
+              onClick={() => openUrl(postUrl).catch(() => {})}
+              title={t('openPostInTelegram')}
+            >
+              {title}
+            </h1>
+            {hasMultipleMedia && (
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexShrink: 0, marginTop: '2px' }}>
+                <button
+                  className="feed-slider-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentSlide(prev => (prev > 0 ? prev - 1 : mediaList.length - 1));
+                  }}
+                  title="Previous media"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <span style={{ fontSize: '0.9rem', color: '#cbd5e1', fontVariantNumeric: 'tabular-nums' }}>
+                  {currentSlide + 1} / {mediaList.length}
+                </span>
+                <button
+                  className="feed-slider-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentSlide(prev => (prev < mediaList.length - 1 ? prev + 1 : 0));
+                  }}
+                  title="Next media"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+            )}
+          </div>
           <span className="feed-date">{date}</span>
         </div>
 
-        {/* Медиа */}
-        <div className="feed-card-media-block">
-          {media ? (
-            <MediaFile
-              fileId={media.fileId}
-              initialFile={media.initialFile}
-              type={media.type}
-            />
-          ) : (
-            <div style={{ width: '100%', height: '100%', background: '#0c1218' }} />
-          )}
-        </div>
-
-        {/* Текст снизу */}
-        {text && (
-          <div className="feed-card-text-block">
-            <ExpandableText
-              text={text}
-              entities={mPost.content?.text?.entities || mPost.content?.caption?.entities}
-              style={{ fontSize: `${1.05 * textScale}rem`, lineHeight: 1.5, color: '#f1f5f9' }}
-            />
+        {/* Область медиа и контента поверх него */}
+        <div className="feed-card-body">
+          {/* Медиа фон */}
+          <div className="feed-bg-preview">
+            {activeMedia ? (
+              <MediaFile
+                key={activeMedia.fileId} // Принудительный ререндер компонента медиа при смене слайда
+                fileId={activeMedia.fileId}
+                initialFile={activeMedia.initialFile}
+                type={activeMedia.type}
+              />
+            ) : (
+              <div style={{ width: '100%', height: '100%', background: '#0c1218' }} />
+            )}
           </div>
-        )}
+
+          {/* Текст поверх медиа (внизу) */}
+          <div className="feed-card-overlay">
+            <div className="feed-card-flex-spacer" />
+            {text && (
+              <div className="feed-ai-summary">
+                <ExpandableText
+                  text={text}
+                  entities={entities}
+                  style={{ fontSize: `${1.05 * textScale}rem`, lineHeight: 1.5, color: '#f1f5f9' }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
 
       </div>
     </div>
