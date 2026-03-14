@@ -104,6 +104,10 @@
   min-height: 0;
 }
 
+.feed-card-flex-spacer.hidden {
+  display: none;
+}
+
 /* Блок текста в рамочке (до 50% высоты) */
 .feed-ai-summary {
   background: rgba(36, 47, 61, 0.75);
@@ -116,6 +120,12 @@
   overflow-y: auto;
   flex-shrink: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.feed-ai-summary.expanded {
+  max-height: 90%;
+  overscroll-behavior-y: contain; /* Предотвращает прокрутку всей карточки/ленты при скролле текста */
 }
 
 .feed-ai-summary::-webkit-scrollbar {

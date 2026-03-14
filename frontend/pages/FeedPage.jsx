@@ -42,6 +42,12 @@ const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
   }, [group.posts, mPost]);
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // Collapse when jumping away from this slide (if not active anymore)
+  useEffect(() => {
+    if (!isActive) setIsExpanded(false);
+  }, [isActive]);
 
   const hasMultipleMedia = mediaList.length > 1;
   const activeMedia = mediaList[currentSlide] || mediaList[0];
@@ -128,13 +134,14 @@ const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
 
           {/* Текст поверх медиа (внизу) */}
           <div className="feed-card-overlay">
-            <div className="feed-card-flex-spacer" />
+            <div className={`feed-card-flex-spacer ${isExpanded ? 'hidden' : ''}`} />
             {text && (
-              <div className="feed-ai-summary">
+              <div className={`feed-ai-summary ${isExpanded ? 'expanded' : ''}`}>
                 <ExpandableText
                   text={text}
                   entities={entities}
                   style={{ fontSize: `${1.05 * textScale}rem`, lineHeight: 1.5, color: '#f1f5f9' }}
+                  onToggle={setIsExpanded}
                 />
               </div>
             )}
@@ -259,6 +266,19 @@ export function FeedPage({ feedItems }) {
     await handleToggleFavorite(mPost.chat_id, [mPost.id]);
     setTimeout(() => setAnimOut(null), 280);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Игнорируем S, если фокус в инпуте или текстареа
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+      if (e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        onMarkAsRead();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onMarkAsRead]);
 
   return (
     <div className="feed-page">

@@ -17,7 +17,7 @@ function handleLinkClick(e) {
 /**
  * Текст с entities. Раскрывается/скрывается по клику (без кнопок).
  */
-export function ExpandableText({ text, entities, style = {} }) {
+export function ExpandableText({ text, entities, style = {}, onToggle }) {
     const [expanded, setExpanded] = useState(false);
 
     const fullHtml = useMemo(() => {
@@ -30,8 +30,12 @@ export function ExpandableText({ text, entities, style = {} }) {
             handleLinkClick(e);
             return;
         }
-        setExpanded((v) => !v);
-    }, []);
+        setExpanded((v) => {
+            const next = !v;
+            onToggle?.(next);
+            return next;
+        });
+    }, [onToggle]);
 
     if (!text) return null;
 
