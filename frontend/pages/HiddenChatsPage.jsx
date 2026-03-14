@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUiStore } from '../stores/uiStore';
+import { usePostActionsStore } from '../stores/postActionsStore';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { t } from '../app/i18n';
 import '../shared/styles/settings.css';
 
 export function HiddenChatsPage() {
     const navigate = useNavigate();
-    const blacklist = useUiStore((s) => s.blacklist);
-    const setBlacklist = useUiStore((s) => s.setBlacklist);
+    const blacklist = usePostActionsStore((s) => s.blacklist);
+    const setBlacklist = usePostActionsStore((s) => s.setBlacklist);
     const chats = useChatStore((s) => s.chats);
 
     const CATEGORIES = [

@@ -1,15 +1,16 @@
 import { useUiStore } from '../stores/uiStore';
+import { usePostActionsStore } from '../stores/postActionsStore';
 import { useNavigate } from 'react-router-dom';
 import { ProfileAvatar } from '../shared/ui/ProfileAvatar';
 import { t } from '../app/i18n';
-import { invoke } from '@tauri-apps/api/core';
+import { ipcOptimizeStorage } from '../shared/ipc/index';
 import { showToast } from '../stores/toastStore';
 import '../shared/styles/settings.css';
 
 export function MenuPage() {
     const profile = useUiStore((s) => s.profile);
     const textScale = useUiStore((s) => s.textScale);
-    const blacklist = useUiStore((s) => s.blacklist);
+    const blacklist = usePostActionsStore((s) => s.blacklist);
     const navigate = useNavigate();
 
     return (
@@ -90,7 +91,7 @@ export function MenuPage() {
                     className="menu-item"
                     onClick={async () => {
                         try {
-                            await invoke('optimize_storage');
+                            await ipcOptimizeStorage();
                             showToast(t('mediaCacheCleared'), { type: 'success' });
                         } catch (e) {
                             showToast('Ошибка: ' + e, { type: 'error' });

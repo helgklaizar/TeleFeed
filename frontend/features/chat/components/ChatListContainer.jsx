@@ -1,7 +1,8 @@
 import { useMemo, useEffect, useRef } from 'react';
-import { invoke } from '@tauri-apps/api/core';
 import { useChatStore } from '../stores/chatStore';
 import { useUiStore } from '../../../stores/uiStore';
+import { usePostActionsStore } from '../../../stores/postActionsStore';
+import { ipcMarkAsRead } from '../../../shared/ipc/index';
 import { ChatListItem } from './ChatListItem';
 import { t } from '../../../app/i18n';
 
@@ -27,8 +28,8 @@ export function ChatListContainer({
 }) {
     const chats = useChatStore((s) => s.chats);
     const markAllAsRead = useUiStore((s) => s.markAllAsRead);
-    const blacklist = useUiStore((s) => s.blacklist);
-    const addToBlacklist = useUiStore((s) => s.addToBlacklist);
+    const blacklist = usePostActionsStore((s) => s.blacklist);
+    const addToBlacklist = usePostActionsStore((s) => s.addToBlacklist);
 
     const filteredChats = useMemo(() => {
         const wallName = t('wall');
@@ -55,7 +56,7 @@ export function ChatListContainer({
                 if (markAction) {
                     markAction(chat);
                 } else {
-                    invoke('mark_as_read', { chatId: chat.id, messageIds: [] }).catch(() => { });
+                    ipcMarkAsRead(chat.id, []).catch(() => { });
                 }
             }
         });
