@@ -3,6 +3,7 @@ import { useFeedStore } from '../features/feed/stores/feedStore';
 import { useUiStore } from '../stores/uiStore';
 import { useFeedActions } from '../features/feed/hooks/useFeedActions';
 import { getTextFromContent, formatDatePrefix, buildPostKey } from '../shared/utils/helpers';
+import { ExpandableText } from '../shared/ui/ExpandableText';
 import { MediaFile } from '../features/media/components/MediaFile';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { t } from '../app/i18n';
@@ -28,13 +29,6 @@ function getPostMedia(post) {
 }
 
 const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  useEffect(() => {
-    if (!isActive) {
-      setIsExpanded(false);
-    }
-  }, [isActive]);
   const mPost = group.mainPost;
   const media = getPostMedia(mPost);
   const channel = group.channel;
@@ -85,16 +79,12 @@ const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
 
         {/* Текст снизу */}
         {text && (
-          <div
-            className={`feed-card-text-block feed-ai-summary ${isExpanded ? 'expanded' : ''}`}
-            onClick={() => setIsExpanded(!isExpanded)}
-            style={{ cursor: 'pointer' }}
-          >
-            <div className="summary-text-container" style={{ fontSize: `${1.05 * textScale}rem` }}>
-              {text.split('\n').map((line, i) => (
-                <span key={i}>{line}<br /></span>
-              ))}
-            </div>
+          <div className="feed-card-text-block">
+            <ExpandableText
+              text={text}
+              entities={mPost.content?.text?.entities || mPost.content?.caption?.entities}
+              style={{ fontSize: `${1.05 * textScale}rem`, lineHeight: 1.5, color: '#f1f5f9' }}
+            />
           </div>
         )}
 

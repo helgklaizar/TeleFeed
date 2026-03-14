@@ -118,54 +118,7 @@
   color: #60a5fa; /* Синяя подсветка при наведении, т.к. теперь это ссылка */
 }
 
-/* AI / Text Summary Block */
-.feed-ai-summary {
-  background: var(--card-bg-glass);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.15); /* Keep border or change to transparent if preferred, but usually looks good */
-  transition: all 0.3s ease;
-  overflow: hidden;
-  max-height: 280px; /* Ограничиваем нераскрытый текст (около 10 строк) */
-  display: flex;
-  flex-direction: column;
-}
 
-.feed-ai-summary:hover {
-  background: var(--card-bg);
-}
-
-.feed-ai-summary.expanded {
-  max-height: 90%; 
-  flex: 1; 
-  overflow-y: auto;
-}
-
-/* Скрываем скроллбар внутри текста, если он появляется */
-.feed-ai-summary.expanded::-webkit-scrollbar {
-  width: 6px;
-}
-.feed-ai-summary.expanded::-webkit-scrollbar-thumb {
-  background-color: rgba(255,255,255,0.3);
-  border-radius: 3px;
-}
-
-
-
-.summary-text-container {
-  line-height: 1.5;
-  color: #f1f5f9;
-}
-
-/* При нераскрытом состоянии показываем туман с градиентом в конце */
-.feed-ai-summary:not(.expanded) .summary-text-container {
-  display: -webkit-box;
-  -webkit-line-clamp: 10;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
 /* 4. Right Controls */
 .feed-right-controls {
