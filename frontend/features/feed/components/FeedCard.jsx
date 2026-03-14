@@ -4,7 +4,7 @@ import { ChatAvatar } from '../../../shared/ui/ChatAvatar';
 import { PostContent } from './PostContent';
 import { AlbumGrid } from './AlbumGrid';
 import { getTextFromContent, buildPostKey, formatDatePrefix } from '../../../shared/utils/helpers';
-import { useUiStore } from '../../../stores/uiStore';
+import { usePostActionsStore } from '../../../stores/postActionsStore';
 import { useChatStore } from '../../chat/stores/chatStore';
 import { t } from '../../../app/i18n';
 
@@ -88,7 +88,7 @@ export const FeedCard = memo(function FeedCard({ group, onMarkAsRead, onToggleFa
     const { mainPost, posts, channel, isAlbum } = group;
     const mainKey = buildPostKey(mainPost?.chat_id, mainPost?.id);
     // Выбираем конкретное булево значение, чтобы Zustand не ререндерил ВСЕ карточки при каждом клике по одной
-    const isFavorite = useUiStore((s) => s.favoritePosts.has(mainKey));
+    const isFavorite = usePostActionsStore((s) => s.favoritePosts.has(mainKey));
 
     const [animOut, setAnimOut] = useState(null); // 'left' | 'right' | null
     // isPending блокирует кнопки немедленно (до setState-рендера)
