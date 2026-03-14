@@ -85,6 +85,8 @@ html.scroll-locked body {
     align-items: center;
     gap: 6px;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .header-title-text {

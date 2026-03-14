@@ -111,6 +111,7 @@ impl TdlibManager {
             while let Some(request) = rx.recv().await {
                 let client = ptr_write as *mut c_void;
                 if let Ok(json_string) = serde_json::to_string(&request) {
+                    println!("[TDLib SEND] {}", json_string);
                     if let Ok(c_string) = CString::new(json_string) {
                         // SAFETY: client pointer valid, c_string is null-terminated and
                         // lives long enough (owned by this scope until after the call).

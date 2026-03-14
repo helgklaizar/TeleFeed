@@ -108,7 +108,7 @@ function AppShell() {
   const isAiChat = path.startsWith('/ai');
   const isInChat = !!path.match(/\/messages\/\-?\d/);
 
-  let headerTitle = 'Каналы';
+  let headerTitle = t('channelsLabel');
   if (isMessages) headerTitle = t('messagesTitle');
   if (isAiChat) headerTitle = t('aiAgent');
 
