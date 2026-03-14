@@ -141,93 +141,97 @@ export const FeedCard = memo(function FeedCard({ group, onMarkAsRead, onToggleFa
         <div
             className={`post-card${animOut === 'left' ? ' slide-out-left' : animOut === 'right' ? ' slide-out-right' : ''}`}
         >
-            {/* POST HEADER — единый блок */}
-            <div className="post-header">
-                {/* Левая часть: аватар + инфо */}
-                <div className="post-header-left">
-                    <div
-                        onClick={(e) => handleOpenInTelegram(e, channel, mainPost?.chat_id, mainPost?.id)}
-                        style={{ cursor: 'pointer', display: 'block', lineHeight: 0 }}
-                        title={t('openInTelegram')}
-                    >
-                        <ChatAvatar chat={channel} size={36} />
-                    </div>
-
-                    <div className="post-channel-info">
-                        <span
-                            className="post-channel-name"
+            {/* HEADER BAR — название + дата вверху с собственным фоном */}
+            <div className="post-card-header-bar">
+                <div className="post-header">
+                    {/* Левая часть: аватар + инфо */}
+                    <div className="post-header-left">
+                        <div
                             onClick={(e) => handleOpenInTelegram(e, channel, mainPost?.chat_id, mainPost?.id)}
-                            style={{ cursor: 'pointer' }}
+                            style={{ cursor: 'pointer', display: 'block', lineHeight: 0 }}
                             title={t('openInTelegram')}
                         >
-                            {chatTitle}
-                        </span>
-                        {dateStr && <span className="post-channel-date">{dateStr}</span>}
-                    </div>
-                </div>
+                            <ChatAvatar chat={channel} size={36} />
+                        </div>
 
-                {/* Правая часть: действия */}
-                <div className="post-actions">
-                    <button
-                        onClick={handleMarkAsRead}
-                        className="icon-button icon-eye"
-                        title={t('markAsRead')}
-                        aria-label={t('markAsRead')}
-                        disabled={!!animOut}
-                    >
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
-                        </svg>
-                    </button>
-                    <button
-                        onClick={handleToggleFavorite}
-                        className={`icon-button icon-heart ${isFavorite ? 'active favorited' : ''}`}
-                        title={isFavorite ? t('removeFromFavorites') : t('addToFavorites')}
-                        aria-label={isFavorite ? t('removeFromFavorites') : t('addToFavorites')}
-                        disabled={!!animOut && !isFavorite}
-                    >
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                        </svg>
-                    </button>
+                        <div className="post-channel-info">
+                            <span
+                                className="post-channel-name"
+                                onClick={(e) => handleOpenInTelegram(e, channel, mainPost?.chat_id, mainPost?.id)}
+                                style={{ cursor: 'pointer' }}
+                                title={t('openInTelegram')}
+                            >
+                                {chatTitle}
+                            </span>
+                            {dateStr && <span className="post-channel-date">{dateStr}</span>}
+                        </div>
+                    </div>
+
+                    {/* Правая часть: действия */}
+                    <div className="post-actions">
+                        <button
+                            onClick={handleMarkAsRead}
+                            className="icon-button icon-eye"
+                            title={t('markAsRead')}
+                            aria-label={t('markAsRead')}
+                            disabled={!!animOut}
+                        >
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                            </svg>
+                        </button>
+                        <button
+                            onClick={handleToggleFavorite}
+                            className={`icon-button icon-heart ${isFavorite ? 'active favorited' : ''}`}
+                            title={isFavorite ? t('removeFromFavorites') : t('addToFavorites')}
+                            aria-label={isFavorite ? t('removeFromFavorites') : t('addToFavorites')}
+                            disabled={!!animOut && !isFavorite}
+                        >
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* FORWARD BADGE */}
-            {(() => {
-                const fwd = getForwardInfo(mainPost);
-                if (!fwd) return null;
-                return (
-                    <div className="forward-badge">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style={{ flexShrink: 0, marginTop: '1px' }}>
-                            <path d="M12 8V4l8 8-8 8v-4H4V8z" />
-                        </svg>
-                        <span>Forwarded from&nbsp;</span>
-                        {fwd.url ? (
-                            <a
-                                className="forward-badge-link"
-                                onClick={(e) => { e.stopPropagation(); openUrl(fwd.url).catch(() => { }); }}
-                            >
-                                {fwd.label}
-                            </a>
-                        ) : (
-                            <span className="forward-badge-name">{fwd.label}</span>
-                        )}
-                    </div>
-                );
-            })()}
+            {/* POST BODY — forward + контент */}
+            <div className="post-card-body">
+                {/* FORWARD BADGE */}
+                {(() => {
+                    const fwd = getForwardInfo(mainPost);
+                    if (!fwd) return null;
+                    return (
+                        <div className="forward-badge">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style={{ flexShrink: 0, marginTop: '1px' }}>
+                                <path d="M12 8V4l8 8-8 8v-4H4V8z" />
+                            </svg>
+                            <span>Forwarded from&nbsp;</span>
+                            {fwd.url ? (
+                                <a
+                                    className="forward-badge-link"
+                                    onClick={(e) => { e.stopPropagation(); openUrl(fwd.url).catch(() => { }); }}
+                                >
+                                    {fwd.label}
+                                </a>
+                            ) : (
+                                <span className="forward-badge-name">{fwd.label}</span>
+                            )}
+                        </div>
+                    );
+                })()}
 
-            {/* POST BODY — без даты в тексте */}
-            {isAlbum && posts.length > 1 ? (
-                <AlbumGrid
-                    posts={posts}
-                    text={albumText}
-                    entities={[]}
-                    onMediaClick={onMediaClick}
-                />
-            ) : (
-                <PostContent message={mainPost} onMediaClick={onMediaClick} />
-            )}
+                {isAlbum && posts.length > 1 ? (
+                    <AlbumGrid
+                        posts={posts}
+                        text={albumText}
+                        entities={[]}
+                        onMediaClick={onMediaClick}
+                    />
+                ) : (
+                    <PostContent message={mainPost} onMediaClick={onMediaClick} />
+                )}
+            </div>
         </div>
     );
 }, (prev, next) => {

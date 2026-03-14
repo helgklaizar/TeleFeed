@@ -4,11 +4,11 @@ use std::sync::RwLock;
 use std::time::Instant;
 
 /// Максимум сообщений в кеше ленты.
-const MAX_MESSAGES: usize = 5_000;
+const MAX_MESSAGES: usize = 1_500;
 /// TTL для буфера pending: сообщения старше этого значения удаляем.
 const PENDING_TTL_SECS: u64 = 60;
-/// Лимит pending-сообщений на чат (защита от переполнения памяти при starte).
-const MAX_PENDING_PER_CHAT: usize = 50;
+/// Лимит pending-сообщений на чат (защита от переполнения памяти при старте).
+const MAX_PENDING_PER_CHAT: usize = 20;
 
 pub struct FeedCache {
     /// Whitelist ленты: ID каналов из chatListMain.

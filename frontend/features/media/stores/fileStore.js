@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const MAX_FILES = 500;
+const MAX_FILES = 150;
 
 export const useFileStore = create((set, get) => ({
     files: {},      // fileId -> file object

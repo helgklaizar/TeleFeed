@@ -1,19 +1,21 @@
 import { create } from 'zustand';
 
-const loadSet = (key) => {
-    try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); }
-    catch { return new Set(); }
-};
-const saveSet = (key, s) => {
-    try { localStorage.setItem(key, JSON.stringify([...s])); } catch { }
-};
-const loadArr = (key) => {
-    try { return JSON.parse(localStorage.getItem(key) || '[]'); }
-    catch { return []; }
-};
-
+/**
+ * uiStore — только UI-состояние оболочки:
+ * - Тема и масштаб текста (preferences)
+ * - Профиль пользователя
+ * - Триггер "прочитать всё"
+ * - Инструкции для AI
+ * - Flash-анимации хедера
+ * - Видимость панели папок
+ * - Режим отображения ленты
+ *
+ * Прочее:
+ *   - hiddenPosts / favoritePosts / blacklist → postActionsStore
+ *   - startupPhase → startupStore
+ */
 export const useUiStore = create((set, get) => ({
-    // Theme
+    // ── Theme ──
     theme: localStorage.getItem('tg_theme') || 'blue',
     setTheme: (t) => {
         localStorage.setItem('tg_theme', t);
@@ -25,7 +27,7 @@ export const useUiStore = create((set, get) => ({
         get().setTheme(next);
     },
 
-    // Text Scale
+    // ── Text Scale ──
     textScale: Number(localStorage.getItem('tg_text_scale')) || 1.0,
     setTextScale: (scale) => {
         localStorage.setItem('tg_text_scale', scale);
@@ -41,42 +43,7 @@ export const useUiStore = create((set, get) => ({
         get().setTextScale(parseFloat(next.toFixed(2)));
     },
 
-    // Hidden / Favorite posts
-    hiddenPosts: loadSet('tg_hidden'),
-    favoritePosts: loadSet('tg_favorites'),
-
-    addHidden: (key) => set((s) => {
-        const n = new Set(s.hiddenPosts);
-        n.add(key);
-        saveSet('tg_hidden', n);
-        return { hiddenPosts: n };
-    }),
-    addFavorite: (key) => set((s) => {
-        const n = new Set(s.favoritePosts);
-        n.add(key);
-        saveSet('tg_favorites', n);
-        return { favoritePosts: n };
-    }),
-    removeFavorite: (key) => set((s) => {
-        const n = new Set(s.favoritePosts);
-        n.delete(key);
-        saveSet('tg_favorites', n);
-        return { favoritePosts: n };
-    }),
-
-    // Blacklist
-    blacklist: loadArr('tg_blacklist'),
-    addToBlacklist: (chatId) => set((s) => {
-        const n = [...s.blacklist, chatId.toString()];
-        localStorage.setItem('tg_blacklist', JSON.stringify(n));
-        return { blacklist: n };
-    }),
-    setBlacklist: (list) => {
-        localStorage.setItem('tg_blacklist', JSON.stringify(list));
-        set({ blacklist: list });
-    },
-
-    // Profile
+    // ── Profile ──
     profile: (() => {
         try { return JSON.parse(localStorage.getItem('tg_profile') || 'null'); }
         catch { return null; }
@@ -86,14 +53,13 @@ export const useUiStore = create((set, get) => ({
         set({ profile: p });
     },
 
-    // Mark-all-as-read trigger: components watch `count` changes
+    // ── Mark-all-as-read trigger ──
     markAllAsRead: { type: null, count: 0 },
     triggerMarkAllAsRead: (type) => set((s) => ({
         markAllAsRead: { type, count: s.markAllAsRead.count + 1 },
     })),
 
-
-    // Instructions
+    // ── Instructions (AI feature) ──
     instructions: (() => {
         try { return JSON.parse(localStorage.getItem('tg_instructions') || '{"daily":"","onDemand":""}'); }
         catch { return { daily: '', onDemand: '' }; }
@@ -103,7 +69,7 @@ export const useUiStore = create((set, get) => ({
         set({ instructions: inst });
     },
 
-    // UI Animations for Header
+    // ── Header flash-animations ──
     flashEye: false,
     flashHeart: false,
     triggerFlashEye: () => {
@@ -115,20 +81,19 @@ export const useUiStore = create((set, get) => ({
         setTimeout(() => set({ flashHeart: false }), 800);
     },
 
+    // ── Folder bar ──
     folderBarVisible: false,
     toggleFolderBar: () => set((s) => ({ folderBarVisible: !s.folderBarVisible })),
 
-    // Startup sequence tracking
-    // 'idle' → 'syncing_chats' → 'loading_feed' → 'ready'
-    startupPhase: 'idle',
-    setStartupPhase: (phase) => set({ startupPhase: phase }),
-
-    // Switch between standard and tiktok-style feed
+    // ── Feed view mode ──
     feedViewMode: localStorage.getItem('tg_feed_mode') || 'standard',
     setFeedViewMode: (mode) => {
         localStorage.setItem('tg_feed_mode', mode);
         set({ feedViewMode: mode });
     },
 
+    // ── Startup phase (backward compat: делегируем в startupStore) ──
+    // Оставляем здесь реэкспорт для обратной совместимости пока не обновлены все импорты
+    startupPhase: 'idle',
+    setStartupPhase: (phase) => set({ startupPhase: phase }),
 }));
-

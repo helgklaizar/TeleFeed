@@ -2,19 +2,20 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUiStore } from '../stores/uiStore';
 import { useChatStore } from '../features/chat/stores/chatStore';
+import { t } from '../app/i18n';
 import '../shared/styles/settings.css';
-
-const CATEGORIES = [
-        { key: 'channel', label: t('channelsLabel'), color: '#5ab847' },
-        { key: 'group', label: t('groupsLabel'), color: 'var(--accent)' },
-        { key: 'private', label: t('privateLabel'), color: '#ffa500' },
-];
 
 export function HiddenChatsPage() {
     const navigate = useNavigate();
     const blacklist = useUiStore((s) => s.blacklist);
     const setBlacklist = useUiStore((s) => s.setBlacklist);
     const chats = useChatStore((s) => s.chats);
+
+    const CATEGORIES = [
+        { key: 'channel', label: t('channelsLabel'), color: '#5ab847' },
+        { key: 'group', label: t('groupsLabel'), color: 'var(--accent)' },
+        { key: 'private', label: t('privateLabel'), color: '#ffa500' },
+    ];
 
     const byCategory = useMemo(() => {
         const result = { channel: [], group: [], private: [] };

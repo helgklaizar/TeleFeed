@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { ChatAvatar } from '../shared/ui/ChatAvatar';
 import { invoke } from '@tauri-apps/api/core';
+import { t } from '../app/i18n';
 
 export function ChannelListPage() {
     const navigate = useNavigate();

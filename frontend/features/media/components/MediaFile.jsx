@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { invoke } from '@tauri-apps/api/core';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { useFileStore } from '../stores/fileStore';
+import { ipcDownloadFile } from '../../../shared/ipc/index';
 import { VideoPlayer } from './VideoPlayer';
 import { Lightbox } from './Lightbox';
 
@@ -22,7 +22,7 @@ export function MediaFile({ fileId, initialFile, type = 'image', style = {}, onC
     useEffect(() => {
         if (!fileId || isDownloaded || requested) return;
         setRequested(true);
-        invoke('download_file', { fileId }).catch(console.error);
+        ipcDownloadFile(fileId).catch(console.error);
     }, [fileId, isDownloaded, requested]);
 
     if (!isDownloaded) {

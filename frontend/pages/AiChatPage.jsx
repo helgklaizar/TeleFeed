@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { t } from '../app/i18n';
 
 /**
  * AI Chat — заглушка дизайна.

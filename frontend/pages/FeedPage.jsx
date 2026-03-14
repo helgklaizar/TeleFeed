@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, memo } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, memo } from 'react';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { useUiStore } from '../stores/uiStore';
 import { getTextFromContent, formatDatePrefix, buildPostKey } from '../shared/utils/helpers';
@@ -124,6 +124,45 @@ export function FeedPage({ feedItems }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animOut, setAnimOut] = useState(null); // { id: '...', dir: 'left' | 'right' }
   const containerRef = useRef(null);
+  const prevFeedItemsRef = useRef(feedItems);
+  const activeKeyRef = useRef(null);
+
+  // Синхронизируем activeKey с текущим постом (на который мы смотрим)
+  useEffect(() => {
+    const activeGroup = feedItems[activeIndex];
+    if (activeGroup) {
+        activeKeyRef.current = buildPostKey(activeGroup.mainPost.chat_id, activeGroup.mainPost.id);
+    }
+  }, [activeIndex, feedItems]);
+
+  // Сохраняем позицию фокуса на текущей карточке при загрузке новых сверху
+  useLayoutEffect(() => {
+    const prevFeedItems = prevFeedItemsRef.current;
+    if (feedItems !== prevFeedItems) {
+        if (feedItems.length > 0 && prevFeedItems.length > 0 && containerRef.current && activeKeyRef.current) {
+            
+            const newIndex = feedItems.findIndex(g => buildPostKey(g.mainPost.chat_id, g.mainPost.id) === activeKeyRef.current);
+            const oldIndex = prevFeedItems.findIndex(g => buildPostKey(g.mainPost.chat_id, g.mainPost.id) === activeKeyRef.current);
+            
+            // Если мы читаем пост, и он съехал (например, загрузили новые), жестко фиксируем его позицию
+            if (newIndex !== -1 && oldIndex !== -1 && newIndex !== oldIndex) {
+                const container = containerRef.current;
+                const originalScrollBehavior = container.style.scrollBehavior;
+                container.style.scrollBehavior = 'auto'; // Отключаем плавную анимацию
+                
+                // Моментально сдвигаем скролл ровно на новую высоту карточки
+                container.scrollTop = newIndex * container.clientHeight;
+                setActiveIndex(newIndex);
+                
+                // Возвращаем настройки скролла
+                requestAnimationFrame(() => {
+                    container.style.scrollBehavior = originalScrollBehavior || '';
+                });
+            }
+        }
+        prevFeedItemsRef.current = feedItems;
+    }
+  }, [feedItems]);
 
   // Когда feedItems обновляются (например, удалился пост), нужно убедиться что activeIndex не вылетает за границы
   useEffect(() => {

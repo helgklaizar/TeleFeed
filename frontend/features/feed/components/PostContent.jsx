@@ -31,7 +31,6 @@ export function PostContent({ message, onMediaClick }) {
 
         return (
             <div>
-                {caption && <ExpandableText text={caption} entities={captionEnts} />}
                 <div className="post-media" style={mediaStyle}>
                     <MediaFile
                         fileId={best.photo.id}
@@ -44,6 +43,7 @@ export function PostContent({ message, onMediaClick }) {
                         })}
                     />
                 </div>
+                {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
             </div>
         );
     }
@@ -59,10 +59,10 @@ export function PostContent({ message, onMediaClick }) {
 
         return (
             <div>
-                {caption && <ExpandableText text={caption} entities={captionEnts} />}
                 <div className="post-media" style={mediaStyle}>
                     <MediaFile fileId={c.video.video.id} initialFile={c.video.video} type="video" className="media-file" />
                 </div>
+                {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
             </div>
         );
     }
@@ -78,10 +78,10 @@ export function PostContent({ message, onMediaClick }) {
 
         return (
             <div>
-                {caption && <ExpandableText text={caption} entities={captionEnts} />}
                 <div className="post-media" style={mediaStyle}>
                     <MediaFile fileId={c.animation.animation.id} initialFile={c.animation.animation} type="animation" className="media-file" />
                 </div>
+                {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
             </div>
         );
     }

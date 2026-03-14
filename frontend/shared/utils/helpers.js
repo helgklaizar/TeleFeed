@@ -111,9 +111,11 @@ export function renderEntities(text, entities) {
             case 'textEntityTypeUrl':
                 parts.push(`<a href="${safeChunk}" target="_blank" rel="noopener">${safeChunk}</a>`);
                 break;
-            case 'textEntityTypeTextUrl':
-                parts.push(`<a href="${escapeHtml(entity.type.url)}" target="_blank" rel="noopener">${safeChunk}</a>`);
+            case 'textEntityTypeTextUrl': {
+                const safeUrl = /^javascript:/i.test(entity.type.url) ? '#' : entity.type.url;
+                parts.push(`<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">${safeChunk}</a>`);
                 break;
+            }
             case 'textEntityTypeMention':
                 parts.push(`<a href="https://t.me/${escapeHtml(chunk.replace('@', ''))}" target="_blank" rel="noopener">${safeChunk}</a>`);
                 break;

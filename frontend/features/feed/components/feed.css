@@ -96,13 +96,15 @@
 
 .post-card {
     background-color: var(--card-bg);
-    padding: 12px 16px;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
     border-radius: 12px;
     margin: 0 8px 8px;
     transition: box-shadow 0.2s, transform 0.2s;
+    overflow: hidden;
+    min-height: 120px;
 }
 
 .post-card:hover {
@@ -116,11 +118,46 @@
     }
 }
 
-.post-header {
+/* ── Post Card Header Bar (название + дата вверху с собственным фоном) ── */
+
+.post-card-header-bar {
+    background: rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 8px 12px 8px 16px;
+}
+
+.post-card-header-bar .post-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+/* Контент карточки: текст без медиа, forward-badge и т.д. */
+.post-card > .expandable-text,
+.post-card > .forward-badge,
+.post-card > .post-content-placeholder,
+.post-card > .web-page-preview {
+    padding: 10px 16px 12px;
+}
+
+/* Обёртка контента внутри карточки */
+.post-card .post-card-body {
+    /* без общего паддинга — медиа идёт без отступов */
+}
+
+/* Текст (messageText) и форвард внутри body */
+.post-card-body > .expandable-text,
+.post-card-body > .forward-badge,
+.post-card-body > .post-content-placeholder {
+    padding: 10px 16px 12px;
+    display: block;
+}
+
+/* forward-badge перед контентом */
+.post-card-body .forward-badge {
+    margin: 8px 16px 0;
+}
+
 
 .post-channel-name {
     font-size: calc(15px * var(--text-scale, 1.0));
@@ -199,14 +236,19 @@
 /* ── Post Media ── */
 
 .post-media {
-    margin-top: 8px;
-    border-radius: 8px;
+    margin-top: 0;
+    border-radius: 0;
     overflow: hidden;
     position: relative;
     background: #000;
     display: flex;
     justify-content: center;
-    max-height: 840px;
+    max-height: 60vh;
+}
+
+/* Паддинг для контента под медиа */
+.post-caption {
+    padding: 10px 16px 12px;
 }
 
 .post-media img {
@@ -225,10 +267,9 @@
 
 .media-file {
     width: 100%;
-    max-height: 840px;
+    max-height: 60vh;
     object-fit: cover;
     display: block;
-    border-radius: 8px;
     cursor: pointer;
 }
 
@@ -251,8 +292,8 @@
 /* ── Expandable Text ── */
 
 .expandable-text {
-    font-size: calc(16px * var(--text-scale, 1.0));
-    line-height: 1.45;
+    font-size: calc(17px * var(--text-scale, 1.0));
+    line-height: 1.5;
     white-space: pre-wrap;
     word-break: break-word;
     -webkit-user-select: text;

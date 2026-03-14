@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-const MAX_MESSAGES_PER_CHAT = 200;
-const MAX_CHATS_IN_STORE = 100;
+const MAX_MESSAGES_PER_CHAT = 50;
+const MAX_CHATS_IN_STORE = 20;
 
 /** Вставляем msg в sorted-desc массив без полного пересорта */
 function insertSorted(arr, msg) {
