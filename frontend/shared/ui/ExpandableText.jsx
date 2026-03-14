@@ -1,11 +1,21 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import { openUrl } from '@tauri-apps/plugin-opener';
 import { renderEntities } from '../utils/helpers';
 
 const WORD_LIMIT = 60;
 
+/** Обрабатывает клик на <a> внутри текста — открывает через Tauri */
+function handleLinkClick(e) {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const href = anchor.getAttribute('href');
+    if (href && href !== '#') openUrl(href).catch(() => { });
+}
+
 /**
  * Текст с entities. Раскрывается/скрывается по клику (без кнопок).
- * Jina AI async-fetch убран — работает только expand по количеству слов.
  */
 export function ExpandableText({ text, entities, style = {} }) {
     const [expanded, setExpanded] = useState(false);
@@ -15,6 +25,14 @@ export function ExpandableText({ text, entities, style = {} }) {
         return renderEntities(text, entities);
     }, [text, entities]);
 
+    const handleClick = useCallback((e) => {
+        if (e.target.closest('a')) {
+            handleLinkClick(e);
+            return;
+        }
+        setExpanded((v) => !v);
+    }, []);
+
     if (!text) return null;
 
     const words = text.split(/\s+/);
@@ -22,7 +40,7 @@ export function ExpandableText({ text, entities, style = {} }) {
 
     if (!isTruncatable) {
         return (
-            <div className="expandable-text" style={style}>
+            <div className="expandable-text" style={style} onClick={handleLinkClick}>
                 <span dangerouslySetInnerHTML={{ __html: fullHtml }} />
             </div>
         );
@@ -33,10 +51,7 @@ export function ExpandableText({ text, entities, style = {} }) {
             <div
                 className="expandable-text"
                 style={{ ...style, cursor: 'pointer' }}
-                onClick={(e) => {
-                    if (e.target.tagName === 'A') return;
-                    setExpanded(false);
-                }}
+                onClick={handleClick}
             >
                 <span dangerouslySetInnerHTML={{ __html: fullHtml }} />
             </div>
@@ -50,10 +65,7 @@ export function ExpandableText({ text, entities, style = {} }) {
         <div
             className="expandable-text truncated"
             style={{ ...style, cursor: 'pointer' }}
-            onClick={(e) => {
-                if (e.target.tagName === 'A') return;
-                setExpanded(true);
-            }}
+            onClick={handleClick}
         >
             <span dangerouslySetInnerHTML={{ __html: truncatedHtml }} />
         </div>

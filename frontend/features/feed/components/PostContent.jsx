@@ -16,7 +16,13 @@ export function PostContent({ message, onMediaClick }) {
 
     if (t === 'messageText') {
         const { text, entities } = getText(c.text?.text, c.text?.entities);
-        return <ExpandableText text={text} entities={entities} />;
+        return (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px' }}>
+                    <ExpandableText text={text} entities={entities} />
+                </div>
+            </div>
+        );
     }
 
     if (t === 'messagePhoto' && c.photo?.sizes?.length) {
@@ -24,14 +30,9 @@ export function PostContent({ message, onMediaClick }) {
         const caption = c.caption?.text || '';
         const captionEnts = c.caption?.entities || [];
 
-        let mediaStyle = undefined;
-        if (best.width && best.height) {
-            mediaStyle = { aspectRatio: `${best.width} / ${best.height}` };
-        }
-
         return (
-            <div>
-                <div className="post-media" style={mediaStyle}>
+            <>
+                <div className="post-media">
                     <MediaFile
                         fileId={best.photo.id}
                         initialFile={best.photo}
@@ -44,7 +45,7 @@ export function PostContent({ message, onMediaClick }) {
                     />
                 </div>
                 {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
-            </div>
+            </>
         );
     }
 
@@ -52,18 +53,13 @@ export function PostContent({ message, onMediaClick }) {
         const caption = c.caption?.text || '';
         const captionEnts = c.caption?.entities || [];
 
-        let mediaStyle = undefined;
-        if (c.video.width && c.video.height) {
-            mediaStyle = { aspectRatio: `${c.video.width} / ${c.video.height}` };
-        }
-
         return (
-            <div>
-                <div className="post-media" style={mediaStyle}>
+            <>
+                <div className="post-media">
                     <MediaFile fileId={c.video.video.id} initialFile={c.video.video} type="video" className="media-file" />
                 </div>
                 {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
-            </div>
+            </>
         );
     }
 
@@ -71,18 +67,13 @@ export function PostContent({ message, onMediaClick }) {
         const caption = c.caption?.text || '';
         const captionEnts = c.caption?.entities || [];
 
-        let mediaStyle = undefined;
-        if (c.animation.width && c.animation.height) {
-            mediaStyle = { aspectRatio: `${c.animation.width} / ${c.animation.height}` };
-        }
-
         return (
-            <div>
-                <div className="post-media" style={mediaStyle}>
+            <>
+                <div className="post-media">
                     <MediaFile fileId={c.animation.animation.id} initialFile={c.animation.animation} type="animation" className="media-file" />
                 </div>
                 {caption && <div className="post-caption"><ExpandableText text={caption} entities={captionEnts} /></div>}
-            </div>
+            </>
         );
     }
 
