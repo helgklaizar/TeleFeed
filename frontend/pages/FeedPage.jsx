@@ -57,52 +57,46 @@ const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
     <div className="feed-card-wrapper" data-index={index}>
       <div className={`feed-card ${animDir ? `slide-out-${animDir}` : ''}`}>
 
-        {/* Медиа фон — верхние 50% */}
-        <div className="feed-bg-preview">
+        {/* Заголовок + дата — вверху с bg */}
+        <div className="feed-card-header">
+          <h1
+            className="feed-title"
+            style={{ cursor: 'pointer', fontSize: `${1.4 * textScale}rem`, margin: 0 }}
+            onClick={() => openUrl(postUrl).catch(() => {})}
+            title={t('openPostInTelegram')}
+          >
+            {title}
+          </h1>
+          <span className="feed-date">{date}</span>
+        </div>
+
+        {/* Медиа */}
+        <div className="feed-card-media-block">
           {media ? (
             <MediaFile
               fileId={media.fileId}
               initialFile={media.initialFile}
               type={media.type}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
             />
           ) : (
-            <div style={{ width: '100%', height: '100%', background: 'linear-gradient(45deg, #111, #222)' }} />
+            <div style={{ width: '100%', height: '100%', background: '#0c1218' }} />
           )}
         </div>
 
-        <div className="feed-card-content">
-          {/* Заголовок + дата — вверху с bg */}
-          <div className="feed-card-header">
-            <h1
-              className="feed-title"
-              style={{ cursor: 'pointer', fontSize: `${1.4 * textScale}rem`, margin: 0 }}
-              onClick={() => openUrl(postUrl).catch(() => {})}
-              title={t('openPostInTelegram')}
-            >
-              {title}
-            </h1>
-            <span className="feed-date">{date}</span>
-          </div>
-
-          {/* Spacer — занимает место медиа */}
-          <div className="feed-card-media-spacer" />
-
-          {/* Текст снизу */}
-          {text && (
-            <div
-              className={`feed-card-text-block feed-ai-summary ${isExpanded ? 'expanded' : ''}`}
-              onClick={() => setIsExpanded(!isExpanded)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="summary-text-container" style={{ fontSize: `${1.05 * textScale}rem` }}>
-                {text.split('\n').map((line, i) => (
-                  <span key={i}>{line}<br /></span>
-                ))}
-              </div>
+        {/* Текст снизу */}
+        {text && (
+          <div
+            className={`feed-card-text-block feed-ai-summary ${isExpanded ? 'expanded' : ''}`}
+            onClick={() => setIsExpanded(!isExpanded)}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="summary-text-container" style={{ fontSize: `${1.05 * textScale}rem` }}>
+              {text.split('\n').map((line, i) => (
+                <span key={i}>{line}<br /></span>
+              ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
       </div>
     </div>

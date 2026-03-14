@@ -37,80 +37,62 @@
 
 /* 3. The Card Element */
 .feed-card {
-  width: 95%;
-  max-width: 700px;
-  height: 95%;
-  max-height: 900px;
-  border-radius: 20px;
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+  max-height: 100vh;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* контент начинается сверху */
-  background-color: var(--card-bg-glass);
+  background-color: var(--card-bg);
 }
 
-.feed-bg-preview {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 50%;
-  background-size: cover;
-  background-position: top;
-  z-index: 0;
+.feed-card-media-block {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #0c1218; /* темный фон для медиа */
   overflow: hidden;
 }
 
-.feed-bg-preview > * {
+.feed-card-media-block > * {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top;
+  object-fit: contain; /* Картинка не обрезается */
+  object-position: top; /* Прижимаем кверху */
 }
 
 
-/* Gradient overlay disabled as per user request */
-.feed-card::after {
-  content: none;
-}
-
-.feed-card-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
 /* Заголовок + дата — вверху с собственным фоном */
 .feed-card-header {
   padding: 12px 20px;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: var(--card-bg-glass);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   display: flex;
   flex-direction: column;
   gap: 2px;
   flex-shrink: 0;
+  z-index: 2;
 }
 
-/* Медиа — занимает свободное место */
-.feed-card-media-spacer {
-  flex: 1;
-  min-height: 0;
-}
-
-/* Текст снизу — ~50% карточки, скроллится */
+/* Текст снизу — ровно 50% высоты относительно медиа (flex: 1) */
 .feed-card-text-block {
-  max-height: 50%;
-  flex-shrink: 0;
+  flex: 1; /* Делит пополам пространство с медиа-блоком */
+  min-height: 0;
   overflow-y: auto;
   padding: 14px 20px 20px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--card-bg);
   border-top: 1px solid rgba(255,255,255,0.07);
+  will-change: transform;
 }
+
 
 
 .feed-metadata {
