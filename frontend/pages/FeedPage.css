@@ -90,26 +90,19 @@
 
 /* Оверлей текста снизу */
 .feed-card-overlay {
-  position: relative;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
   z-index: 2;
-  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end; /* прижимает блок текста к низу */
   padding: 0 20px 20px;
-}
-
-/* Пустое место, чтобы контент сдвигался вниз */
-.feed-card-flex-spacer {
-  flex: 1;
-  min-height: 0;
-}
-
-.feed-card-flex-spacer.hidden {
-  display: none;
+  pointer-events: none; /* Пропускаем клики сквозь оверлей */
 }
 
 /* Блок текста в рамочке (до 50% высоты) */
 .feed-ai-summary {
+  pointer-events: auto; /* Восстанавливаем клики для текста */
   background: rgba(36, 47, 61, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -117,6 +110,7 @@
   padding: 15px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   max-height: 50%;
+  min-height: 0; /* ВАЖНО для скроллинга внутри flex-контейнера */
   overflow-y: auto;
   flex-shrink: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -124,7 +118,7 @@
 }
 
 .feed-ai-summary.expanded {
-  max-height: 90%;
+  max-height: 95%; /* Почти до верха карточки */
   overscroll-behavior-y: contain; /* Предотвращает прокрутку всей карточки/ленты при скролле текста */
 }
 

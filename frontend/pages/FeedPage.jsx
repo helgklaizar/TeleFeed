@@ -134,7 +134,6 @@ const FeedItem = memo(({ group, index, isActive, textScale, animDir }) => {
 
           {/* Текст поверх медиа (внизу) */}
           <div className="feed-card-overlay">
-            <div className={`feed-card-flex-spacer ${isExpanded ? 'hidden' : ''}`} />
             {text && (
               <div className={`feed-ai-summary ${isExpanded ? 'expanded' : ''}`}>
                 <ExpandableText
