@@ -63,4 +63,4 @@ export const ChatListItem = memo(function ChatListItem({ chat, routePrefix, onHi
             </div>
         </div>
     );
-}
+});
