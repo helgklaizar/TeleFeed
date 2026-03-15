@@ -38,6 +38,20 @@
 
 /* ── Feed ── */
 
+.feed-list-container {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Внутри feed-list-container: Virtuoso занимает 100% высоты */
+.feed-list-container > * {
+    flex: 1;
+    min-height: 0;
+}
+
 .feed-list {
     display: flex;
     flex-direction: column;

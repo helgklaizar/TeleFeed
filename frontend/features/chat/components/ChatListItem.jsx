@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChatAvatar } from '../../../shared/ui/ChatAvatar';
 import { getTextFromContent, formatTime } from '../../../shared/utils/helpers';
 import { t } from '../../../app/i18n';
 
-export function ChatListItem({ chat, routePrefix, onHide }) {
+export const ChatListItem = memo(function ChatListItem({ chat, routePrefix, onHide }) {
     const navigate = useNavigate();
     const [hovered, setHovered] = useState(false);
 

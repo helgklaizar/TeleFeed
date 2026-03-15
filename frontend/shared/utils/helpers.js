@@ -79,8 +79,20 @@ function escapeHtml(str) {
 
 // ── Entities rendering ──
 
+const renderCache = new Map();
+const MAX_CACHE_SIZE = 1500;
+
 export function renderEntities(text, entities) {
+    if (!text) return '';
     if (!entities || entities.length === 0) return escapeHtml(text);
+
+    const cacheKey = typeof text === 'string' && text.length < 5000 
+        ? text + JSON.stringify(entities) 
+        : null;
+
+    if (cacheKey && renderCache.has(cacheKey)) {
+        return renderCache.get(cacheKey);
+    }
 
     const sorted = [...entities].sort((a, b) => a.offset - b.offset);
     const parts = [];
@@ -90,11 +102,15 @@ export function renderEntities(text, entities) {
         const { offset, length } = entity;
         const entityType = entity.type?.['@type'] || '';
 
-        if (offset > lastIndex) {
-            parts.push(escapeHtml(text.slice(lastIndex, offset)));
+        // Safely bounds check
+        const safeOffset = Math.min(Math.max(0, offset), text.length);
+        const safeLength = Math.min(Math.max(0, length), text.length - safeOffset);
+
+        if (safeOffset > lastIndex) {
+            parts.push(escapeHtml(text.slice(lastIndex, safeOffset)));
         }
 
-        const chunk = text.slice(offset, offset + length);
+        const chunk = text.slice(safeOffset, safeOffset + safeLength);
         const safeChunk = escapeHtml(chunk);
 
         switch (entityType) {
@@ -112,7 +128,7 @@ export function renderEntities(text, entities) {
                 parts.push(`<a href="${safeChunk}" target="_blank" rel="noopener">${safeChunk}</a>`);
                 break;
             case 'textEntityTypeTextUrl': {
-                const safeUrl = /^javascript:/i.test(entity.type.url) ? '#' : entity.type.url;
+                const safeUrl = entity.type.url && /^javascript:/i.test(entity.type.url) ? '#' : (entity.type.url || '#');
                 parts.push(`<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">${safeChunk}</a>`);
                 break;
             }
@@ -123,12 +139,22 @@ export function renderEntities(text, entities) {
                 parts.push(safeChunk);
         }
 
-        lastIndex = offset + length;
+        lastIndex = safeOffset + safeLength;
     }
 
     if (lastIndex < text.length) {
         parts.push(escapeHtml(text.slice(lastIndex)));
     }
 
-    return parts.join('');
+    const result = parts.join('');
+
+    if (cacheKey) {
+        if (renderCache.size >= MAX_CACHE_SIZE) {
+            const keysToDelete = Array.from(renderCache.keys()).slice(0, 300);
+            keysToDelete.forEach(k => renderCache.delete(k));
+        }
+        renderCache.set(cacheKey, result);
+    }
+
+    return result;
 }

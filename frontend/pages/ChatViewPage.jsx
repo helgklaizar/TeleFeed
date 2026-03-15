@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useLayoutEffect, useRef, useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { listen } from '@tauri-apps/api/event';
 import { ipcMarkAsRead, ipcLoadMoreHistory, ipcSendReply } from '../shared/ipc/index';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { useMessageStore } from '../features/chat/stores/messageStore';
@@ -62,22 +63,29 @@ export function ChatViewPage() {
         useChatStore.getState().addChat({ id: chatIdNum, unread_count: 0 });
     }, [chatIdNum]);
 
+    useEffect(() => {
+        const unlisten = listen('tdlib_event', (event) => {
+            const data = event.payload;
+            if (data?.['@type'] === 'messages' && data?.['@extra'] === `history_${chatIdNum}`) {
+                setLoadingMore(false);
+                if (!data.messages || data.messages.length === 0) {
+                    setReachedStart(true);
+                }
+            }
+        });
+        return () => unlisten.then(f => f());
+    }, [chatIdNum]);
+
     // Load history on mount if messages are few
     useEffect(() => {
         if (rawMessages.length < MIN_MESSAGES_THRESHOLD) {
             setLoadingMore(true);
-            const countBefore = useMessageStore.getState().messages[chatIdNum]?.length ?? 0;
             ipcLoadMoreHistory(chatIdNum, 0)
                 .catch((e) => {
                     console.error('load_more_history error:', e);
+                    setLoadingMore(false);
                     showToast(t('actionFailed'), { type: 'error' });
                 });
-            // TDLib отправляет сообщения через события async. Через 1.5s проверяем пришло ли что-то.
-            setTimeout(() => {
-                const countAfter = useMessageStore.getState().messages[chatIdNum]?.length ?? 0;
-                setLoadingMore(false);
-                if (countAfter <= countBefore) setReachedStart(true);
-            }, 1500);
         }
     }, [chatIdNum]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -93,19 +101,13 @@ export function ChatViewPage() {
         if (rawMessages.length === 0 || loadingMore || reachedStart) return;
         const oldestMsg = rawMessages[rawMessages.length - 1];
         if (!oldestMsg) return;
-        const countBefore = useMessageStore.getState().messages[chatIdNum]?.length ?? 0;
         setLoadingMore(true);
         ipcLoadMoreHistory(chatIdNum, oldestMsg.id)
             .catch((e) => {
                 console.error('load_more_history error:', e);
+                setLoadingMore(false);
                 showToast(t('actionFailed'), { type: 'error' });
             });
-        // TDLib отвечает через события — через 1.5s смотрим на рост счётчика
-        setTimeout(() => {
-            const countAfter = useMessageStore.getState().messages[chatIdNum]?.length ?? 0;
-            setLoadingMore(false);
-            if (countAfter <= countBefore) setReachedStart(true);
-        }, 1500);
     }, [chatIdNum, rawMessages, loadingMore, reachedStart]);
 
     useEffect(() => {

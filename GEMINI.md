@@ -31,23 +31,21 @@ npm install && npm run tauri dev
 - IPC-слой для всех invoke — меняем в одном месте при переименовании команды
 - Батчинг feed_updated: AtomicBool + 500ms loop (Rust), не emit на каждое сообщение
 - FeedCard: memo с кастомным comparator для избежания лишних рендеров
+- **Snap-scroll layout**: `html/body/#root/.app-container { height: 100% }`. FeedPage — `position: absolute; inset: 0` внутри `position: relative; flex: 1` обёртки. Virtuoso (standard mode) — `style={{ height: '100%' }}` без `useWindowScroll`
 
 ## Известные ограничения / Tech Debt
-- BubbleMessage.jsx ~624 строки — нужно разбить на bubbles/ (Phase 4.2, не сделано)
 - handlers.rs — монолитная handle_update (446 строк), разбивка на tdlib/handlers/* не сделана
 - Нет TypeScript — начинать с IPC-слоя при введении
-- ChatViewPage: setTimeout(1500ms) для детекции загрузки истории — race condition
 
-## Что делали последним (2026-03-14)
-- Аудит архитектуры (полный, 35+ файлов)
-- Phase 0: Fix 3 runtime crashes (missing t imports) + XSS в renderEntities
-- Phase 1: Backend split lib.rs → ipc/*
-- Phase 2: Store split uiStore → postActionsStore + startupStore
-- Phase 3: IPC layer + events split + feedStore decoupling + feed/actions.js
-- Phase 4: AppHeader.jsx выделен из App.jsx (384→~140 строк)
+## Что делали последним (2026-03-15)
+- Комплексный рефакторинг UI (минимизация кода и производительность)
+- **BubbleMessage.jsx** разрезан на мелкие компоненты в `features/chat/components/bubbles/` (`BaseBubbleLayout`, `VoiceBubble`, `MediaBubbles`, `InfoBubbles`)
+- **ChatViewPage**: выпилен костыль `setTimeout(1500ms)`, добавлен `@extra` в Rust `load_more_history` для отслеживания загрузки через `tdlib_event`
+- **Производительность**: `renderEntities` добавлен LRU-кэш для предотвращения тормозов парсинга HTML при быстром скролле `Virtuoso`
+- **Мемоизация**: Обернули `ChatListItem` в `React.memo` для предотвращения лишних рендеров списков. (В `FeedCard` уже использовался умный Zustand-selector + memo)
 
 ## Следующие задачи (приоритет)
 1. Разбить handlers.rs → tdlib/handlers/{auth,feed,chats}.rs
-2. Разбить BubbleMessage.jsx → bubbles/
-3. Graceful TDLib shutdown (CancellationToken)
-4. Тесты для feed_cache.rs
+2. Graceful TDLib shutdown (CancellationToken)
+3. Тесты для feed_cache.rs
+4. Интеграция TypeScript (начиная с IPC)

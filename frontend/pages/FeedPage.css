@@ -1,9 +1,7 @@
 /* Reset / Layout base */
 .feed-page {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  flex: 1;
+  position: absolute;
+  inset: 0;
   background-color: var(--bg-color); 
   color: #fff;
   overflow: hidden;

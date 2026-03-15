@@ -53,7 +53,8 @@ pub async fn load_more_history(
             "from_message_id": from_message_id,
             "offset": 0,
             "limit": 200,
-            "only_local": false
+            "only_local": false,
+            "@extra": format!("history_{}", chat_id)
         })).await;
     }
     Ok(())

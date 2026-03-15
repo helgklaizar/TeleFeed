@@ -130,13 +130,15 @@ export function ChannelsPage({ setMediaModal }) {
             )}
 
             {feedViewMode === 'tiktok' ? (
-                <FeedPage 
-                    feedItems={filteredGroupedFeed} 
-                    onMarkAsRead={handleMarkAsRead}
-                    onToggleFavorite={handleToggleFavorite}
-                />
+                <div style={{ position: 'relative', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+                    <FeedPage 
+                        feedItems={filteredGroupedFeed} 
+                        onMarkAsRead={handleMarkAsRead}
+                        onToggleFavorite={handleToggleFavorite}
+                    />
+                </div>
             ) : (
-                <div className="feed-list">
+                <div className="feed-list-container">
                     {isLoading && groups.length === 0 ? (
                         <div className="feed-initial-loader">
                             <div className="feed-initial-spinner" />
@@ -208,7 +210,7 @@ function VirtuosoList({ groupedFeed, handleMarkAsRead, handleToggleFavorite, set
 
     return (
         <Virtuoso
-            useWindowScroll
+            style={{ height: '100%' }}
             firstItemIndex={firstItemIndexRef.current}
             initialTopMostItemIndex={0}
             data={groupedFeed}
