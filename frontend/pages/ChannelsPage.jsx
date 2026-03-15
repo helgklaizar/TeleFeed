@@ -92,7 +92,7 @@ export function ChannelsPage({ setMediaModal }) {
     }, [folders, chats]);
 
     return (
-        <div className="page channels-page" style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="page channels-page" style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
             {/* Folder filter */}
             {channelFolders.length > 0 && folderBarVisible && (
                 <div className="filter-bar" style={{ display: 'flex', alignItems: 'center' }}>
