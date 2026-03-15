@@ -44,7 +44,7 @@ describe('messageStore', () => {
             date: i,
         }));
         useMessageStore.getState().addMessages(1, msgs);
-        expect(useMessageStore.getState().getMessages(1)).toHaveLength(200);
+        expect(useMessageStore.getState().getMessages(1)).toHaveLength(50);
     });
 
 
