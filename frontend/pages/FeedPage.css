@@ -7,12 +7,11 @@
   background-color: var(--bg-color); 
   color: #fff;
   overflow: hidden;
-  display: flex;
 }
 
 /* 2. Snap Scrolling Container */
 .feed-snap-container {
-  flex: 1;
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
@@ -20,9 +19,6 @@
   /* Hide scrollbar */
   -ms-overflow-style: none;
   scrollbar-width: none;
-  
-  display: flex;
-  flex-direction: column;
 }
 .feed-snap-container.empty {
   overflow-y: hidden;
@@ -35,7 +31,6 @@
 .feed-card-wrapper {
   height: 100%;
   width: 100%;
-  flex-shrink: 0;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
