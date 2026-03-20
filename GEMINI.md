@@ -37,7 +37,9 @@ npm install && npm run tauri dev
 - handlers.rs — монолитная handle_update (446 строк), разбивка на tdlib/handlers/* не сделана
 - Нет TypeScript — начинать с IPC-слоя при введении
 
-## Что делали последним (2026-03-15)
+## Что делали последним (2026-03-20)
+- **Полный аудит**: исправлены все `ESLint` и `clippy` (упёрся в 0 warning-ов).
+- **Git**: ветка `main` зафиксирована, создана саб-ветка `feature/next-version` для новой версии.
 - Комплексный рефакторинг UI (минимизация кода и производительность)
 - **BubbleMessage.jsx** разрезан на мелкие компоненты в `features/chat/components/bubbles/` (`BaseBubbleLayout`, `VoiceBubble`, `MediaBubbles`, `InfoBubbles`)
 - **ChatViewPage**: выпилен костыль `setTimeout(1500ms)`, добавлен `@extra` в Rust `load_more_history` для отслеживания загрузки через `tdlib_event`
