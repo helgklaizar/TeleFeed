@@ -4,11 +4,11 @@ use std::sync::RwLock;
 use std::time::Instant;
 
 /// Максимум сообщений в кеше ленты.
-const MAX_MESSAGES: usize = 1_500;
+const MAX_MESSAGES: usize = 20_000;
 /// TTL для буфера pending: сообщения старше этого значения удаляем.
 const PENDING_TTL_SECS: u64 = 60;
 /// Лимит pending-сообщений на чат (защита от переполнения памяти при старте).
-const MAX_PENDING_PER_CHAT: usize = 20;
+const MAX_PENDING_PER_CHAT: usize = 100;
 
 pub struct FeedCache {
     /// Whitelist ленты: ID каналов из chatListMain.
@@ -167,9 +167,13 @@ impl FeedCache {
         limit: usize,
         before_date: Option<i64>,
         before_msg_id: Option<i64>,
+        search_query: Option<String>,
     ) -> Vec<Value> {
         let r_msgs = self.messages.read().unwrap();
         let valid_chats = self.folder_filter(folder_id);
+        
+        // Prepare search filter
+        let sq = search_query.unwrap_or_default().to_lowercase();
 
         let mut results = Vec::new();
         let mut current_album_id: Option<String> = None;
@@ -191,6 +195,16 @@ impl FeedCache {
             let chat_id = msg["chat_id"].as_i64().unwrap_or(0);
             if let Some(ref valid) = valid_chats {
                 if !valid.contains(&chat_id) { continue; }
+            }
+
+            if !sq.is_empty() {
+                let text = msg["content"]["text"]["text"].as_str()
+                           .or_else(|| msg["content"]["caption"]["text"].as_str())
+                           .or_else(|| msg["content"]["text"].as_str())
+                           .unwrap_or("");
+                if !text.to_lowercase().contains(&sq) {
+                    continue;
+                }
             }
 
             let album_id = msg["media_album_id"].as_str().unwrap_or("0");
@@ -270,5 +284,42 @@ impl FeedCache {
             let mid = msg["id"].as_i64().unwrap_or(0);
             !(cid == chat_id && ids.contains(&mid))
         });
+    }
+
+    /// Extract texts from feed for trending words calculation (fast, no object overhead)
+    pub fn get_trending_texts(
+        &self,
+        folder_id: Option<i32>,
+        limit: usize,
+        days: u32,
+    ) -> Vec<String> {
+        let r_msgs = self.messages.read().unwrap();
+        let valid_chats = self.folder_filter(folder_id);
+        
+        let now = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64;
+        let min_date = now - (days as i64 * 86400);
+
+        let mut results = Vec::new();
+        for (_, msg) in r_msgs.iter().rev() {
+            let msg_date = msg["date"].as_i64().unwrap_or(0);
+            if msg_date < min_date { continue; } // ignore old
+
+            let chat_id = msg["chat_id"].as_i64().unwrap_or(0);
+            if let Some(ref valid) = valid_chats {
+                if !valid.contains(&chat_id) { continue; }
+            }
+            
+            // grab text
+            let text = msg["content"]["text"]["text"].as_str()
+                       .or_else(|| msg["content"]["caption"]["text"].as_str())
+                       .or_else(|| msg["content"]["text"].as_str())
+                       .unwrap_or("");
+            
+            if !text.is_empty() {
+                results.push(text.to_string());
+                if results.len() >= limit { break; }
+            }
+        }
+        results
     }
 }

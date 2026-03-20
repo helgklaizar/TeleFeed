@@ -1,5 +1,5 @@
 {
-  "name": "tg-feed-root",
+  "name": "tele-news-root",
   "private": true,
   "scripts": {
     "dev": "npm run tauri dev",

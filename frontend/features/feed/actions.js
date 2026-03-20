@@ -20,7 +20,13 @@ export async function markPostAsRead(chatId, messageIds, _mediaFileIds = []) {
         // Скрываем в UI немедленно (оптимистично)
         const mainMsgId = messageIds[0];
         if (mainMsgId) {
-            usePostActionsStore.getState().addHidden(buildPostKey(chatId, mainMsgId));
+            const store = usePostActionsStore.getState();
+            store.addHidden(buildPostKey(chatId, mainMsgId));
+            
+            // Если это альбом (много messageIds), добавляем и остальные,
+            // либо можно было бы передать media_album_id, но у нас его нет здесь явно.
+            // Поэтому на всякий случай просто пометим все messageIds как скрытые.
+            messageIds.forEach(id => store.addHidden(buildPostKey(chatId, id)));
         }
 
         await ipcMarkAsRead(chatId, messageIds);

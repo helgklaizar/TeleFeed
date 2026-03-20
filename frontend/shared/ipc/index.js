@@ -20,14 +20,19 @@ export const ipcSubmitPassword = (password) =>
 
 // ── Feed ──
 
-export const ipcGetChannelFeed = (folderId, limit, beforeDate = null, beforeMsgId = null) =>
-    invoke('get_channel_feed', { folderId, limit, beforeDate, beforeMsgId });
+export const ipcGetChannelFeed = (folderId, limit, beforeDate = null, beforeMsgId = null, searchQuery = null) =>
+    invoke('get_channel_feed', { folderId, limit, beforeDate, beforeMsgId, searchQuery });
 
 export const ipcGetNewFeedSince = (folderId, sinceDate) =>
     invoke('get_new_feed_since', { folderId, sinceDate });
 
-export const ipcFetchMoreFeedHistory = (beforeDate) =>
-    invoke('fetch_more_feed_history', { beforeDate });
+export async function ipcFetchMoreFeedHistory(beforeDate) {
+    return invoke('fetch_more_feed_history', { beforeDate });
+}
+
+export async function ipcGetTrendingTexts(folderId, days) {
+    return invoke('get_trending_texts', { folderId, days });
+}
 
 // ── Chat ──
 

@@ -10,20 +10,13 @@ import { ErrorBoundary } from '../shared/ui/ErrorBoundary';
 import { ToastContainer } from '../shared/ui/Toast';
 import { ConnectionStatus } from '../shared/ui/ConnectionStatus';
 import { StartupLoader } from '../shared/ui/StartupLoader';
-import { AppHeader } from './AppHeader';
 
 import { AuthPage } from '../pages/AuthPage';
 
 // Lazy-loaded pages (code splitting)
 const ChannelsPage = lazy(() => import('../pages/ChannelsPage').then(m => ({ default: m.ChannelsPage })));
 const MessagesPage = lazy(() => import('../pages/MessagesPage').then(m => ({ default: m.MessagesPage })));
-const ChatViewPage = lazy(() => import('../pages/ChatViewPage').then(m => ({ default: m.ChatViewPage })));
-const MenuPage = lazy(() => import('../pages/MenuPage').then(m => ({ default: m.MenuPage })));
 const AiChatPage = lazy(() => import('../pages/AiChatPage').then(m => ({ default: m.AiChatPage })));
-const ChannelListPage = lazy(() => import('../pages/ChannelListPage').then(m => ({ default: m.ChannelListPage })));
-const InstructionsPage = lazy(() => import('../pages/InstructionsPage').then(m => ({ default: m.InstructionsPage })));
-const HiddenChatsPage = lazy(() => import('../pages/HiddenChatsPage').then(m => ({ default: m.HiddenChatsPage })));
-
 /** MediaModal — фуллскрин просмотр фото/видео */
 function MediaModal({ mediaModal, setMediaModal }) {
     if (!mediaModal) return null;
@@ -118,9 +111,6 @@ function AppShell() {
 
     return (
         <div className="app-container">
-            <StartupLoader />
-            <AppHeader />
-
             <div className="app-content">
                 <ErrorBoundary>
                     <Suspense fallback={<div className="suspense-fallback"><div className="media-spinner" /></div>}>
@@ -128,11 +118,6 @@ function AppShell() {
                             <Route path="/" element={<ChannelsPage setMediaModal={handleMediaModal} />} />
                             <Route path="/channels" element={<ChannelsPage setMediaModal={handleMediaModal} />} />
                             <Route path="/messages" element={<MessagesPage />} />
-                            <Route path="/messages/:chatId" element={<ChatViewPage />} />
-                            <Route path="/menu" element={<MenuPage />} />
-                            <Route path="/settings/channels" element={<ChannelListPage />} />
-                            <Route path="/settings/instructions" element={<InstructionsPage />} />
-                            <Route path="/settings/hidden" element={<HiddenChatsPage />} />
                             <Route path="/ai" element={<AiChatPage />} />
                         </Routes>
                     </Suspense>

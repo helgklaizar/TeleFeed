@@ -8,9 +8,10 @@ pub async fn get_channel_feed(
     limit: usize,
     before_date: Option<i64>,
     before_msg_id: Option<i64>,
+    search_query: Option<String>,
     state: State<'_, AppState>,
 ) -> Result<Vec<Value>, String> {
-    Ok(state.feed_cache.get_feed(folder_id, limit, before_date, before_msg_id))
+    Ok(state.feed_cache.get_feed(folder_id, limit, before_date, before_msg_id, search_query))
 }
 
 #[tauri::command]
@@ -59,4 +60,13 @@ pub async fn fetch_more_feed_history(
         }
     }
     Ok(())
+}
+
+#[tauri::command]
+pub async fn get_trending_texts(
+    folder_id: Option<i32>,
+    days: u32,
+    state: State<'_, AppState>,
+) -> Result<Vec<String>, String> {
+    Ok(state.feed_cache.get_trending_texts(folder_id, 10000, days))
 }

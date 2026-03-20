@@ -93,10 +93,10 @@ pub fn handle_update(update: &Value, ctx: &UpdateContext) {
                         "chat_id": chat_id,
                         "from_message_id": 0,
                         "offset": 0,
-                        "limit": 50,
-                        "only_local": true
+                        "limit": 100,
+                        "only_local": false
                     })).await;
-                    tokio::time::sleep(tokio::time::Duration::from_millis(30)).await;
+                    tokio::time::sleep(tokio::time::Duration::from_millis(50)).await;
                 }
             });
         } else {
@@ -166,6 +166,30 @@ pub fn handle_update(update: &Value, ctx: &UpdateContext) {
                 }
                 _ => {}
             }
+        }
+
+        // Direct responses from getAuthorizationState
+        "authorizationStateWaitTdlibParameters" => {
+            app.emit("auth_update", json!({ "state": "wait_params" })).ok();
+        }
+        "authorizationStateWaitPhoneNumber" => {
+            app.emit("auth_update", json!({ "state": "wait_phone" })).ok();
+        }
+        "authorizationStateWaitCode" => {
+            app.emit("auth_update", json!({ "state": "wait_code" })).ok();
+        }
+        "authorizationStateWaitPassword" => {
+            app.emit("auth_update", json!({ "state": "wait_password" })).ok();
+        }
+        "authorizationStateReady" => {
+            if let Ok(mut r) = auth_ready.write() {
+                *r = true;
+            }
+            app.emit("auth_update", json!({ "state": "ready" })).ok();
+            send_sync(tx, json!({ "@type": "getMe", "@extra": "getMe" }));
+        }
+        "authorizationStateLoggingOut" | "authorizationStateClosed" => {
+            app.emit("auth_update", json!({ "state": "logged_out" })).ok();
         }
 
         // ok — ответ на loadChats: порция загружена, запускаем следующую

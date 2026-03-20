@@ -4,6 +4,7 @@ use serde_json::json;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
+
 mod tdlib;
 mod handlers;
 mod feed_cache;
@@ -65,6 +66,7 @@ pub fn run() {
             ipc::feed::get_channel_feed,
             ipc::feed::get_new_feed_since,
             ipc::feed::fetch_more_feed_history,
+            ipc::feed::get_trending_texts,
             // Chat
             ipc::chat::mark_as_read,
             ipc::chat::forward_to_stena,

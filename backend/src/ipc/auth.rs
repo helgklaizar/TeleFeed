@@ -10,7 +10,8 @@ pub async fn init_tdlib(
     app: tauri::AppHandle,
 ) -> Result<(), String> {
     let mut client = state.client.lock().await;
-    if client.is_some() {
+    if let Some(c) = client.as_ref() {
+        c.send(json!({ "@type": "getAuthorizationState" })).await;
         return Ok(());
     }
     let manager = crate::tdlib::TdlibManager::new(

@@ -9,20 +9,19 @@ export const useFeedStore = create((set, get) => ({
     isLoading: false,
     hasMore: true,
     currentFolder: 'all',
-    // startupPhase управляется снаружи через startupStore / uiStore
-    // feedStore больше не знает о UI-состоянии
+    currentSearchQuery: '',
 
-    loadInitial: async (folderId, _retryCount = 0) => {
-        set({ currentFolder: folderId, isLoading: true });
+    loadInitial: async (folderId, searchQuery = '', _retryCount = 0) => {
+        set({ currentFolder: folderId, currentSearchQuery: searchQuery, isLoading: true });
         try {
-            const feed = await ipcGetChannelFeed(parseFolderId(folderId), 30, null, null);
+            const feed = await ipcGetChannelFeed(parseFolderId(folderId), 150, null, null, searchQuery);
             if (feed.length === 0 && _retryCount < 3) {
                 const delays = [1500, 4000, 10000];
                 set({ isLoading: false });
-                setTimeout(() => get().loadInitial(folderId, _retryCount + 1), delays[_retryCount]);
+                setTimeout(() => get().loadInitial(folderId, searchQuery, _retryCount + 1), delays[_retryCount]);
                 return;
             }
-            set({ groups: feed, isLoading: false, hasMore: feed.length === 30 });
+            set({ groups: feed, isLoading: false, hasMore: feed.length === 150 });
         } catch (e) {
             console.error('[feedStore.loadInitial]', e);
             set({ isLoading: false });
@@ -30,7 +29,7 @@ export const useFeedStore = create((set, get) => ({
     },
 
     loadMore: async () => {
-        const { groups, currentFolder, isLoading, hasMore } = get();
+        const { groups, currentFolder, currentSearchQuery, isLoading, hasMore } = get();
         if (isLoading || !hasMore || groups.length === 0) return;
 
         set({ isLoading: true });
@@ -40,9 +39,10 @@ export const useFeedStore = create((set, get) => ({
 
             const newFeed = await ipcGetChannelFeed(
                 parseFolderId(currentFolder),
-                50,
+                100,
                 lastMsg.date,
-                lastMsg.id
+                lastMsg.id,
+                currentSearchQuery
             );
 
             if (newFeed.length === 0) {
@@ -52,8 +52,8 @@ export const useFeedStore = create((set, get) => ({
                 return;
             }
 
-            const combined = [...groups, ...newFeed].slice(0, 300);
-            set({ groups: combined, isLoading: false, hasMore: newFeed.length === 50 });
+            const combined = [...groups, ...newFeed].slice(0, 1000);
+            set({ groups: combined, isLoading: false, hasMore: newFeed.length === 100 });
         } catch (e) {
             console.error('[feedStore.loadMore]', e);
             set({ isLoading: false });
@@ -85,7 +85,7 @@ export const useFeedStore = create((set, get) => ({
                     return !existingKeys.has(k);
                 });
                 if (toAdd.length > 0) {
-                    set({ groups: [...toAdd, ...groups].slice(0, 300) });
+                    set({ groups: [...toAdd, ...groups].slice(0, 1000) });
                 }
             }
         } catch (e) {

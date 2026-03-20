@@ -18,6 +18,7 @@ pub struct FeedQuery {
     pub limit: Option<usize>,
     pub before_date: Option<i64>,
     pub before_msg_id: Option<i64>,
+    pub search_query: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -140,7 +141,13 @@ async fn get_feed(
     let folder_id = params.folder.as_deref().filter(|s| *s != "all").and_then(|s| s.parse().ok());
     let limit = params.limit.unwrap_or(30).min(100);
     let state = app.state::<AppState>();
-    let result = state.feed_cache.get_feed(folder_id, limit, params.before_date, params.before_msg_id);
+    let result = state.feed_cache.get_feed(
+        folder_id, 
+        limit, 
+        params.before_date, 
+        params.before_msg_id, 
+        params.search_query
+    );
     Ok(Json(result))
 }
 

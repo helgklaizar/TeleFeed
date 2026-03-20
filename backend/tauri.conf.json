@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "TG-Feed",
+  "productName": "Tele News",
   "version": "1.0.0-rc.1",
-  "identifier": "com.tgfeed.v3",
+  "identifier": "com.telenews.app",
   "build": {
     "beforeDevCommand": "npm run dev --prefix frontend",
     "devUrl": "http://localhost:1420",
@@ -12,8 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "TG-Feed",
-        "width": 420,
+        "label": "main",
+        "title": "Tele News",
+        "width": 1200,
         "height": 800
       }
     ],
