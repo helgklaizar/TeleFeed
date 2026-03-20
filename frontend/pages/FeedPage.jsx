@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useLayoutEffect, memo, useMemo } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, memo, useMemo, useCallback } from 'react';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { useUiStore } from '../stores/uiStore';
 import { useFeedActions } from '../features/feed/hooks/useFeedActions';
@@ -250,13 +250,13 @@ export function FeedPage({ feedItems }) {
   const mPost = activeGroup?.mainPost;
   const isFavorite = mPost ? favoritePosts.has(buildPostKey(mPost.chat_id, mPost.id)) : false;
 
-  const onMarkAsRead = async () => {
+  const onMarkAsRead = useCallback(async () => {
     if (!mPost || animOut) return;
     const key = buildPostKey(mPost.chat_id, mPost.id);
     setAnimOut({ id: key, dir: 'left' });
     await handleMarkAsRead(mPost.chat_id, [mPost.id]);
     setTimeout(() => setAnimOut(null), 280);
-  };
+  }, [mPost, animOut, handleMarkAsRead]);
 
   const onToggleFavorite = async () => {
     if (!mPost || (animOut && !isFavorite)) return;

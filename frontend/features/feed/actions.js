@@ -15,7 +15,7 @@ import { t } from '../../../app/i18n';
  * @param {number[]} messageIds  — все ID сообщений в группе/альбоме
  * @param {number[]} [mediaFileIds] — ID файлов для эвикции (опционально)
  */
-export async function markPostAsRead(chatId, messageIds, mediaFileIds = []) {
+export async function markPostAsRead(chatId, messageIds, _mediaFileIds = []) {
     try {
         // Скрываем в UI немедленно (оптимистично)
         const mainMsgId = messageIds[0];

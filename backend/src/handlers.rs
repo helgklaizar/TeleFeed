@@ -316,11 +316,9 @@ pub fn handle_update(update: &Value, ctx: &UpdateContext) {
                     }
                     // Сбрасываем feed_channels — они будут заново заполнены через getChat-ответы
                     feed_cache.feed_channels.write().unwrap().clear();
-                } else {
-                    if let Ok(mut whitelist) = subscribed_ids.write() {
-                        for id in &ids {
-                            whitelist.insert(*id);
-                        }
+                } else if let Ok(mut whitelist) = subscribed_ids.write() {
+                    for id in &ids {
+                        whitelist.insert(*id);
                     }
                 }
 

@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUiStore } from '../stores/uiStore';
 import { usePostActionsStore } from '../stores/postActionsStore';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { t } from '../app/i18n';

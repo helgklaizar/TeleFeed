@@ -18,7 +18,7 @@ const loadArr = (key) => {
 };
 
 /** Стор пользовательских действий: скрытые посты, избранное, чёрный список */
-export const usePostActionsStore = create((set, get) => ({
+export const usePostActionsStore = create((set) => ({
     hiddenPosts: loadSet('tg_hidden'),
     favoritePosts: loadSet('tg_favorites'),
     blacklist: loadArr('tg_blacklist'),

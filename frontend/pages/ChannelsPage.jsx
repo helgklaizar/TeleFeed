@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useChatStore } from '../features/chat/stores/chatStore';
 import { useUiStore } from '../stores/uiStore';
 import { usePostActionsStore } from '../stores/postActionsStore';
-import { ipcMarkAsRead, ipcDeleteLocalFile } from '../shared/ipc/index';
+import { ipcMarkAsRead } from '../shared/ipc/index';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { FeedCard } from '../features/feed/components/FeedCard';
 import { FeedPage } from './FeedPage';
@@ -10,7 +10,6 @@ import { useFeedActions } from '../features/feed/hooks/useFeedActions';
 import { buildPostKey } from '../shared/utils/helpers';
 import { Virtuoso } from 'react-virtuoso';
 import { t } from '../app/i18n';
-import { showToast } from '../stores/toastStore';
 
 export function ChannelsPage({ setMediaModal }) {
     const chats = useChatStore((s) => s.chats);

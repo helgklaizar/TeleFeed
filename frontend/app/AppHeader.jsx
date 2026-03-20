@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUiStore } from '../stores/uiStore';
 import { ProfileAvatar } from '../shared/ui/ProfileAvatar';
