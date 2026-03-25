@@ -15,6 +15,9 @@ import { create } from 'zustand';
  *   - startupPhase → startupStore
  */
 export const useUiStore = create((set, get) => ({
+    // ── Feed Mode ──
+    feedMode: 'feed', // 'feed' | 'saved'
+    setFeedMode: (mode) => set({ feedMode: mode }),
     // ── Theme ──
     theme: localStorage.getItem('tg_theme') || 'blue',
     setTheme: (t) => {
@@ -81,16 +84,6 @@ export const useUiStore = create((set, get) => ({
         setTimeout(() => set({ flashHeart: false }), 800);
     },
 
-    // ── Folder bar ──
-    folderBarVisible: false,
-    toggleFolderBar: () => set((s) => ({ folderBarVisible: !s.folderBarVisible })),
-
-    // ── Feed view mode ──
-    feedViewMode: localStorage.getItem('tg_feed_mode') || 'standard',
-    setFeedViewMode: (mode) => {
-        localStorage.setItem('tg_feed_mode', mode);
-        set({ feedViewMode: mode });
-    },
 
     // ── Startup phase (backward compat: делегируем в startupStore) ──
     // Оставляем здесь реэкспорт для обратной совместимости пока не обновлены все импорты

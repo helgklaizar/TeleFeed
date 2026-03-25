@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, Suspense, lazy } from 'react';
-import { HashRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import './App.css';
 
@@ -14,15 +14,8 @@ import { AppHeader } from './AppHeader';
 
 import { AuthPage } from '../pages/AuthPage';
 
-// Lazy-loaded pages (code splitting)
 const ChannelsPage = lazy(() => import('../pages/ChannelsPage').then(m => ({ default: m.ChannelsPage })));
-const MessagesPage = lazy(() => import('../pages/MessagesPage').then(m => ({ default: m.MessagesPage })));
-const ChatViewPage = lazy(() => import('../pages/ChatViewPage').then(m => ({ default: m.ChatViewPage })));
-const MenuPage = lazy(() => import('../pages/MenuPage').then(m => ({ default: m.MenuPage })));
-const AiChatPage = lazy(() => import('../pages/AiChatPage').then(m => ({ default: m.AiChatPage })));
 const ChannelListPage = lazy(() => import('../pages/ChannelListPage').then(m => ({ default: m.ChannelListPage })));
-const InstructionsPage = lazy(() => import('../pages/InstructionsPage').then(m => ({ default: m.InstructionsPage })));
-const HiddenChatsPage = lazy(() => import('../pages/HiddenChatsPage').then(m => ({ default: m.HiddenChatsPage })));
 
 /** MediaModal — фуллскрин просмотр фото/видео */
 function MediaModal({ mediaModal, setMediaModal }) {
@@ -64,13 +57,9 @@ function MediaModal({ mediaModal, setMediaModal }) {
 function AppShell() {
     const authState = useAuthStore((s) => s.state);
     const navigate = useNavigate();
-    const location = useLocation();
     const [mediaModal, setMediaModal] = useState(null);
 
-    const path = location.pathname;
-    const isInChat = !!path.match(/\/messages\/\-?\d/);
-
-    // TDLib events (auth + feed + chat)
+    // TDLib events (auth + feed)
     useTdlibListener();
 
     // Global link interceptor — открываем https-ссылки в системном браузере
@@ -100,17 +89,14 @@ function AppShell() {
         const handleKeyDown = (e) => {
             if (e.metaKey || e.ctrlKey) {
                 if (e.key === '1') { e.preventDefault(); navigate('/channels'); }
-                if (e.key === '2') { e.preventDefault(); navigate('/messages'); }
-                if (e.key === '3') { e.preventDefault(); navigate('/ai'); }
             }
             if (e.key === 'Escape') {
                 if (mediaModal) setMediaModal(null);
-                else if (isInChat) navigate(-1);
             }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isInChat, navigate, mediaModal]);
+    }, [navigate, mediaModal]);
 
     const handleMediaModal = useCallback((data) => setMediaModal(data), []);
 
@@ -127,13 +113,7 @@ function AppShell() {
                         <Routes>
                             <Route path="/" element={<ChannelsPage setMediaModal={handleMediaModal} />} />
                             <Route path="/channels" element={<ChannelsPage setMediaModal={handleMediaModal} />} />
-                            <Route path="/messages" element={<MessagesPage />} />
-                            <Route path="/messages/:chatId" element={<ChatViewPage />} />
-                            <Route path="/menu" element={<MenuPage />} />
                             <Route path="/settings/channels" element={<ChannelListPage />} />
-                            <Route path="/settings/instructions" element={<InstructionsPage />} />
-                            <Route path="/settings/hidden" element={<HiddenChatsPage />} />
-                            <Route path="/ai" element={<AiChatPage />} />
                         </Routes>
                     </Suspense>
                 </ErrorBoundary>

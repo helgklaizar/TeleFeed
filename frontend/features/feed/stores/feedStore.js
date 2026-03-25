@@ -51,8 +51,7 @@ export const useFeedStore = create((set, get) => ({
                 set({ isLoading: false });
                 return;
             }
-
-            const combined = [...groups, ...newFeed].slice(0, 300);
+            const combined = [...groups, ...newFeed];
             set({ groups: combined, isLoading: false, hasMore: newFeed.length === 50 });
         } catch (e) {
             console.error('[feedStore.loadMore]', e);
@@ -85,7 +84,7 @@ export const useFeedStore = create((set, get) => ({
                     return !existingKeys.has(k);
                 });
                 if (toAdd.length > 0) {
-                    set({ groups: [...toAdd, ...groups].slice(0, 300) });
+                    set({ groups: [...toAdd, ...groups] });
                 }
             }
         } catch (e) {

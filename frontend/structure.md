@@ -3,120 +3,112 @@
 Архитектура: Feature-Sliced Design (разбиение по фичам: chat, feed, media) + Zustand (сторы) + Tauri IPC.
 
 ## 📁 `app/` — Ядро приложения
-- **`App.jsx`** — Главный компонент. Содержит роутинг (`react-router-dom`), ленивую загрузку страниц (`React.lazy`), обертку `useTdlibListener` и глобальные UI-элементы (Header, Toast, Loader, Boundary).
-- **`AppHeader.jsx`** — Верхнее меню (header). Переключатель тем, кнопка профиля (меню), кнопка "В чаты" / "В ленту", проверка апдейтов мобильного сервера.
+- **`App.jsx`** — Главный компонент. Содержит роутинг (`react-router-dom`), ленивую загрузку страниц (`React.lazy`), глобальный перехватчик ссылок, keyboard shortcuts, медиа-модалку и компоновку AppShell.
+- **`AppHeader.jsx`** — Верхнее меню. Фильтры папок (filter-chip), кнопки +/- шрифта, сердечко (Избранное/Saved), глазик (mark all as read), кнопка обновления PWA.
 - **`App.css`** — Точка входа для CSS. Импортирует все глобальные стили (`tokens.css`, `layout.css`, стили авторизации, ленты, чатов).
 - **`i18n.js`** — Локальная i18n библиотека. Хранит переводы словаря (ru/en), экспортирует функцию `t()` и стор `useI18nStore`.
-- **`main.jsx`** — Корневой файл React-домена. Оборачивает `App` в `<BrowserRouter>`, монтирует приложение в `#root`.
+- **`main.jsx`** — Корневой файл React-домена. Оборачивает `App` в `<HashRouter>`, монтирует приложение в `#root`.
 
 ## 📁 `pages/` — Экраны маршрутизации (Слой Pages)
-- **`AiChatPage.jsx`** — Экран-заглушка чата с AI-агентом.
-- **`AuthPage.jsx`** — Страница авторизации TDLib. Ведёт по шагам: телефон → код → пароль.
-- **`ChannelListPage.jsx`** — Раздел "Подписки". Список всех каналов с возможностью отписаться.
-- **`ChannelsPage.jsx`** — Классическая лента (папки сверху, скролл ленты через `Virtuoso`). Отображает посты в виде обычного списка.
-- **`ChatViewPage.jsx`** — Экран общения (сообщения чата). Включает список `BubbleMessage`, инпут `textarea` и логику подгрузки истории при скролле вверх.
-- **`FeedPage.jsx`** — Главная страница-лента ("Tiktok/Snap" режим). Каждая карточка (`FeedCard`) скроллится полноэкранно, снапинг скролла.
-- **`FeedPage.css`** — CSS для Snap-скроллинга и выравнивания карточек в `FeedPage`.
-- **`HiddenChatsPage.jsx`** — Управление черным списком чатов и каналов, от которых пользователь скрыл посты.
-- **`InstructionsPage.jsx`** — Настройки промптов и инструкций для AI (Daily/OnDemand).
-- **`MenuPage.jsx`** — Главное меню профиля: выбор темы, размера текста (textScale), очистка памяти, логаут, переход в поднастройки.
-- **`MessagesPage.jsx`** — Раздел "Сообщения". Список только личных чатов и обычных групп без каналов (через `ChatListContainer`).
+- **`AuthPage.jsx`** — Страница авторизации TDLib. Ведёт по шагам: телефон → код → пароль → 2FA.
+- **`ChannelListPage.jsx`** — Раздел «Подписки». Список всех каналов с возможностью добавить в чёрный список.
+- **`ChannelsPage.jsx`** — Главная лента. Посты каналов через `Virtuoso` + SavedMessagesFeed (избранное). Фильтрует по черному списку и скрытым постам. Слушает глазик (mark all as read).
 
 ## 📁 `features/` — Бизнес-логика и фичи (Слой Features)
 
 ### 💬 `chat/` — Чаты и Сообщения
 * **`components/`**
-  - **`BubbleMessage.jsx`** — Монструозный компонент для рендера всех типов сообщений (Текст, Стикер, Войс, Кружочек, Файл, Опрос, Реплай и тд).
-  - **`ChatListContainer.jsx`** — HOC/Контейнер для рендеринга списков чатов (Channels, Messages).
-  - **`ChatListItem.jsx`** — Строка в списке чатов (аватарка, название, последнее сообщение, бейджи).
-  - **`chat.css`** — Стили списка чатов, инпута и пупырей сообщений (`BubbleMessage`).
+  - **`BubbleMessage.jsx`** — Рендер всех типов сообщений (текст, стикер, войс, кружочек, файл, опрос, реплай и т.д.).
+  - **`bubbles/BaseBubbleLayout.jsx`** — Базовая обёртка пузыря (аватар, имя, хвостик).
+  - **`bubbles/InfoBubbles.jsx`** — Информационные пузыри (сервисные сообщения, опросы).
+  - **`bubbles/MediaBubbles.jsx`** — Медиа-пузыри (фото, видео, документ, анимация).
+  - **`bubbles/VoiceBubble.jsx`** — Войсовое сообщение с прогресс-баром.
+  - **`chat.css`** — Стили списка чатов, пузырей, инпута.
 * **`hooks/`**
-  - **`useSenderInfo.js`** — Хук: по `sender_id` (чат/юзер) вытягивает актуальное имя и аватар из сторов пользователя/чатов.
+  - **`useSenderInfo.js`** — По `sender_id` достаёт актуальное имя и аватар из сторов.
 * **`stores/`**
-  - **`chatStore.js`** — Zustand-стор списка чатов и папок. Фильтрует мусор от TDLib через `trimChat`, хранит `chats` по ID.
-  - **`messageStore.js`** — Zustand-стор истории сообщений (сортировка DESC). Лимитирует память (50 сообщений на 20 чатов).
+  - **`chatStore.js`** — Zustand-стор списка чатов и папок. Фильтрует через `trimChat`, хранит `chats` по ID.
+  - **`messageStore.js`** — Zustand-стор истории сообщений (сортировка DESC). Лимит: 50 сообщений, 20 чатов.
   - **`userStore.js`** — Zustand-стор профилей контактов и пользователей Telegram.
 
 ### 📰 `feed/` — Лента
-* **`actions.js`** — Разделяемая логика действий с постами в ленте: отметить прочитанным (`markPostAsRead`) и лайк (`toggleFavoritePost`).
+* **`actions.js`** — Единая логика действий: `markPostAsRead`, `toggleFavoritePost`.
 * **`components/`**
-  - **`AlbumGrid.jsx`** — Вывод сгруппированных альбомом фото и видео (карусель/грид).
-  - **`FeedCard.jsx`** — Карточка поста для "tiktok"-ленты. Отображает `PostContent`, UI кнопок (Скрыть, Лайк), AI Summary.
-  - **`PostContent.jsx`** — Внутрянка поста: текст (через `ExpandableText`) и медиафайлы. 
-  - **`feed.css`** — Стили для карточек классической ленты, рамок, отступов.
+  - **`AlbumGrid.jsx`** — Грид альбомов (несколько фото/видео в одном посте).
+  - **`FeedCard.jsx`** — Карточка поста ленты. `PostContent` + кнопки (скрыть, лайк). Memo с кастомным comparator.
+  - **`PostContent.jsx`** — Текст (через `ExpandableText`) + медиафайлы поста.
+  - **`SavedMessagesFeed.jsx`** — Лента «Избранного» (Saved Messages) — отдельный режим `feedMode === 'saved'`.
+  - **`feed.css`** — Стили карточек классической ленты.
 * **`hooks/`**
-  - **`useFeedActions.js`** — React-хук обертка над логикой из `actions.js`, привязанная к `Toast` и сторам.
+  - **`useFeedActions.js`** — React-хук над `actions.js`, привязан к `Toast` и сторам.
 * **`stores/`**
-  - **`feedStore.js`** — Zustand-стор постов ленты (пагинация, добавление батчами, группировка альбомов на лету).
+  - **`feedStore.js`** — Zustand-стор постов ленты (пагинация, батчи, группировка альбомов).
 
 ### 🎬 `media/` — Медиа (Фото/Видео)
 * **`components/`**
-  - **`Lightbox.jsx`** — Полноэкранная модалка с зумом для просмотра медиа.
-  - **`MediaFile.jsx`** — Главный загрузчик. Вызывает `ipcDownloadFile`, если файл еще не загружен локально, и рендерит `img`, `video` или анимацию.
-  - **`VideoPlayer.jsx`** — Кастомный видеоплеер поверх стандартного HTML5 Video, со своим ползунком громкости, автовоспроизведением и скрытием контролов.
-  - **`lightbox.css`** — Стили Лайтбокса (модалки с медиа).
-  - **`video-player.css`** — Стили плеера, ползунков прогресса и кнопок.
+  - **`Lightbox.jsx`** — Полноэкранная модалка с зумом для медиа.
+  - **`MediaFile.jsx`** — Загрузчик файлов: `ipcDownloadFile`, если не скачан → рендерит `img`/`video`/анимацию.
+  - **`VideoPlayer.jsx`** — Кастомный видеоплеер: ползунок, авто-воспроизведение, скрытие контролов.
+  - **`lightbox.css`** — Стили лайтбокса.
+  - **`video-player.css`** — Стили плеера и ползунков.
 * **`stores/`**
-  - **`fileStore.js`** — Zustand LRU-кэш файловой системы (хранит `localPath` по `file_id`, чтобы не грузить одно фото дважды). Лимит: 150 файлов.
+  - **`fileStore.js`** — Zustand LRU-кэш файлов (хранит `localPath` по `file_id`). Лимит: 150 файлов.
 
-## 📁 `shared/` — Общие/Глобальные инструменты (Слой Shared)
+## 📁 `shared/` — Общие инструменты (Слой Shared)
 
-### ⚡ `events/` & `hooks/` — TDLib Listener 
-* **`events/useAuthEvents.js`** — Слушает `auth_update`, синхронизирует состояние `authStore`.
-* **`events/useChatEvents.js`** — Главный обработчик событий TDLib (`tdlib_event`: newChat, message, positions, user). Раскидывает данные по соответствующим сторам.
-* **`events/useFeedEvents.js`** — Слушает эмит `feed_updated` и делает дебаунс-запрос к бэкенду на получение новых постов (`loadMore`).
-* **`hooks/useTdlibListener.js`** — Обертка-агрегатор, запускает три хука выше.
+### ⚡ `events/` & `hooks/` — TDLib Listener
+* **`events/useAuthEvents.js`** — Слушает `auth_update`, синхронизирует `authStore`.
+* **`events/useChatEvents.js`** — Главный обработчик событий TDLib: raскидывает `newChat`, `message`, `positions`, `user` по сторам.
+* **`events/useFeedEvents.js`** — Слушает эмит `feed_updated`, дебаунс-запрос на `loadMore`.
+* **`hooks/useTdlibListener.js`** — Агрегатор: запускает три хука выше.
 
 ### 🔌 `ipc/`
-* **`index.js`** — Единый фасад для `tauri.invoke`. Все вызовы Rust-команд должны происходить через эти типизированные функции (`ipcMarkAsRead`, `ipcSyncChats` и тд).
+* **`index.js`** — **Единственное место для `tauri.invoke()`**. Все вызовы Rust-команд через типизированные функции (`ipcMarkAsRead`, `ipcSyncChats` и т.д.).
 
-### 🎨 `styles/` — Дизайн система
-* **`animations.css`** — Глобальные `@keyframes` (loading spinner, pulse).
-* **`auth.css`** — Стили для флоу авторизации (пин-код, телефон).
-* **`layout.css`** — Основная структура: `.app-container`, `.page`, сбросы margin/padding.
-* **`overlays.css`** — Стили модальных окон, блюр-задников (`backdrop-filter`).
-* **`settings.css`** — Стили Меню-настроек, списков подписок, свитчеров.
-* **`toast.css`** — Стили плашек-алертов и ConnectionStatus снизу/сверху.
-* **`tokens.css`** — Цветовая палитра `var(--bg-color)`, шрифты, брейкпоинты. Дизайн система проекта.
+### 🎨 `styles/` — Дизайн-система
+* **`animations.css`** — `@keyframes` (loading spinner, pulse, flash).
+* **`auth.css`** — Стили флоу авторизации.
+* **`layout.css`** — Основная структура: `.app-container`, `.page`, сбросы.
+* **`overlays.css`** — Модальные окна, `backdrop-filter`.
+* **`settings.css`** — Стили меню, списков подписок, свитчеров.
+* **`toast.css`** — Плашки-алерты и ConnectionStatus.
+* **`tokens.css`** — Цветовая палитра `var(--bg-color)`, шрифты. Дизайн-система проекта.
 
 ### 🧩 `ui/` — Компоненты-примитивы
 * **`ChatAvatar.jsx`** — Универсальная аватарка чата/канала.
-* **`ConnectionStatus.jsx`** — Бар с сообщением, когда отвалился интернет/TDLib коннектится.
-* **`ContactPickerModal.jsx`** — Попап со списком контактов (из `userStore`) для создания приватного чата.
-* **`ErrorBoundary.jsx`** — Ловит исключения рендера в дочках (React Class Component).
-* **`ExpandableText.jsx`** — Текстовый блок со ссылкой "Читать дальше" и парсингом Telegram-сущностей из массива entities.
+* **`ConnectionStatus.jsx`** — Бар при потере соединения/реконнекте TDLib.
+* **`ErrorBoundary.jsx`** — React Class Component, ловит исключения при рендере.
+* **`ExpandableText.jsx`** — «Читать дальше» + парсинг Telegram entities в HTML.
 * **`ProfileAvatar.jsx`** — Аватар текущего пользователя (me).
-* **`SenderAvatar.jsx`** — Аватар отправителя конкретного сообщения.
-* **`StartupLoader.jsx`** — Полноэкранный спиннер загрузки при `startupPhase !== 'ready'`.
-* **`Toast.jsx`** — Рендер уведомления из `toastStore` с автоматическим закрытием.
+* **`SenderAvatar.jsx`** — Аватар отправителя сообщения.
+* **`StartupLoader.jsx`** — Полноэкранный спиннер при `startupPhase !== 'ready'`.
+* **`Toast.jsx`** — Рендер уведомления из `toastStore` с автозакрытием.
 
 ### 🛠 `utils/`
-* **`helpers.js`** — Набор чистых утилит: 
-  - `renderEntities`: парсинг `messageText` и его `entities` (жирный текст, ссылки, спойлеры) в HTML.
-  - `formatTime`, `formatTimeShort`, `formatDatePrefix`: форматирование времени.
-  - `getTextFromContent`: извлечение сырого текста из поста для preview.
-  - `buildPostKey`: генератор уникальных ключей для маппинга постов.
+* **`helpers.js`** — Чистые утилиты:
+  - `renderEntities` — парсинг `entities` Telegram в HTML (bold, ссылки, спойлеры).
+  - `formatTime`, `formatTimeShort`, `formatDatePrefix` — форматирование времени.
+  - `getTextFromContent` — извлечение текста из поста для preview.
+  - `buildPostKey` — уникальный ключ `chatId_msgId` для маппинга постов.
 
-## 📁 `stores/` — Глобальные стейтовые менеджеры
+## 📁 `stores/` — Глобальные стейты
 - **`authStore.js`** — Статусы TDLib: `init` → `wait_phone` → ... → `ready`.
-- **`postActionsStore.js`** — Синхронизируется с `localStorage`. Хранит лайки (`favoritePosts`), блеклист чатов (`blacklist`), скрытые посты (`hiddenPosts`).
-- **`startupStore.js`** — Фазы загрузки приложения: `idle` → `syncing_chats` → `loading_feed` → `ready`.
-- **`toastStore.js`** — Массив текущих тостов + метод `showToast`.
-- **`uiStore.js`** — Настройки фронтенда: тема (`theme`), промпты AI (`aiInstruction`), размер шрифта (`textScale`), состояние открытых модалок (`folderBarOpen`), профиль me.
+- **`postActionsStore.js`** — `localStorage`-персистент. `favoritePosts`, `blacklist`, `hiddenPosts`.
+- **`startupStore.js`** — Фазы загрузки: `idle` → `syncing_chats` → `loading_feed` → `ready`.
+- **`toastStore.js`** — Массив тостов + метод `showToast`.
+- **`uiStore.js`** — Тема, `textScale`, `feedMode` (feed/saved), `markAllAsRead`, профиль me.
 
-## 📁 `tests/` — Unit-тесты
-- **`README.md`** — Инструкции по запуску тестов внутри папки tests.
-- **`helpers.test.js`** — Проверка парсинга энтити, дат и извлечения ключей (Vitest).
-- **`i18n.test.js`** — Проверка переключателя локализаций и фолбеков.
-- **`messageStore.test.js`** — Проверка сортировки, лимитов вставки и дедупликации сообщений.
+## 📁 `tests/` — Unit-тесты (vitest)
+- **`README.md`** — Инструкция по запуску.
+- **`helpers.test.js`** — 21 тест: парсинг entities, даты, ключи постов.
+- **`i18n.test.js`** — 6 тестов: переключатель локализаций, фолбеки.
+- **`messageStore.test.js`** — 6 тестов: сортировка, лимиты, дедупликация.
 
 ## 📁 Корень `/frontend/`
-- **`index.html`** — HTML-шаблон (точка входа Vite), внутри которого подключается `main.jsx`.
-- **`eslint.config.js`** — Правила линтера ESLint в новом Flat-формате (React/Vite).
-- **`package.json`** — Скрипты (`dev`, `build`, `test`) и зависимости (React, Zustand, Virtuoso, Tauri).
-- **`package-lock.json`** — Зафиксированные версии всех npm-пакетов проекта.
-- **`.prettierrc`** — Конфигурация Prettier для форматирования кода фронтенда.
-- **`README.md`** — Краткая справка по фронтенду, структура (устаревшая) и правила работы (не вызывать ipc напрямую).
-- **`update_ruby.rb`** — Ruby-скрипт или утилита (вероятно, вспомогательный служебный файл проекта).
-- **`vite.config.js`** — Конфиг бандлера Vite с плагином Tauri (HMR на порт 1420).
-- **`assets/react.svg`** — Стандартная иконка React.
+- **`index.html`** — HTML-шаблон Vite, точка входа `main.jsx`.
+- **`eslint.config.js`** — ESLint Flat-конфиг (React/Vite).
+- **`package.json`** — Скрипты (`dev`, `build`, `test`) и зависимости.
+- **`package-lock.json`** — Зафиксированные версии npm-пакетов.
+- **`.prettierrc`** — Настройки Prettier.
+- **`README.md`** — Справка по фронтенду.
+- **`vite.config.js`** — Конфиг Vite с плагином Tauri (HMR на порту 1420).

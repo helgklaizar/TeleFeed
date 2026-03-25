@@ -233,15 +233,46 @@ impl FeedCache {
         let valid_chats = self.folder_filter(folder_id);
         let lower = (since_date + 1, i64::MIN);
 
-        r_msgs.range(lower..).rev()
-            .filter_map(|(&(_date, _msg_id), msg)| {
-                let chat_id = msg["chat_id"].as_i64().unwrap_or(0);
-                if let Some(ref valid) = valid_chats {
-                    if !valid.contains(&chat_id) { return None; }
+        let mut results = Vec::new();
+        let mut current_album_id: Option<String> = None;
+        let mut current_album_group: Vec<Value> = Vec::new();
+
+        for (&(_date, _msg_id), msg) in r_msgs.range(lower..).rev() {
+            let chat_id = msg["chat_id"].as_i64().unwrap_or(0);
+            if let Some(ref valid) = valid_chats {
+                if !valid.contains(&chat_id) { continue; }
+            }
+
+            let album_id = msg["media_album_id"].as_str().unwrap_or("0");
+
+            if album_id != "0" {
+                let a_key = format!("{}_{}", chat_id, album_id);
+                if let Some(ref cur_id) = current_album_id {
+                    if *cur_id == a_key {
+                        current_album_group.push(msg.clone());
+                        continue;
+                    } else if !current_album_group.is_empty() {
+                        results.push(Self::create_group_static(&current_album_group, true));
+                        current_album_group.clear();
+                    }
                 }
-                Some(Self::create_group_static(std::slice::from_ref(msg), false))
-            })
-            .collect()
+                current_album_id = Some(a_key);
+                current_album_group.push(msg.clone());
+            } else {
+                if !current_album_group.is_empty() {
+                    results.push(Self::create_group_static(&current_album_group, true));
+                    current_album_group.clear();
+                    current_album_id = None;
+                }
+                results.push(Self::create_group_static(std::slice::from_ref(msg), false));
+            }
+        }
+
+        if !current_album_group.is_empty() {
+            results.push(Self::create_group_static(&current_album_group, true));
+        }
+
+        results
     }
 
     fn create_group_static(msgs: &[Value], is_album: bool) -> Value {

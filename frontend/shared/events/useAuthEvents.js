@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
 import { useAuthStore } from '../../stores/authStore';
 import { useUiStore } from '../../stores/uiStore';
-import { ipcSyncChats } from '../ipc/index';
 
 /**
  * Слушает события авторизации TDLib.
@@ -15,8 +14,7 @@ export function useAuthEvents() {
             if (state) {
                 useAuthStore.getState().setState(state);
                 if (state === 'ready') {
-                    useUiStore.getState().setStartupPhase('syncing_chats');
-                    ipcSyncChats().catch(() => { });
+                    useUiStore.getState().setStartupPhase('loading_feed');
                 }
             }
         });

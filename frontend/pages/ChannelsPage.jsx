@@ -1,45 +1,31 @@
-import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
-import { useChatStore } from '../features/chat/stores/chatStore';
+import { useMemo, useEffect, useRef } from 'react';
 import { useUiStore } from '../stores/uiStore';
 import { usePostActionsStore } from '../stores/postActionsStore';
 import { ipcMarkAsRead } from '../shared/ipc/index';
 import { useFeedStore } from '../features/feed/stores/feedStore';
 import { FeedCard } from '../features/feed/components/FeedCard';
-import { FeedPage } from './FeedPage';
 import { useFeedActions } from '../features/feed/hooks/useFeedActions';
+import { SavedMessagesFeed } from '../features/feed/components/SavedMessagesFeed';
 import { buildPostKey } from '../shared/utils/helpers';
 import { Virtuoso } from 'react-virtuoso';
 import { t } from '../app/i18n';
 
 export function ChannelsPage({ setMediaModal }) {
-    const chats = useChatStore((s) => s.chats);
-    const folders = useChatStore((s) => s.folders);
     const hiddenPosts = usePostActionsStore((s) => s.hiddenPosts);
     const blacklist = usePostActionsStore((s) => s.blacklist);
     const markAllAsRead = useUiStore((s) => s.markAllAsRead);
-    const folderBarVisible = useUiStore((s) => s.folderBarVisible);
-    const feedViewMode = useUiStore((s) => s.feedViewMode);
+    const feedMode = useUiStore((s) => s.feedMode);
 
     const { groups, isLoading, loadInitial, loadMore } = useFeedStore();
     const { handleMarkAsRead, handleToggleFavorite } = useFeedActions();
 
-    const [selectedFolder, setSelectedFolder] = useState(() => {
-        try {
-            return localStorage.getItem('tg_selected_folder') || 'all';
-        } catch { return 'all'; }
-    });
+    const currentFolder = useFeedStore((s) => s.currentFolder);
 
-    // На смену папки перезагружаем ленту с бэкенда
+    // На первоначальную загрузку ленты (из локального стора)
     useEffect(() => {
-        loadInitial(selectedFolder);
-    }, [selectedFolder, loadInitial]);
-
-    // Persist folder selection
-    const handleSelectFolder = useCallback((folderId) => {
-        const id = String(folderId);
-        setSelectedFolder(id);
-        try { localStorage.setItem('tg_selected_folder', id); } catch { }
-    }, []);
+        const _id = currentFolder;
+        // Уже загружено в useTdlibListener или feedStore.loadInitial, но для страховки.
+    }, [currentFolder, loadInitial]);
 
     // Фильтрация ленты:
     // "all" — посты которые пользователь ещё не скрыл глазиком (= не прочитал в этом приложении)
@@ -50,14 +36,14 @@ export function ChannelsPage({ setMediaModal }) {
             if (!mainMsg) return false;
             if (blacklist.includes(mainMsg.chat_id.toString())) return false;
 
-            if (selectedFolder === 'all') {
+            if (currentFolder === 'all') {
                 const key = buildPostKey(mainMsg.chat_id, mainMsg.id);
                 if (hiddenPosts.has(key)) return false;
             }
 
             return true;
         });
-    }, [groups, blacklist, selectedFolder, hiddenPosts]);
+    }, [groups, blacklist, currentFolder, hiddenPosts]);
 
     // React to "mark all as read" trigger from store
     const lastMarkCount = useRef(markAllAsRead.count);
@@ -79,87 +65,32 @@ export function ChannelsPage({ setMediaModal }) {
 
 
 
-    // Only show folders that contain channels
-    const channelFolders = useMemo(() => {
-        return folders.filter((f) => {
-            if (!f.included_chat_ids?.length) return false;
-            return f.included_chat_ids.some((id) => {
-                const chat = chats[id];
-                return chat && chat._customType === 'channel';
-            });
-        });
-    }, [folders, chats]);
-
     return (
         <div className="page channels-page" style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
-            {/* Folder filter */}
-            {channelFolders.length > 0 && folderBarVisible && (
-                <div className="filter-bar" style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', overflowX: 'auto', flex: 1, paddingBottom: '4px' }}>
-                        <button
-                            className={`filter-chip ${selectedFolder === 'all' ? 'active' : ''}`}
-                            onClick={() => handleSelectFolder('all')}
-                        >
-                            {t('all')}
-                        </button>
-                        {channelFolders.map((f) => (
-                            <button
-                                key={f.id}
-                                className={`filter-chip ${selectedFolder === String(f.id) ? 'active' : ''}`}
-                                onClick={() => handleSelectFolder(f.id)}
-                            >
-                                {f.title}
-                            </button>
-                        ))}
+            <div className="feed-list-container" style={{ flex: 1, minHeight: 0, position: 'relative' }}>
+                {feedMode === 'saved' ? (
+                    <SavedMessagesFeed />
+                ) : isLoading && groups.length === 0 ? (
+                    <div className="feed-initial-loader">
+                        <div className="feed-initial-spinner" />
                     </div>
-                    {/* Hide Button */}
-                    <button
-                        onClick={() => useUiStore.getState().toggleFolderBar()}
-                        className="hide-folder-btn"
-                        style={{
-                            marginLeft: '8px',
-                            background: 'none', border: 'none',
-                            padding: '0 12px', cursor: 'pointer',
-                            color: '#5ab847', flexShrink: 0
-                        }}
-                        title={t('backLabel')}
-                    >
-                    </button>
-                </div>
-            )}
-
-            {feedViewMode === 'tiktok' ? (
-                <div style={{ position: 'relative', flex: 1, minHeight: 0, overflow: 'hidden' }}>
-                    <FeedPage 
-                        feedItems={filteredGroupedFeed} 
-                        onMarkAsRead={handleMarkAsRead}
-                        onToggleFavorite={handleToggleFavorite}
+                ) : filteredGroupedFeed.length === 0 && !isLoading ? (
+                    <div className="empty-state">
+                        <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor" opacity="0.3">
+                            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z" />
+                        </svg>
+                        <span>{t('noNewPosts')}</span>
+                    </div>
+                ) : (
+                    <VirtuosoList
+                        groupedFeed={filteredGroupedFeed}
+                        handleMarkAsRead={handleMarkAsRead}
+                        handleToggleFavorite={handleToggleFavorite}
+                        setMediaModal={setMediaModal}
+                        loadMore={loadMore}
                     />
-                </div>
-            ) : (
-                <div className="feed-list-container">
-                    {isLoading && groups.length === 0 ? (
-                        <div className="feed-initial-loader">
-                            <div className="feed-initial-spinner" />
-                        </div>
-                    ) : filteredGroupedFeed.length === 0 && !isLoading ? (
-                        <div className="empty-state">
-                            <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor" opacity="0.3">
-                                <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z" />
-                            </svg>
-                            <span>{t('noNewPosts')}</span>
-                        </div>
-                    ) : (
-                        <VirtuosoList
-                            groupedFeed={filteredGroupedFeed}
-                            handleMarkAsRead={handleMarkAsRead}
-                            handleToggleFavorite={handleToggleFavorite}
-                            setMediaModal={setMediaModal}
-                            loadMore={loadMore}
-                        />
-                    )}
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

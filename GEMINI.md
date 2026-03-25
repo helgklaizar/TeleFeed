@@ -33,15 +33,13 @@ npm install && npm run tauri dev
 - FeedCard: memo с кастомным comparator для избежания лишних рендеров
 - **Snap-scroll layout**: `html/body/#root/.app-container { height: 100% }`. FeedPage — `position: absolute; inset: 0` внутри `position: relative; flex: 1` обёртки. Virtuoso (standard mode) — `style={{ height: '100%' }}` без `useWindowScroll`
 
-## Что делали последним (2026-03-22)
-- Упростили интерфейс настроек: вырезана кнопка/страница настроек и скрытых каналов. Кнопки размера шрифта (`+` / `-`) вынесены прямо в `AppHeader`.
-- Вернули "Избранное" (Saved Messages) для ленты: теперь оно работает как вкладка прямо внутри `ChannelsPage`. Сердечко в шапке ведет в ленту сохранёнок без открытия чат-интерфейса (без баблов).
-- Исправлен баг "подгрузки старых постов" при появлении новых:
-  - Убрано агрессивное сжатие массива постов `.slice(0, 300)` снизу в `feedStore.js`.
-  - В бэкенде (`feed_cache.rs` `get_new_since`) добавлена правильная группировка альбомов, чтобы они не разрывали ленту.
+## Что делали последним (2026-03-25)
+- Мастер-аудит проекта: выявлены и исправлены lint warnings (9 → 0), удалены мёртвые переменные из App.jsx, AppHeader.jsx, ChannelsPage.jsx.
+- Переписана `frontend/structure.md` — убраны 11 несуществующих файлов, актуализирована под текущую структуру.
+- Чистка .tasks/: удалены завершённые задачи (audit, ui-refinement, v3-rebuild).
+- ESLint: 0 errors, 0 warnings. Тесты: 33/33 зелёных.
 
 ## Следующие задачи (приоритет)
-1. **GitHub Actions CI Fix**: Починить падающие тесты в `tests/store/chatsStore.test.ts` (ошибки `should add messages to existing chat and respect limit` и `should handle pagination correctly`). Похоже, тесты не синхронизированы с недавним обновлением логики лимитов сообщений.
-2. Разбить handlers.rs → tdlib/handlers/{auth,feed,chats}.rs
-3. Оптимизация памяти (Graceful TDLib shutdown + CancellationToken)
-4. Интеграция TypeScript (начиная с IPC)
+1. Разбить `handlers.rs` → `tdlib/handlers/{auth,feed,chats}.rs`
+2. Оптимизация памяти (Graceful TDLib shutdown + CancellationToken)
+3. Интеграция TypeScript (начиная с IPC-слоя `shared/ipc/index.js`)
