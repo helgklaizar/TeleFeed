@@ -8,7 +8,7 @@ use std::sync::{Arc, RwLock};
 use std::sync::atomic::{AtomicBool};
 use std::collections::HashSet;
 
-use crate::handlers;
+pub mod handlers;
 use crate::feed_cache::FeedCache;
 
 pub struct TdlibManager {

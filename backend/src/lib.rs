@@ -5,7 +5,6 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 mod tdlib;
-mod handlers;
 mod feed_cache;
 mod mobile_server;
 mod ipc;

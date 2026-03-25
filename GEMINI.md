@@ -34,12 +34,12 @@ npm install && npm run tauri dev
 - **Snap-scroll layout**: `html/body/#root/.app-container { height: 100% }`. FeedPage — `position: absolute; inset: 0` внутри `position: relative; flex: 1` обёртки. Virtuoso (standard mode) — `style={{ height: '100%' }}` без `useWindowScroll`
 
 ## Что делали последним (2026-03-25)
+- **Рефакторинг Backend**: Монолитный `handlers.rs` (444 строки) разбит на функциональные подмодули в `src/tdlib/handlers/`. Теперь логика разделена на `auth.rs`, `chats.rs`, `feed.rs` и общие утилиты `common.rs`. Паттерн роутинга событий сохранён, но читаемость и изоляция значительно улучшены.
 - Мастер-аудит проекта: выявлены и исправлены lint warnings (9 → 0), удалены мёртвые переменные из App.jsx, AppHeader.jsx, ChannelsPage.jsx.
 - Переписана `frontend/structure.md` — убраны 11 несуществующих файлов, актуализирована под текущую структуру.
 - Чистка .tasks/: удалены завершённые задачи (audit, ui-refinement, v3-rebuild).
 - ESLint: 0 errors, 0 warnings. Тесты: 33/33 зелёных.
 
 ## Следующие задачи (приоритет)
-1. Разбить `handlers.rs` → `tdlib/handlers/{auth,feed,chats}.rs`
-2. Оптимизация памяти (Graceful TDLib shutdown + CancellationToken)
-3. Интеграция TypeScript (начиная с IPC-слоя `shared/ipc/index.js`)
+1. Оптимизация памяти (Graceful TDLib shutdown + CancellationToken)
+2. Интеграция TypeScript (начиная с IPC-слоя `shared/ipc/index.js`)
