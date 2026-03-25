@@ -36,13 +36,14 @@ export const useFeedStore = create((set, get) => ({
         set({ isLoading: true });
         try {
             const lastGroup = groups[groups.length - 1];
-            const lastMsg = lastGroup.mainPost;
+            // Используем физически самый старый пост в группе, чтобы не залипнуть внутри альбома
+            const oldestPost = lastGroup.posts[lastGroup.posts.length - 1] || lastGroup.mainPost;
 
             const newFeed = await ipcGetChannelFeed(
                 parseFolderId(currentFolder),
                 50,
-                lastMsg.date,
-                lastMsg.id
+                oldestPost.date,
+                oldestPost.id
             );
 
             if (newFeed.length === 0) {
@@ -68,7 +69,8 @@ export const useFeedStore = create((set, get) => ({
         }
 
         try {
-            const newestDate = groups[0]?.mainPost?.date || 0;
+            // Используем физически самый новый пост для отсчёта since_date
+            const newestDate = groups[0]?.posts?.[0]?.date || groups[0]?.mainPost?.date || 0;
             const newFeed = await ipcGetNewFeedSince(parseFolderId(currentFolder), newestDate);
 
             if (newFeed.length > 0) {
