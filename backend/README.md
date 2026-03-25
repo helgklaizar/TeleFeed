@@ -1,6 +1,6 @@
 # Backend (Rust / Tauri)
 
-Rust-бэкенд приложения tg-feed. Выступает мостом между TDLib и React-фронтендом через Tauri IPC.
+Rust-бэкенд приложения telefeed. Выступает мостом между TDLib и React-фронтендом через Tauri IPC.
 
 ## Структура
 
@@ -65,7 +65,7 @@ npm run tauri dev
 
 # Production
 npm run tauri build
-# → backend/target/release/bundle/macos/TG-Feed.app
+# → backend/target/release/bundle/macos/TeleFeed.app
 ```
 
 ## FeedCache

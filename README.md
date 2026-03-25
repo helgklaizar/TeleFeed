@@ -1,126 +1,61 @@
-# TG-Feed
+# 🚀 TeleFeed
 
-Desktop Telegram client for reading channels and chats. Built on Tauri v2 + React + Rust/TDLib.
+A blazing fast, highly optimized Telegram feed reader desktop application built with **Tauri**, **Rust**, **React**, and **TDLib (Telegram Database Library)**.
 
-## Stack
+TeleFeed is designed to provide you with a unified scrolling experience for all your favorite Telegram channels, filtering out the noise and offering you pure information streams organized exactly how you need them.
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 19, Vite 7, Zustand 5, React Router 7 |
-| Backend | Rust (Tauri v2), TDLib (via FFI / libloading) |
-| Platform | macOS (darwin-arm64) |
-| Tests | Vitest |
-| Linting | ESLint 9 |
+## 🌟 Key Features
 
-## Quick Start
+- **Unified Smart Feed**: Read all your channels visually as a single scrollable feed without jumping between chats.
+- **Native Performance**: Powered by **Rust** & **Tauri** for maximum speed and minimal RAM/CPU footprint compared to Electron.
+- **Flawless Infinite Scroll**: Engineered with snap-scrolling and intelligent caching (Zustand + BTreeMap LRU cache in Rust) to handle thousands of posts effortlessly.
+- **Graceful TDLib Integration**: Direct integration via FFI natively on background threads ensures robust synchronization and zero data corruption.
+- **Beautiful Media Handling**: Seamless support for multi-photo albums, videos, UI transitions, and native macOS design cues.
+- **Offline Capable**: Stores historical feeds compactly locally using TDLib's internal SQLite.
 
+## 🛠 Tech Stack
+
+- **Core Framework**: [Tauri v2](https://v2.tauri.app/)
+- **Backend**: Rust 1.85+, TDLib (Official C++ Telegram client library integration)
+- **Frontend**: React 19, Vite, Zustand 5, Tailwind CSS / Vanilla Modules
+- **Architecture**: Modular Feature-Sliced Design (FSD) + robust IPC Events.
+
+## 📦 Installation & Setup (macOS only)
+
+Currently, the project is configured and compiled specifically for macOS (darwin-arm64).
+
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:helgklaizar/TeleFeed.git
+   cd TeleFeed
+   ```
+2. Install npm dependencies for the frontend:
+   ```bash
+   cd frontend
+   npm install
+   ```
+3. Run the complete Tauri application in dev mode:
+   ```bash
+   npm run tauri dev
+   ```
+
+*Note: Building TDLib can require significant RAM. The repository usually expects pre-compiled linking libraries inside the `backend/lib` directory based on your architecture.*
+
+## 🔨 Production Build
+
+To create the release `.app` bundle:
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Run in dev mode
-npm run tauri dev
+cd backend
+../frontend/node_modules/.bin/tauri build
+# The compiled application will be located at: target/release/bundle/macos/TeleFeed.app
 ```
 
-On first launch enter your **Telegram API credentials** (api_id + api_hash).  
-Get them at [my.telegram.org/apps](https://my.telegram.org/apps).
+## 🔒 Privacy & Security
 
-## Scripts
+TeleFeed stores all authentication and session data completely locally on your machine via the official TDLib. 
+It never routes your messages through any third-party servers. 
+Your `.env` and TDLib local database components are carefully `.gitignore`'d. You retain 100% control over your Telegram session data.
 
-| Command | Description |
-|---|---|
-| `npm run tauri dev` | Launch Tauri + Vite (dev) |
-| `npm run dev` | Vite only (frontend preview) |
-| `npm run tauri build` | Production build → `backend/target/release/bundle/` |
-| `npm test` | Vitest |
-| `npm run lint` | ESLint check |
-| `npm run lint:fix` | ESLint auto-fix |
+## 📜 License
 
-## Architecture
-
-```
-tg-feed/
-├── frontend/
-│   ├── app/
-│   │   ├── App.jsx          # Router + shell + keyboard shortcuts
-│   │   ├── AppHeader.jsx    # Navigation bar + update check
-│   │   └── i18n.js          # Localization (en/ru)
-│   ├── features/
-│   │   ├── feed/
-│   │   │   ├── components/  # FeedCard, PostContent, AlbumGrid
-│   │   │   ├── stores/      # feedStore (no uiStore dependency)
-│   │   │   └── actions.js   # markPostAsRead, toggleFavoritePost
-│   │   ├── chat/
-│   │   │   ├── components/  # BubbleMessage, ChatList
-│   │   │   ├── hooks/       # useSenderInfo
-│   │   │   └── stores/      # chatStore, messageStore, userStore
-│   │   └── media/
-│   │       ├── components/  # MediaFile, VideoPlayer, Lightbox
-│   │       └── stores/      # fileStore (LRU 150 files)
-│   ├── pages/               # Thin route components
-│   ├── shared/
-│   │   ├── ipc/             # Typed invoke wrappers (use instead of raw invoke)
-│   │   ├── events/          # useAuthEvents, useFeedEvents, useChatEvents
-│   │   ├── hooks/           # useTdlibListener (aggregator)
-│   │   └── ui/              # ChatAvatar, ExpandableText, Toast, etc.
-│   └── stores/
-│       ├── authStore.js     # Auth state machine
-│       ├── uiStore.js       # Theme, textScale, profile, animations
-│       ├── postActionsStore.js # hiddenPosts, favoritePosts, blacklist
-│       ├── startupStore.js  # Startup lifecycle phase
-│       └── toastStore.js    # Notifications
-├── backend/src/
-│   ├── lib.rs               # AppState + Tauri setup + handler registration
-│   ├── ipc/
-│   │   ├── auth.rs          # init_tdlib, submit_phone/code/password
-│   │   ├── feed.rs          # get_channel_feed, get_new_feed_since, fetch_more_feed_history
-│   │   ├── chat.rs          # mark_as_read, send_reply, load_more_history, leave_chat, ...
-│   │   ├── files.rs         # download_file, delete_local_file
-│   │   └── system.rs        # optimize_storage, check/apply_local_update
-│   ├── tdlib/
-│   │   ├── manager.rs (tdlib.rs) # TDLib FFI manager (send/receive loops)
-│   │   └── handlers.rs      # handle_update → TDLib events → Tauri emit
-│   └── feed_cache.rs        # In-process feed cache (BTreeMap, LRU, album grouping)
-└── api/
-    └── swagger.yaml         # IPC command reference (OpenAPI format)
-```
-
-## IPC Layer
-
-All frontend → backend calls go through `shared/ipc/index.js`:
-
-```js
-import { ipcMarkAsRead, ipcGetChannelFeed } from '../shared/ipc/index';
-```
-
-Never call `invoke()` directly — use the typed wrappers.
-
-## TDLib Events
-
-Backend emits events via Tauri. Frontend listens through three domain hooks:
-
-| Hook | Events |
-|---|---|
-| `useAuthEvents` | `auth_update` → auth state machine |
-| `useFeedEvents` | `feed_updated` → feed store refresh |
-| `useChatEvents` | `tdlib_event` → chat/message/file/user stores |
-
-## Authorization Flow
-
-1. Enter API credentials (api_id + api_hash) — stored in localStorage
-2. Enter phone number
-3. Enter SMS code
-4. (Optional) Enter 2FA password
-
-## Keyboard Shortcuts
-
-| Key | Action |
-|---|---|
-| `Cmd+1` | Channels |
-| `Cmd+2` | Messages |
-| `Cmd+3` | AI Chat |
-| `Esc` | Back / Close modal |
-
-## License
-
-MIT
+TeleFeed is licensed under the MIT License. Copyright (c) 2026 TeleFeed.

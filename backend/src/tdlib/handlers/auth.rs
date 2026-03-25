@@ -13,7 +13,7 @@ pub fn handle_auth(update: &Value, ctx: &UpdateContext) {
     match state {
         "authorizationStateWaitTdlibParameters" => {
             let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
-            let db_dir = format!("{}/Library/Application Support/TG-Feed-v3", home);
+            let db_dir = format!("{}/Library/Application Support/TeleFeed-v3", home);
             ctx.app.emit("auth_update", json!({ "state": "wait_params" })).ok();
             send_sync(
                 ctx.tx,

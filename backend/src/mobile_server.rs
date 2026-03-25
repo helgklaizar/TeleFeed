@@ -61,8 +61,8 @@ async fn serve_pwa() -> Html<&'static str> { Html(PWA_HTML) }
 
 async fn serve_manifest() -> impl IntoResponse {
     let manifest = serde_json::json!({
-        "name": "TG-Feed",
-        "short_name": "TG-Feed",
+        "name": "TeleFeed",
+        "short_name": "TeleFeed",
         "start_url": "/",
         "display": "standalone",
         "background_color": "#0d0d0f",
@@ -74,7 +74,7 @@ async fn serve_manifest() -> impl IntoResponse {
 }
 
 async fn ping() -> Json<Value> {
-    Json(json!({ "ok": true, "service": "tg-feed-mobile" }))
+    Json(json!({ "ok": true, "service": "telefeed-mobile" }))
 }
 
 async fn serve_media(

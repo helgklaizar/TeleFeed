@@ -1,6 +1,6 @@
 # Frontend (React / Vite)
 
-React-фронтенд приложения tg-feed. Feature Sliced Design + Zustand + Tauri IPC.
+React-фронтенд приложения telefeed. Feature Sliced Design + Zustand + Tauri IPC.
 
 ## Структура
 

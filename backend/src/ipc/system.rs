@@ -48,9 +48,9 @@ pub async fn apply_local_update() -> Result<(), String> {
     let manifest_dir = env!("CARGO_MANIFEST_DIR");
     let src_dir = format!("{}/..", manifest_dir);
     let updater_script = format!("{}/backend/local_updater.sh", src_dir);
-    let dest_app = "/Applications/TG-Feed.app";
+    let dest_app = "/Applications/TeleFeed.app";
     let bundle_path = format!(
-        "{}/backend/target/release/bundle/macos/TG-Feed.app",
+        "{}/backend/target/release/bundle/macos/TeleFeed.app",
         src_dir
     );
 

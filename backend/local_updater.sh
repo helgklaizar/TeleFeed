@@ -1,10 +1,10 @@
 #!/bin/bash
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-APP_BUNDLE="$PROJECT_DIR/backend/target/release/bundle/macos/TG-Feed.app"
-APP_DEST="/Applications/TG-Feed.app"
+APP_BUNDLE="$PROJECT_DIR/backend/target/release/bundle/macos/TeleFeed.app"
+APP_DEST="/Applications/TeleFeed.app"
 
-echo "📦 Building TG-Feed from $PROJECT_DIR..."
+echo "📦 Building TeleFeed from $PROJECT_DIR..."
 cd "$PROJECT_DIR" || exit 1
 
 # Ensure npm/nvm available

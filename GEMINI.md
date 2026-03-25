@@ -1,4 +1,4 @@
-# TG-Feed — оперативная память проекта
+# TeleFeed — оперативная память проекта
 
 ## Стек
 - Tauri v2 + React 19 + Rust + TDLib (FFI)
