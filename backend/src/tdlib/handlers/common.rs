@@ -55,4 +55,6 @@ pub struct UpdateContext<'a> {
     pub feed_cache: &'a Arc<FeedCache>,
     /// Флаг для батчинга feed_updated — таймер в lib.rs читает и сбрасывает каждые 500ms.
     pub feed_dirty: &'a Arc<AtomicBool>,
+    /// Флаг для graceful shutdown
+    pub running: &'a Arc<AtomicBool>,
 }

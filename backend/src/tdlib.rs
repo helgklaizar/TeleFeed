@@ -5,7 +5,7 @@ use libloading::Library;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_void};
 use std::sync::{Arc, RwLock};
-use std::sync::atomic::{AtomicBool};
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::collections::HashSet;
 
 pub mod handlers;
@@ -13,13 +13,16 @@ use crate::feed_cache::FeedCache;
 
 pub struct TdlibManager {
     sender: mpsc::Sender<Value>,
+    _running: Arc<AtomicBool>,
 }
 
 impl TdlibManager {
     pub fn new(app_handle: AppHandle, api_id: i64, api_hash: String, feed_cache: Arc<FeedCache>, feed_dirty: Arc<AtomicBool>) -> Self {
         let (tx, mut rx) = mpsc::channel::<Value>(200);
         let init_tx = tx.clone();
-
+        let running = Arc::new(AtomicBool::new(true));
+        let running_task = running.clone();
+        
         let subscribed_ids: Arc<RwLock<HashSet<i64>>> = Arc::new(RwLock::new(HashSet::new()));
         let my_user_id: Arc<RwLock<Option<i64>>> = Arc::new(RwLock::new(None));
         let auth_ready: Arc<RwLock<bool>> = Arc::new(RwLock::new(false));
@@ -55,6 +58,8 @@ impl TdlibManager {
                 unsafe { *lib.get(b"td_json_client_send").unwrap() };
             let client_receive: unsafe extern "C" fn(*mut c_void, c_double) -> *const c_char =
                 unsafe { *lib.get(b"td_json_client_receive").unwrap() };
+            let client_destroy: unsafe extern "C" fn(*mut c_void) =
+                unsafe { *lib.get(b"td_json_client_destroy").unwrap() };
 
             // SAFETY: client_create returns a valid opaque pointer per TDLib docs.
             let client_ptr = unsafe { client_create() };
@@ -73,10 +78,12 @@ impl TdlibManager {
             // Read thread
             let feed_cache_for_read = feed_cache.clone();
             let feed_dirty_for_read = feed_dirty.clone();
+            let running_for_read = running_task.clone();
 
+            let running_loop = running_for_read.clone();
             tokio::task::spawn_blocking(move || {
                 let client = ptr_usize as *mut c_void;
-                loop {
+                while running_loop.load(Ordering::Relaxed) {
                     // SAFETY: client pointer is valid for the lifetime of the app.
                     // client_receive returns either null or a valid C string owned by TDLib
                     // that remains valid until the next client_receive call.
@@ -97,18 +104,26 @@ impl TdlibManager {
                                         api_hash: &api_hash_for_read,
                                         feed_cache: &feed_cache_for_read,
                                         feed_dirty: &feed_dirty_for_read,
+                                        running: &running_for_read,
                                     },
                                 );
                             }
                         }
                     }
                 }
+                
+                unsafe { client_destroy(ptr_usize as *mut c_void) };
+                println!("[TDLib] Loop stopped, client destroyed.");
             });
 
             // Write thread
             let _keep_lib = lib;
             let ptr_write = client_ptr as usize;
+            let running_for_write = running_task.clone();
             while let Some(request) = rx.recv().await {
+                if !running_for_write.load(Ordering::Relaxed) {
+                    break;
+                }
                 let client = ptr_write as *mut c_void;
                 if let Ok(json_string) = serde_json::to_string(&request) {
                     println!("[TDLib SEND] {}", json_string);
@@ -121,10 +136,16 @@ impl TdlibManager {
             }
         });
 
-        Self { sender: tx }
+        Self { sender: tx, _running: running }
     }
 
     pub async fn send(&self, request: Value) {
         let _ = self.sender.send(request).await;
+    }
+    
+    pub async fn shutdown(&self) {
+        println!("[TDLib] Начинаем Graceful Shutdown...");
+        self.send(json!({ "@type": "close" })).await;
+        // Поток чтения сам установит running=false при получении authorizationStateClosed
     }
 }

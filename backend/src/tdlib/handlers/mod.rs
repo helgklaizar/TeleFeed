@@ -6,7 +6,7 @@ pub mod feed;
 use serde_json::Value;
 use tauri::Emitter;
 
-pub use common::{UpdateContext, send_sync, trigger_load_chats, determine_custom_type};
+pub use common::UpdateContext;
 
 pub fn handle_update(update: &Value, ctx: &UpdateContext) {
     let type_str = match update["@type"].as_str() {

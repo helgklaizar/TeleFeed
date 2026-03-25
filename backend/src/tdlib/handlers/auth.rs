@@ -1,4 +1,5 @@
 use serde_json::{json, Value};
+use std::sync::atomic::Ordering;
 use tauri::Emitter;
 
 use super::common::{send_sync, trigger_load_chats, UpdateContext};
@@ -58,6 +59,10 @@ pub fn handle_auth(update: &Value, ctx: &UpdateContext) {
         }
         "authorizationStateLoggingOut" | "authorizationStateClosed" => {
             ctx.app.emit("auth_update", json!({ "state": "logged_out" })).ok();
+            if state == "authorizationStateClosed" {
+                println!("[TDLib] authorizationStateClosed получено. Останавливаем потоки.");
+                ctx.running.store(false, Ordering::Relaxed);
+            }
         }
         _ => {}
     }

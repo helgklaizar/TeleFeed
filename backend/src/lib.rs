@@ -33,6 +33,24 @@ pub fn run() {
             feed_cache: Arc::new(FeedCache::new()),
             feed_dirty,
         })
+        .on_window_event(|window, event| match event {
+            tauri::WindowEvent::CloseRequested { api, .. } => {
+                use tauri::Manager;
+                api.prevent_close();
+                let handle = window.app_handle().clone();
+                tauri::async_runtime::spawn(async move {
+                    let state: tauri::State<'_, AppState> = handle.state::<AppState>();
+                    let guard = state.inner().client.lock().await;
+                    if let Some(client) = guard.as_ref() {
+                        client.shutdown().await;
+                        // Даём TDLib время на сохранение БД и остановку потоков
+                        tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
+                    }
+                    std::process::exit(0);
+                });
+            }
+            _ => {}
+        })
         .setup(move |app| {
             // Мобильный HTTP-сервер
             let app_handle = app.handle().clone();
