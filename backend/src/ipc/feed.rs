@@ -24,7 +24,7 @@ pub async fn get_new_feed_since(
 
 #[tauri::command]
 pub async fn fetch_more_feed_history(
-    before_date: i64,
+    _before_date: i64,
     state: State<'_, AppState>,
 ) -> Result<(), String> {
     let requests: Vec<(i64, i64)> = {
@@ -34,10 +34,7 @@ pub async fn fetch_more_feed_history(
 
         channels.into_iter().map(|chat_id| {
             let oldest_id = messages_snap.iter()
-                .filter(|(_, msg)| {
-                    msg["chat_id"].as_i64().unwrap_or(0) == chat_id
-                    && msg["date"].as_i64().unwrap_or(0) <= before_date
-                })
+                .filter(|(_, msg)| msg["chat_id"].as_i64().unwrap_or(0) == chat_id)
                 .map(|(_, msg)| msg["id"].as_i64().unwrap_or(0))
                 .min()
                 .unwrap_or(0);

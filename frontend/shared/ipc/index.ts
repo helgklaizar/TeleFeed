@@ -3,7 +3,6 @@
  * Использовать вместо прямых вызовов invoke() во всём приложении.
  */
 import { invoke } from '@tauri-apps/api/core';
-
 // ── Auth ──
 
 export const ipcInitTdlib = (apiId: number, apiHash: string): Promise<void> =>

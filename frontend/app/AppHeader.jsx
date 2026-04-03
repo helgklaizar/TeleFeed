@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUiStore } from '../stores/uiStore';
 import { useFeedStore } from '../features/feed/stores/feedStore';
@@ -18,19 +19,25 @@ export function AppHeader() {
     const [updateAvailable, setUpdateAvailable] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
 
-    const triggerMarkAllAsRead = useUiStore((s) => s.triggerMarkAllAsRead);
-    const flashEye = useUiStore((s) => s.flashEye);
-    const feedMode = useUiStore((s) => s.feedMode);
-    const setFeedMode = useUiStore((s) => s.setFeedMode);
-
+    const { triggerMarkAllAsRead, flashEye, feedMode, setFeedMode } = useUiStore(useShallow((s) => ({
+        triggerMarkAllAsRead: s.triggerMarkAllAsRead,
+        flashEye: s.flashEye,
+        feedMode: s.feedMode,
+        setFeedMode: s.setFeedMode
+    })));
 
     const path = location.pathname;
     const isChannels = path === '/' || path.startsWith('/channels');
 
-    const folders = useChatStore((s) => s.folders);
-    const chats = useChatStore((s) => s.chats);
-    const currentFolder = useFeedStore((s) => s.currentFolder);
-    const loadInitial = useFeedStore((s) => s.loadInitial);
+    const { folders, chats } = useChatStore(useShallow((s) => ({
+        folders: s.folders,
+        chats: s.chats
+    })));
+    
+    const { currentFolder, loadInitial } = useFeedStore(useShallow((s) => ({
+        currentFolder: s.currentFolder,
+        loadInitial: s.loadInitial
+    })));
 
     const channelFolders = useMemo(() => {
         return folders.filter((f) => {

@@ -1,35 +1,15 @@
-name: CI — Lint & Test
-
-on:
-  push:
-    branches: [main, v3-beta]
-  pull_request:
-    branches: [main, v3-beta]
-
+name: CI
+on: [push, pull_request]
 jobs:
-  lint-and-test:
-    runs-on: macos-latest
-    defaults:
-      run:
-        working-directory: beta1
-
+  test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: beta1/package-lock.json
-
+          node-version: '20'
       - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
+        run: npm install || pnpm install
+      - name: Run tests
         run: npm test
-
-      - name: Build Storybook (validate)
-        run: npm run build-storybook

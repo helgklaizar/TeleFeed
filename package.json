@@ -5,6 +5,7 @@
     "dev": "npm run tauri dev",
     "tauri": "cd backend && ../frontend/node_modules/.bin/tauri",
     "install": "cd frontend && npm install",
-    "build": "cd backend && ../frontend/node_modules/.bin/tauri build"
+    "build": "cd backend && ../frontend/node_modules/.bin/tauri build",
+    "test": "cd frontend && npm test"
   }
 }

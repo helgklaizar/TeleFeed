@@ -58,12 +58,12 @@ export function formatTimeShort(timestamp) {
 export function formatDatePrefix(timestamp) {
     if (!timestamp) return '';
     const d = new Date(timestamp * 1000);
-    const yy = String(d.getFullYear()).slice(2);
+    const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
     const hh = String(d.getHours()).padStart(2, '0');
     const min = String(d.getMinutes()).padStart(2, '0');
-    return `${yy}.${mm}.${dd} ${hh}:${min}`;
+    return `${dd}.${mm}.${yyyy} ${hh}:${min}`;
 }
 
 // ── HTML sanitization ──

@@ -48,11 +48,27 @@ export const useFeedStore = create((set, get) => ({
 
             if (newFeed.length === 0) {
                 // Кэш исчерпан — запрашиваем историю с TDLib (только локальная БД)
-                ipcFetchMoreFeedHistory(lastMsg.date).catch(() => { });
-                set({ isLoading: false });
+                ipcFetchMoreFeedHistory(oldestPost.date).catch(() => { });
+                // Даем TDLib время на загрузку данных в кэш и предотвращаем бесконечный цикл загрузки
+                setTimeout(() => set({ isLoading: false }), 2000);
                 return;
             }
-            const combined = [...groups, ...newFeed];
+
+            // Жёсткий фильтр дубликатов на случай сбоев TDLib или гонок
+            const existingKeys = new Set(groups.map(g =>
+                g.isAlbum && g.mainPost.media_album_id && g.mainPost.media_album_id !== '0'
+                    ? `album_${g.mainPost.chat_id}_${g.mainPost.media_album_id}`
+                    : `${g.mainPost.chat_id}_${g.mainPost.id}`
+            ));
+
+            const uniqueNewFeed = newFeed.filter(g => {
+                const k = g.isAlbum && g.mainPost.media_album_id && g.mainPost.media_album_id !== '0'
+                    ? `album_${g.mainPost.chat_id}_${g.mainPost.media_album_id}`
+                    : `${g.mainPost.chat_id}_${g.mainPost.id}`;
+                return !existingKeys.has(k);
+            });
+
+            const combined = [...groups, ...uniqueNewFeed];
             set({ groups: combined, isLoading: false, hasMore: newFeed.length === 50 });
         } catch (e) {
             console.error('[feedStore.loadMore]', e);

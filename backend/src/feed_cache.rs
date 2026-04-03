@@ -4,7 +4,7 @@ use std::sync::RwLock;
 use std::time::Instant;
 
 /// Максимум сообщений в кеше ленты.
-const MAX_MESSAGES: usize = 1_500;
+const MAX_MESSAGES: usize = 20_000;
 /// TTL для буфера pending: сообщения старше этого значения удаляем.
 const PENDING_TTL_SECS: u64 = 60;
 /// Лимит pending-сообщений на чат (защита от переполнения памяти при старте).

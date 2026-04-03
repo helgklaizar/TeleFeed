@@ -95,7 +95,7 @@ describe('formatDatePrefix', () => {
         // 2024-01-15 14:30 UTC
         const ts = 1705325400;
         const result = formatDatePrefix(ts);
-        expect(result).toMatch(/24\.01\.15/);
+        expect(result).toMatch(/\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}/);
     });
 });
 

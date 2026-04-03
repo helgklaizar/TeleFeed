@@ -1,4 +1,5 @@
 import { useMemo, useEffect, useRef } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useUiStore } from '../stores/uiStore';
 import { usePostActionsStore } from '../stores/postActionsStore';
 import { ipcMarkAsRead } from '../shared/ipc/index';
@@ -11,15 +12,24 @@ import { Virtuoso } from 'react-virtuoso';
 import { t } from '../app/i18n';
 
 export function ChannelsPage({ setMediaModal }) {
-    const hiddenPosts = usePostActionsStore((s) => s.hiddenPosts);
-    const blacklist = usePostActionsStore((s) => s.blacklist);
-    const markAllAsRead = useUiStore((s) => s.markAllAsRead);
-    const feedMode = useUiStore((s) => s.feedMode);
+    const { hiddenPosts, blacklist } = usePostActionsStore(useShallow((s) => ({
+        hiddenPosts: s.hiddenPosts,
+        blacklist: s.blacklist
+    })));
+    const { markAllAsRead, feedMode } = useUiStore(useShallow((s) => ({
+        markAllAsRead: s.markAllAsRead,
+        feedMode: s.feedMode
+    })));
 
-    const { groups, isLoading, loadInitial, loadMore } = useFeedStore();
+    const { groups, isLoading, loadInitial, loadMore, currentFolder } = useFeedStore(useShallow((s) => ({
+        groups: s.groups,
+        isLoading: s.isLoading,
+        loadInitial: s.loadInitial,
+        loadMore: s.loadMore,
+        currentFolder: s.currentFolder
+    })));
+
     const { handleMarkAsRead, handleToggleFavorite } = useFeedActions();
-
-    const currentFolder = useFeedStore((s) => s.currentFolder);
 
     // На первоначальную загрузку ленты (из локального стора)
     useEffect(() => {

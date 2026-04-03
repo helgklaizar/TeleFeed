@@ -33,8 +33,8 @@ pub fn run() {
             feed_cache: Arc::new(FeedCache::new()),
             feed_dirty,
         })
-        .on_window_event(|window, event| match event {
-            tauri::WindowEvent::CloseRequested { api, .. } => {
+        .on_window_event(|window, event| {
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                 use tauri::Manager;
                 api.prevent_close();
                 let handle = window.app_handle().clone();
@@ -49,7 +49,6 @@ pub fn run() {
                     std::process::exit(0);
                 });
             }
-            _ => {}
         })
         .setup(move |app| {
             // Мобильный HTTP-сервер

@@ -1,46 +1,29 @@
-# TeleFeed — оперативная память проекта
+# TeleFeed — Индекс проекта
 
-## Стек
-- Tauri v2 + React 19 + Rust + TDLib (FFI)
-- Zustand 5, React Router 7, Vite 7
-- macOS only (darwin-arm64)
+## 📌 Суть и Стек
+Нативный клиент Telegram с умной лентой. Стек (Tauri, React, Rust) вынесен в [stack.md](./.gemini/rules/stack.md).
 
-## Запуск
-```bash
-npm install && npm run tauri dev
-```
+## 🛑 Ограничения
+Архитектурные ограничения лежат в [constraints.md](./.gemini/rules/constraints.md).
+*(Включая критическое правило: не удалять «неиспользуемый» @prebuilt-tdlib/darwin-arm64).*
 
-## Архитектура (актуальная, после рефакторинга 2026-03-14)
+## 🚀 Деплой и Среда (Где мы находимся)
+- **Local:** `npm run tauri dev`
+- **Продакшн:** Билд лежит в `target/release/bundle/macos/TeleFeed.app`.
+  ⚠️ ЕГО ОБЯЗАТЕЛЬНО НУЖНО ПЕРЕТАЩИТЬ В `/Applications` перед запуском, иначе macOS App Translocation сломает инициализацию базы TDLib.
+## 📚 Навигация по документации
+- 🏗 **Архитектура и Layout:** `docs/architecture.md`
+- 📦 **Настройки деплоя:** `docs/deploy.md`
+- 📅 **Активный спринт:** `docs/sprints/week-1.md`
 
-### Backend
-- `lib.rs` — AppState + setup (~90 строк)
-- `ipc/` — команды по доменам: auth, feed, chat, files, system
-- `tdlib.rs` — TDLib FFI (send/receive loops)
-- `handlers.rs` — handle_update → Tauri emit
-- `feed_cache.rs` — кэш ленты (BTreeMap, LRU, album grouping)
-
-### Frontend
-- `shared/ipc/index.js` — **единственное место для invoke()**. Не вызывать напрямую.
-- `shared/events/` — useAuthEvents, useFeedEvents, useChatEvents (разбитый useTdlibListener)
-- `features/feed/actions.js` — **единственная реализация** markPostAsRead / toggleFavoritePost
-- `stores/postActionsStore.js` — hiddenPosts, favoritePosts, blacklist (выделены из uiStore)
-- `stores/startupStore.js` — фаза запуска (выделена из uiStore)
-
-## Ключевые решения
-- feedStore НЕ зависит от uiStore (было — убрали)
-- IPC-слой для всех invoke — меняем в одном месте при переименовании команды
-- Батчинг feed_updated: AtomicBool + 500ms loop (Rust), не emit на каждое сообщение
-- FeedCard: memo с кастомным comparator для избежания лишних рендеров
-- **Snap-scroll layout**: `html/body/#root/.app-container { height: 100% }`. FeedPage — `position: absolute; inset: 0` внутри `position: relative; flex: 1` обёртки. Virtuoso (standard mode) — `style={{ height: '100%' }}` без `useWindowScroll`
-
-## Что делали последним (2026-03-25)
-- **Исправление багов пагинации ("подгрузка старых постов вместе с новыми")**: В `feedStore.js` при `loadMore` и запросе `get_new_since` теперь используются координаты физически крайних постов в альбоме (`lastGroup.posts[end]` и `newGroup.posts[0]`), а не `mainPost`. Это полностью устраняет дублирование частей альбомов при пагинации и получении новых сообщений.
-- **Graceful TDLib Shutdown**: Добавлен `AtomicBool` CancellationToken. Теперь при `tauri::WindowEvent::CloseRequested` приложение шлет `{"@type": "close"}`, дожидается ответа `authorizationStateClosed` (убивая внутренние потоки `tokio`) и только после этого закрывается. Нет утечек памяти и повреждений БД sqlite.
-- **Интеграция TypeScript**: Слой `shared/ipc` переведён на `.ts` (создан 100% типизированный контракт), установлен TypeScript для Vite.
-- **Unit-тесты (Vitest)**: Написаны тесты для всех оставшихся Zustand сторов (`feedStore`, `chatStore`, `postActionsStore`, `fileStore`). Покрытие ключевых хранилищ — 100% (44 успешных теста). Тесты снова успешно пройдены после правки `feedStore.js`.
-- **Рефакторинг Backend**: Монолитный `handlers.rs` (444 строки) разбит на функциональные подмодули в `src/tdlib/handlers/`. Теперь логика разделена на `auth.rs`, `chats.rs`, `feed.rs` и общие утилиты `common.rs`. Паттерн роутинга событий сохранён, но читаемость и изоляция значительно улучшены.
-- Мастер-аудит проекта: выявлены и исправлены lint warnings (9 → 0), удалены мёртвые переменные.
-- Переписана `frontend/structure.md` под текущую архитектуру (минус 11 устаревших файлов).
+## Что делали последним (2026-04-03)
+- Выполнили рефакторинг из TODO.md:
+  - Удалили неиспользуемые зависимости фронтенда (убрали `@prebuilt-tdlib/darwin-arm64` и `@tauri-apps/plugin-http`), сэкономив размер.
+  - Внедрили `useShallow` для Zustand в `AppHeader` и `ChannelsPage`, убрав излишние ререндеры из-за выборки целых сторов.
+  - Подтвердили, что Code Splitting (`React.lazy` для `ChannelsPage`, `ChannelListPage`) уже успешно функционирует.
+- [Патчинг тестов] Исправлен сломанный тест даты в `helpers.test.js`, а `backend` избавлен от ворнингов Clippy (`single_match`, `unused_variables`). All clean!
+- **[Тесты и Билд]** Написаны unit-тесты для `chatStore` и `feedStore`. Общее покрытие `vitest coverage` доведено с 62% до 82.3%.
+- **[Сборка]** Запущена новая сборка проекта (`npm run build`), генерируется свежий билд Tauri.
 
 ## Следующие задачи
-*Бэклог пуст! Проект стабилен.*
+1. Дальнейшая стабилизация UI ленты (если потребуется).

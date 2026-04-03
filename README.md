@@ -47,8 +47,10 @@ To create the release `.app` bundle:
 ```bash
 cd backend
 ../frontend/node_modules/.bin/tauri build
-# The compiled application will be located at: target/release/bundle/macos/TeleFeed.app
 ```
+The compiled application will be located at: `target/release/bundle/macos/TeleFeed.app`
+
+⚠️ **IMPORTANT INSTALLATION STEP**: You MUST move `TeleFeed.app` to your `/Applications` folder before opening it. Running the application directly from the build directory will trigger macOS App Translocation (App Sandboxing / Gatekeeper), which will prevent TDLib from correctly initializing or saving its local SQLite database.
 
 ## 🔒 Privacy & Security
 
