@@ -20,6 +20,19 @@ TeleFeed is designed to provide you with a unified scrolling experience for all 
 - **Frontend**: React 19, Vite, Zustand 5, Tailwind CSS / Vanilla Modules
 - **Architecture**: Modular Feature-Sliced Design (FSD) + robust IPC Events.
 
+
+## 📂 File Structure
+
+```text
+.
+├── api/                # IPC Events and Data Types definitions
+├── backend/            # Rust/Tauri backend (TDLib integration)
+├── docs/               # Project documentation & architecture
+├── extractor/          # Extra background automation scripts
+└── frontend/           # React 19 UI with Vite & Zustand
+```
+
+
 ## 📦 Installation & Setup (macOS only)
 
 Currently, the project is configured and compiled specifically for macOS (darwin-arm64).
@@ -29,35 +42,12 @@ Currently, the project is configured and compiled specifically for macOS (darwin
    git clone git@github.com:helgklaizar/TeleFeed.git
    cd TeleFeed
    ```
-2. Install npm dependencies for the frontend:
+2. Install dependencies:
    ```bash
-   cd frontend
    npm install
    ```
 3. Run the complete Tauri application in dev mode:
    ```bash
-   npm run tauri dev
+   npm run dev
    ```
 
-*Note: Building TDLib can require significant RAM. The repository usually expects pre-compiled linking libraries inside the `backend/lib` directory based on your architecture.*
-
-## 🔨 Production Build
-
-To create the release `.app` bundle:
-```bash
-cd backend
-../frontend/node_modules/.bin/tauri build
-```
-The compiled application will be located at: `target/release/bundle/macos/TeleFeed.app`
-
-⚠️ **IMPORTANT INSTALLATION STEP**: You MUST move `TeleFeed.app` to your `/Applications` folder before opening it. Running the application directly from the build directory will trigger macOS App Translocation (App Sandboxing / Gatekeeper), which will prevent TDLib from correctly initializing or saving its local SQLite database.
-
-## 🔒 Privacy & Security
-
-TeleFeed stores all authentication and session data completely locally on your machine via the official TDLib. 
-It never routes your messages through any third-party servers. 
-Your `.env` and TDLib local database components are carefully `.gitignore`'d. You retain 100% control over your Telegram session data.
-
-## 📜 License
-
-TeleFeed is licensed under the MIT License. Copyright (c) 2026 TeleFeed.
