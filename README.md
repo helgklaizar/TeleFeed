@@ -20,19 +20,6 @@ TeleFeed is designed to provide you with a unified scrolling experience for all 
 - **Frontend**: React 19, Vite, Zustand 5, Tailwind CSS / Vanilla Modules
 - **Architecture**: Modular Feature-Sliced Design (FSD) + robust IPC Events.
 
-
-## 📂 File Structure
-
-```text
-.
-├── api/                # IPC Events and Data Types definitions
-├── backend/            # Rust/Tauri backend (TDLib integration)
-├── docs/               # Project documentation & architecture
-├── extractor/          # Extra background automation scripts
-└── frontend/           # React 19 UI with Vite & Zustand
-```
-
-
 ## 📦 Installation & Setup (macOS only)
 
 Currently, the project is configured and compiled specifically for macOS (darwin-arm64).
@@ -42,38 +29,35 @@ Currently, the project is configured and compiled specifically for macOS (darwin
    git clone git@github.com:helgklaizar/TeleFeed.git
    cd TeleFeed
    ```
-2. Install dependencies:
+2. Install npm dependencies for the frontend:
    ```bash
+   cd frontend
    npm install
    ```
 3. Run the complete Tauri application in dev mode:
    ```bash
-   npm run dev
+   npm run tauri dev
    ```
 
----
+*Note: Building TDLib can require significant RAM. The repository usually expects pre-compiled linking libraries inside the `backend/lib` directory based on your architecture.*
 
----
+## 🔨 Production Build
 
-## 🍏 The Mac AI Ecosystem
-This project is part of a large-scale initiative to build high-performance AI tools specifically for Apple Silicon developers. Check out our other open-source adaptations:
+To create the release `.app` bundle:
+```bash
+cd backend
+../frontend/node_modules/.bin/tauri build
+```
+The compiled application will be located at: `target/release/bundle/macos/TeleFeed.app`
 
-- [🍏 **LLM Env Selector**](https://github.com/helgklaizar/llm-env-selector) — The ultimate UI configurator.
-- [🌉 **CUDA2MLX Bridge**](https://github.com/helgklaizar/cuda2mlx-bridge) — Drop-in replacement for CUDA projects.
-- [🚀 **TurboQuant MLX**](https://github.com/helgklaizar/turboquant_mlx) — Extreme KV Cache Compression (1-3 bit).
-- [🔥 **Flamegraph-MLX**](https://github.com/helgklaizar/flamegraph-mlx) — Energy UI profiler for neural networks.
-- [🧠 **APFS Vector Indexer**](https://github.com/helgklaizar/apfs-rag-indexer) — Native system RAG with zero battery drain.
-- [⚒️ **Forge-MLX**](https://github.com/helgklaizar/forge-mlx) — Blazing-fast memory-efficient LLM Fine-Tuning.
-- [🔳 **BitNet-MLX**](https://github.com/helgklaizar/bitnet-mlx) — Native Ternary (1.58-bit) Matrix Multiplication Kernels.
-- [👁️ **OmniParser-MLX**](https://github.com/helgklaizar/omni-parser-mlx) — Blazing-fast visual GUI agent.
-- [⚡️ **Flash-Attention-MLX**](https://github.com/helgklaizar/flash-attention-mlx) — Native FA3 for Metal.
-- [🌿 **SageAttention-MLX**](https://github.com/helgklaizar/sage-attention-mlx) — 5x faster quantized attention.
-- [🧬 **Attention-Matching-MLX**](https://github.com/helgklaizar/attention-matching-mlx) — 50x context compression.
-- [🚀 **RocketKV-MLX**](https://github.com/helgklaizar/rocket-kv-mlx) — 400x extreme pruning.
-- [📡 **KVTC-MLX**](https://github.com/helgklaizar/kvtc-mlx) — Transform coding for KV cache.
-- [🌌 **AETHER-MLX**](https://github.com/helgklaizar/aether-mlx) — Geometric Sparse Attention.
-- [🌌 **DeepSeek-MLX**](https://github.com/helgklaizar/deepseek-mlx) — Massive 671B model inference on Mac.
-- [🎞 **Open-Sora-MLX**](https://github.com/helgklaizar/open-sora-mlx) — Text-to-Video generation pipeline.
-- [🗣 **Moshi-Voice-MLX**](https://github.com/helgklaizar/moshi-voice-mlx) — Realtime Voice-to-Voice agents.
-- [🎲 **MCTS-RL-MLX**](https://github.com/helgklaizar/mcts-rl-mlx) — Highly parallel MCTS framework.
+⚠️ **IMPORTANT INSTALLATION STEP**: You MUST move `TeleFeed.app` to your `/Applications` folder before opening it. Running the application directly from the build directory will trigger macOS App Translocation (App Sandboxing / Gatekeeper), which will prevent TDLib from correctly initializing or saving its local SQLite database.
 
+## 🔒 Privacy & Security
+
+TeleFeed stores all authentication and session data completely locally on your machine via the official TDLib. 
+It never routes your messages through any third-party servers. 
+Your `.env` and TDLib local database components are carefully `.gitignore`'d. You retain 100% control over your Telegram session data.
+
+## 📜 License
+
+TeleFeed is licensed under the MIT License. Copyright (c) 2026 TeleFeed.
