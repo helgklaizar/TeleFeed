@@ -43,3 +43,8 @@ venv
 __pycache__
 coverage/
 build/
+
+
+# Professional Cleanup Patterns
+coverage/
+build/
