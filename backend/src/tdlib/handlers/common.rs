@@ -1,10 +1,11 @@
-use serde_json::{json, Value};
-use tokio::sync::mpsc;
-use tauri::AppHandle;
-use std::sync::{Arc, RwLock};
-use std::sync::atomic::AtomicBool;
-use std::collections::HashSet;
 use crate::feed_cache::FeedCache;
+use serde_json::{json, Value};
+use std::collections::HashSet;
+use std::sync::atomic::AtomicBool;
+use std::sync::{Arc, RwLock};
+use tauri::AppHandle;
+use tokio::sync::mpsc;
+use tokio::sync::Notify;
 
 /// Определяет кастомный тип чата по данным TDLib.
 pub fn determine_custom_type(chat_type_obj: &Value) -> &'static str {
@@ -25,7 +26,9 @@ pub fn determine_custom_type(chat_type_obj: &Value) -> &'static str {
 /// Отправляет запрос в TDLib через канал (не await).
 pub fn send_sync(tx: &mpsc::Sender<Value>, req: Value) {
     let tx = tx.clone();
-    tokio::spawn(async move { let _ = tx.send(req).await; });
+    tokio::spawn(async move {
+        let _ = tx.send(req).await;
+    });
 }
 
 /// Запускает loadChats — правильный способ загрузить ВСЕ чаты.
@@ -53,8 +56,8 @@ pub struct UpdateContext<'a> {
     pub api_id: i64,
     pub api_hash: &'a str,
     pub feed_cache: &'a Arc<FeedCache>,
-    /// Флаг для батчинга feed_updated — таймер в lib.rs читает и сбрасывает каждые 500ms.
-    pub feed_dirty: &'a Arc<AtomicBool>,
+    /// Уведомление для батчинга feed_updated в lib.rs.
+    pub feed_notify: &'a Arc<Notify>,
     /// Флаг для graceful shutdown
     pub running: &'a Arc<AtomicBool>,
 }

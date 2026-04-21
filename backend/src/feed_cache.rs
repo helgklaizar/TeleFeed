@@ -1,10 +1,11 @@
+use chrono::{Local, Timelike};
 use serde_json::Value;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::sync::RwLock;
 use std::time::Instant;
 
 /// Максимум сообщений в кеше ленты.
-const MAX_MESSAGES: usize = 20_000;
+const MAX_MESSAGES: usize = 10_000;
 /// TTL для буфера pending: сообщения старше этого значения удаляем.
 const PENDING_TTL_SECS: u64 = 60;
 /// Лимит pending-сообщений на чат (защита от переполнения памяти при старте).
@@ -29,6 +30,20 @@ pub struct FeedCache {
 
     /// file_id → local path
     pub file_paths: RwLock<HashMap<i64, String>>,
+}
+
+fn get_cutoff_timestamp() -> i64 {
+    let now = Local::now();
+    let mut cutoff = now
+        .date_naive()
+        .and_hms_opt(5, 0, 0)
+        .unwrap()
+        .and_local_timezone(Local)
+        .unwrap();
+    if now.hour() < 5 {
+        cutoff = cutoff - chrono::Duration::try_days(1).unwrap_or(chrono::Duration::days(1));
+    }
+    cutoff.timestamp()
 }
 
 impl FeedCache {
@@ -65,7 +80,9 @@ impl FeedCache {
         // Flush буфера pending
         let pending_msgs = {
             let mut pb = self.pending.write().unwrap();
-            pb.remove(&chat_id).map(|(msgs, _)| msgs).unwrap_or_default()
+            pb.remove(&chat_id)
+                .map(|(msgs, _)| msgs)
+                .unwrap_or_default()
         };
         for msg in pending_msgs {
             self.add_message(msg);
@@ -75,16 +92,17 @@ impl FeedCache {
     /// Удаляет канал из whitelist ленты (при отписке).
     pub fn remove_feed_channel(&self, chat_id: i64) {
         self.feed_channels.write().unwrap().remove(&chat_id);
-        self.messages.write().unwrap().retain(|_, msg| {
-            msg["chat_id"].as_i64().unwrap_or(0) != chat_id
-        });
+        self.messages
+            .write()
+            .unwrap()
+            .retain(|_, msg| msg["chat_id"].as_i64().unwrap_or(0) != chat_id);
     }
 
     pub fn update_folder(&self, folder_id: i32, chat_ids: Vec<i64>) {
         self.folders.write().unwrap().insert(folder_id, chat_ids);
     }
 
-    pub fn add_message(&self, mut msg: Value) {
+    pub fn add_message(&self, msg: Value) {
         let chat_id = msg["chat_id"].as_i64().unwrap_or(0);
 
         // Чат ещё не зарегистрирован → буферизируем
@@ -107,30 +125,53 @@ impl FeedCache {
 
         // Фильтр по типу контента — пропускаем системные/служебные
         let type_str = msg["content"]["@type"].as_str().unwrap_or("");
-        if !["messageText", "messagePhoto", "messageVideo", "messageAnimation",
-             "messageWebPage", "messageDocument", "messagePoll", "messageAudio",
-             "messageVoiceNote", "messageVideoNote", "messageSticker"]
-            .contains(&type_str)
+        if ![
+            "messageText",
+            "messagePhoto",
+            "messageVideo",
+            "messageAnimation",
+            "messageWebPage",
+            "messageDocument",
+            "messagePoll",
+            "messageAudio",
+            "messageVoiceNote",
+            "messageVideoNote",
+            "messageSticker",
+        ]
+        .contains(&type_str)
         {
             return;
         }
 
-        let msg_id = msg["id"].as_i64().unwrap_or(0);
-        let date   = msg["date"].as_i64().unwrap_or(0);
-
-        // Прикрепляем данные чата к посту
-        if let Some(chat) = self.chats_info.read().unwrap().get(&chat_id) {
-            let title = chat["title"].as_str().unwrap_or("").to_string();
-            // Игнорируем служебные чаты "Wall" / "Стена"
-            if title == "Wall" || title == "Стена" { return; }
-            msg["_chat"] = chat.clone();
+        // Filter out forwarded messages
+        if !msg["forward_info"].is_null() {
+            return;
         }
 
+        let msg_id = msg["id"].as_i64().unwrap_or(0);
+        let date = msg["date"].as_i64().unwrap_or(0);
+
         {
+            let cutoff = get_cutoff_timestamp();
             let mut w = self.messages.write().unwrap();
-            w.insert((date, msg_id), msg);
+            
+            // Garbage collection of old messages
+            while let Some((&(d, _), _)) = w.first_key_value() {
+                if d < cutoff {
+                    w.pop_first();
+                } else {
+                    break;
+                }
+            }
+
+            if date >= cutoff {
+                w.insert((date, msg_id), msg);
+            }
+            
             // Ограничение размера: удаляем самые старые
-            while w.len() > MAX_MESSAGES { w.pop_first(); }
+            while w.len() > MAX_MESSAGES {
+                w.pop_first();
+            }
         }
     }
 
@@ -152,7 +193,9 @@ impl FeedCache {
     /// None → показывать все каналы (нет фильтра).
     fn folder_filter(&self, folder_id: Option<i32>) -> Option<HashSet<i64>> {
         folder_id.map(|f_id| {
-            self.folders.read().unwrap()
+            self.folders
+                .read()
+                .unwrap()
                 .get(&f_id)
                 .cloned()
                 .unwrap_or_default()
@@ -169,6 +212,7 @@ impl FeedCache {
         before_msg_id: Option<i64>,
     ) -> Vec<Value> {
         let r_msgs = self.messages.read().unwrap();
+        let r_chats = self.chats_info.read().unwrap();
         let valid_chats = self.folder_filter(folder_id);
 
         let mut results = Vec::new();
@@ -181,16 +225,24 @@ impl FeedCache {
             before_msg_id.unwrap_or(i64::MAX),
         );
 
+        let cutoff = get_cutoff_timestamp();
+
         let iter: Box<dyn Iterator<Item = (&(i64, i64), &Value)>> = if before_date.is_some() {
             Box::new(r_msgs.range(..upper).rev())
         } else {
             Box::new(r_msgs.iter().rev())
         };
 
-        for (&(_date, _msg_id), msg) in iter {
+        for (&(date, _msg_id), msg) in iter {
+            if date < cutoff {
+                break; // Because we are iterating in descending order of date
+            }
+
             let chat_id = msg["chat_id"].as_i64().unwrap_or(0);
             if let Some(ref valid) = valid_chats {
-                if !valid.contains(&chat_id) { continue; }
+                if !valid.contains(&chat_id) {
+                    continue;
+                }
             }
 
             let album_id = msg["media_album_id"].as_str().unwrap_or("0");
@@ -202,7 +254,12 @@ impl FeedCache {
                         current_album_group.push(msg.clone());
                         continue;
                     } else if !current_album_group.is_empty() {
-                        results.push(Self::create_group_static(&current_album_group, true));
+                        let chat_ref = r_chats.get(&chat_id);
+                        results.push(Self::create_group_static(
+                            &current_album_group,
+                            true,
+                            chat_ref,
+                        ));
                         current_album_group.clear();
                     }
                 }
@@ -210,18 +267,37 @@ impl FeedCache {
                 current_album_group.push(msg.clone());
             } else {
                 if !current_album_group.is_empty() {
-                    results.push(Self::create_group_static(&current_album_group, true));
+                    let last_chat_id = current_album_group[0]["chat_id"].as_i64().unwrap_or(0);
+                    let chat_ref = r_chats.get(&last_chat_id);
+                    results.push(Self::create_group_static(
+                        &current_album_group,
+                        true,
+                        chat_ref,
+                    ));
                     current_album_group.clear();
                     current_album_id = None;
                 }
-                results.push(Self::create_group_static(std::slice::from_ref(msg), false));
+                let chat_ref = r_chats.get(&chat_id);
+                results.push(Self::create_group_static(
+                    std::slice::from_ref(msg),
+                    false,
+                    chat_ref,
+                ));
             }
 
-            if results.len() >= limit { break; }
+            if results.len() >= limit {
+                break;
+            }
         }
 
         if !current_album_group.is_empty() && results.len() < limit {
-            results.push(Self::create_group_static(&current_album_group, true));
+            let last_chat_id = current_album_group[0]["chat_id"].as_i64().unwrap_or(0);
+            let chat_ref = r_chats.get(&last_chat_id);
+            results.push(Self::create_group_static(
+                &current_album_group,
+                true,
+                chat_ref,
+            ));
         }
 
         results
@@ -230,8 +306,16 @@ impl FeedCache {
     /// Возвращает посты строго НОВЕЕ since_date (инкрементальное обновление ленты).
     pub fn get_new_since(&self, folder_id: Option<i32>, since_date: i64) -> Vec<Value> {
         let r_msgs = self.messages.read().unwrap();
+        let r_chats = self.chats_info.read().unwrap();
         let valid_chats = self.folder_filter(folder_id);
-        let lower = (since_date + 1, i64::MIN);
+
+        let cutoff = get_cutoff_timestamp();
+        let effective_since = if since_date < cutoff {
+            cutoff
+        } else {
+            since_date + 1
+        };
+        let lower = (effective_since, i64::MIN);
 
         let mut results = Vec::new();
         let mut current_album_id: Option<String> = None;
@@ -240,7 +324,9 @@ impl FeedCache {
         for (&(_date, _msg_id), msg) in r_msgs.range(lower..).rev() {
             let chat_id = msg["chat_id"].as_i64().unwrap_or(0);
             if let Some(ref valid) = valid_chats {
-                if !valid.contains(&chat_id) { continue; }
+                if !valid.contains(&chat_id) {
+                    continue;
+                }
             }
 
             let album_id = msg["media_album_id"].as_str().unwrap_or("0");
@@ -252,7 +338,13 @@ impl FeedCache {
                         current_album_group.push(msg.clone());
                         continue;
                     } else if !current_album_group.is_empty() {
-                        results.push(Self::create_group_static(&current_album_group, true));
+                        let last_chat_id = current_album_group[0]["chat_id"].as_i64().unwrap_or(0);
+                        let chat_ref = r_chats.get(&last_chat_id);
+                        results.push(Self::create_group_static(
+                            &current_album_group,
+                            true,
+                            chat_ref,
+                        ));
                         current_album_group.clear();
                     }
                 }
@@ -260,23 +352,40 @@ impl FeedCache {
                 current_album_group.push(msg.clone());
             } else {
                 if !current_album_group.is_empty() {
-                    results.push(Self::create_group_static(&current_album_group, true));
+                    let last_chat_id = current_album_group[0]["chat_id"].as_i64().unwrap_or(0);
+                    let chat_ref = r_chats.get(&last_chat_id);
+                    results.push(Self::create_group_static(
+                        &current_album_group,
+                        true,
+                        chat_ref,
+                    ));
                     current_album_group.clear();
                     current_album_id = None;
                 }
-                results.push(Self::create_group_static(std::slice::from_ref(msg), false));
+                let chat_ref = r_chats.get(&chat_id);
+                results.push(Self::create_group_static(
+                    std::slice::from_ref(msg),
+                    false,
+                    chat_ref,
+                ));
             }
         }
 
         if !current_album_group.is_empty() {
-            results.push(Self::create_group_static(&current_album_group, true));
+            let last_chat_id = current_album_group[0]["chat_id"].as_i64().unwrap_or(0);
+            let chat_ref = r_chats.get(&last_chat_id);
+            results.push(Self::create_group_static(
+                &current_album_group,
+                true,
+                chat_ref,
+            ));
         }
 
         results
     }
 
-    fn create_group_static(msgs: &[Value], is_album: bool) -> Value {
-        let main_post = msgs
+    fn create_group_static(msgs: &[Value], is_album: bool, chat: Option<&Value>) -> Value {
+        let mut main_post = msgs
             .iter()
             .find(|m| {
                 let t = m["content"]["@type"].as_str().unwrap_or("");
@@ -284,13 +393,18 @@ impl FeedCache {
                     || m["content"]["caption"].is_object()
                     || m["content"]["text"].is_object()
             })
-            .unwrap_or(&msgs[0]);
+            .unwrap_or(&msgs[0])
+            .clone();
+
+        if let Some(c) = chat {
+            main_post["_chat"] = c.clone();
+        }
 
         serde_json::json!({
             "isAlbum": is_album,
             "posts": msgs,
             "mainPost": main_post,
-            "channel": main_post["_chat"]
+            "channel": chat
         })
     }
 

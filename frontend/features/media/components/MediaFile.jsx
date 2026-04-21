@@ -11,7 +11,7 @@ import { Lightbox } from './Lightbox';
  * - Клик на фото → Lightbox (зум)
  * - Двойной клик на видео → Lightbox (полный экран через нативный фуллскрин)
  */
-export function MediaFile({ fileId, initialFile, type = 'image', style = {}, onClick, className = '' }) {
+export function MediaFile({ fileId, initialFile, type = 'image', poster, style = {}, onClick, className = '' }) {
     const [requested, setRequested] = useState(false);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const fileFromStore = useFileStore((s) => s.files[fileId]);
@@ -27,8 +27,9 @@ export function MediaFile({ fileId, initialFile, type = 'image', style = {}, onC
 
     if (!isDownloaded) {
         return (
-            <div className={`media-placeholder ${className}`} style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="media-spinner" />
+            <div className={`media-placeholder ${className}`} style={{ ...style, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                {poster && <img src={poster} alt="" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(10px)', opacity: 0.6 }} />}
+                <div className="media-spinner" style={{ zIndex: 1 }} />
             </div>
         );
     }
@@ -40,6 +41,7 @@ export function MediaFile({ fileId, initialFile, type = 'image', style = {}, onC
             <>
                 <VideoPlayer
                     src={src}
+                    poster={poster}
                     className={className}
                     style={style}
                     onLightboxRequest={() => setLightboxOpen(true)}

@@ -1,8 +1,6 @@
-# Тесты (tests)
+# TeleFeed Tests
 
-Содержит unit и интеграционные тесты для проекта.
-Запуск тестов осуществляется через скрипты определенные в \`package.json\`.
+Contains unit and integration tests for both the frontend and backend components.
 
-## Структура
-- Включает тесты для хелперов, сторов и i18n
-- Рекомендуется поддерживать покрытие и писать новые тесты параллельно разработке.
+## 🚀 Running Tests
+Use the scripts defined in `package.json` to execute tests via Vitest (frontend) or Cargo (backend).

@@ -98,6 +98,11 @@ export function AppHeader() {
                                 <button
                                     className={`filter-chip ${currentFolder === 'all' && feedMode === 'feed' ? 'active' : ''}`}
                                     onClick={() => handleSelectFolder('all')}
+                                    onDoubleClick={() => {
+                                        if (currentFolder === 'all') {
+                                            useUiStore.getState().triggerScrollToTop();
+                                        }
+                                    }}
                                 >
                                     {t('all')}
                                 </button>
@@ -106,6 +111,11 @@ export function AppHeader() {
                                         key={f.id}
                                         className={`filter-chip ${currentFolder === String(f.id) && feedMode === 'feed' ? 'active' : ''}`}
                                         onClick={() => handleSelectFolder(f.id)}
+                                        onDoubleClick={() => {
+                                            if (currentFolder === String(f.id)) {
+                                                useUiStore.getState().triggerScrollToTop();
+                                            }
+                                        }}
                                     >
                                         {f.title}
                                     </button>

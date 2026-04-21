@@ -14,13 +14,18 @@ pub fn handle_auth(update: &Value, ctx: &UpdateContext) {
         "authorizationStateWaitTdlibParameters" => {
             let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
             let db_dir = format!("{}/Library/Application Support/TeleFeed-v3", home);
-            ctx.app.emit("auth_update", json!({ "state": "wait_params" })).ok();
+            ctx.app
+                .emit("auth_update", json!({ "state": "wait_params" }))
+                .ok();
             send_sync(
                 ctx.tx,
                 json!({
                     "@type": "setTdlibParameters",
-                    "database_directory": db_dir,
+                    "database_directory": db_dir.clone(),
+                    "files_directory": format!("{}/files", db_dir),
                     "use_message_database": true,
+                    "use_chat_info_database": true,
+                    "use_file_database": true,
                     "use_secret_chats": true,
                     "api_id": ctx.api_id,
                     "api_hash": ctx.api_hash,
@@ -39,26 +44,36 @@ pub fn handle_auth(update: &Value, ctx: &UpdateContext) {
             );
         }
         "authorizationStateWaitPhoneNumber" => {
-            ctx.app.emit("auth_update", json!({ "state": "wait_phone" })).ok();
+            ctx.app
+                .emit("auth_update", json!({ "state": "wait_phone" }))
+                .ok();
         }
         "authorizationStateWaitCode" => {
-            ctx.app.emit("auth_update", json!({ "state": "wait_code" })).ok();
+            ctx.app
+                .emit("auth_update", json!({ "state": "wait_code" }))
+                .ok();
         }
         "authorizationStateWaitPassword" => {
-            ctx.app.emit("auth_update", json!({ "state": "wait_password" })).ok();
+            ctx.app
+                .emit("auth_update", json!({ "state": "wait_password" }))
+                .ok();
         }
         "authorizationStateReady" => {
             if let Ok(mut r) = ctx.auth_ready.write() {
                 *r = true;
             }
-            ctx.app.emit("auth_update", json!({ "state": "ready" })).ok();
+            ctx.app
+                .emit("auth_update", json!({ "state": "ready" }))
+                .ok();
             println!("[TDLib] Авторизация успешна. Запускаем loadChats loop...");
             send_sync(ctx.tx, json!({ "@type": "getMe", "@extra": "getMe" }));
             // loadChats (не getChats!) — TDLib идёт на сервер, синхронизирует список
             trigger_load_chats(ctx.tx);
         }
         "authorizationStateLoggingOut" | "authorizationStateClosed" => {
-            ctx.app.emit("auth_update", json!({ "state": "logged_out" })).ok();
+            ctx.app
+                .emit("auth_update", json!({ "state": "logged_out" }))
+                .ok();
             if state == "authorizationStateClosed" {
                 println!("[TDLib] authorizationStateClosed получено. Останавливаем потоки.");
                 ctx.running.store(false, Ordering::Relaxed);

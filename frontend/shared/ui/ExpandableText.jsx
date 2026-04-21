@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { renderEntities } from '../utils/helpers';
 
-const WORD_LIMIT = 60;
+const CHAR_LIMIT = 1200;
 
 /** Обрабатывает клик на <a> внутри текста — открывает через Tauri */
 function handleLinkClick(e) {
@@ -39,8 +39,7 @@ export function ExpandableText({ text, entities, style = {}, onToggle }) {
 
     if (!text) return null;
 
-    const words = text.split(/\s+/);
-    const isTruncatable = words.length > WORD_LIMIT;
+    const isTruncatable = text.length > CHAR_LIMIT;
 
     if (!isTruncatable) {
         return (
@@ -62,7 +61,14 @@ export function ExpandableText({ text, entities, style = {}, onToggle }) {
         );
     }
 
-    const truncatedText = words.slice(0, WORD_LIMIT).join(' ') + '…';
+    let cutoff = CHAR_LIMIT;
+    if (cutoff < text.length) {
+        const lastSpace = text.lastIndexOf(' ', cutoff);
+        if (lastSpace > CHAR_LIMIT - 100) {
+            cutoff = lastSpace;
+        }
+    }
+    const truncatedText = text.slice(0, cutoff) + '…';
     const truncatedHtml = renderEntities(truncatedText, entities);
 
     return (

@@ -6,30 +6,41 @@ use super::common::{determine_custom_type, send_sync, trigger_load_chats, Update
 pub fn handle_error(update: &Value, ctx: &UpdateContext) {
     let extra = update["@extra"].as_str().unwrap_or("");
     if extra == "loadChats_main" {
-        println!("[TDLib] loadChats завершён — ждём 2с чтобы все updateChatPosition обработались...");
+        println!(
+            "[TDLib] loadChats завершён — ждём 2с чтобы все updateChatPosition обработались..."
+        );
         let feed_cache_clone = ctx.feed_cache.clone();
         let tx_clone = ctx.tx.clone();
         tokio::spawn(async move {
             // Даём время TDLib доставить все updateChatPosition (race condition fix)
             tokio::time::sleep(tokio::time::Duration::from_millis(2000)).await;
             let channels: Vec<i64> = {
-                feed_cache_clone.feed_channels.read().unwrap().iter().cloned().collect()
+                feed_cache_clone
+                    .feed_channels
+                    .read()
+                    .unwrap()
+                    .iter()
+                    .cloned()
+                    .collect()
             };
             println!("[TDLib] Загружаем историю для {} каналов", channels.len());
             for chat_id in channels {
-                let _ = tx_clone.send(json!({
-                    "@type": "getChatHistory",
-                    "chat_id": chat_id,
-                    "from_message_id": 0,
-                    "offset": 0,
-                    "limit": 50,
-                    "only_local": true
-                })).await;
+                let _ = tx_clone
+                    .send(json!({
+                        "@type": "getChatHistory",
+                        "chat_id": chat_id,
+                        "from_message_id": 0,
+                        "offset": 0,
+                        "limit": 50,
+                        "only_local": true
+                    }))
+                    .await;
                 tokio::time::sleep(tokio::time::Duration::from_millis(30)).await;
             }
         });
     } else {
         println!("[TDLib] ERROR: {}", update);
+        let _ = ctx.app.emit("auth_error", update.clone());
     }
 }
 
@@ -53,11 +64,14 @@ pub fn handle_chat_event(type_str: &str, update: &Value, ctx: &UpdateContext) {
                 chat_data["_customType"] = Value::String(custom_type.to_string());
 
                 // Проверяем: реально ли пользователь подписан на этот чат
-                let in_main_list = chat["positions"].as_array()
-                    .map(|positions| positions.iter().any(|pos| {
-                        pos["list"]["@type"].as_str().unwrap_or("") == "chatListMain"
-                        && pos["order"].as_str().unwrap_or("0") != "0"
-                    }))
+                let in_main_list = chat["positions"]
+                    .as_array()
+                    .map(|positions| {
+                        positions.iter().any(|pos| {
+                            pos["list"]["@type"].as_str().unwrap_or("") == "chatListMain"
+                                && pos["order"].as_str().unwrap_or("0") != "0"
+                        })
+                    })
                     .unwrap_or(false);
 
                 let is_feed_channel = in_main_list && custom_type == "channel";
@@ -67,7 +81,8 @@ pub fn handle_chat_event(type_str: &str, update: &Value, ctx: &UpdateContext) {
                         ids.insert(chat_id);
                     }
                 }
-                ctx.feed_cache.add_chat(chat_id, is_feed_channel, chat_data.clone());
+                ctx.feed_cache
+                    .add_chat(chat_id, is_feed_channel, chat_data.clone());
 
                 println!(
                     "[TDLib] updateNewChat: {} [{}] main={} feed={}",
@@ -99,10 +114,13 @@ pub fn handle_chat_event(type_str: &str, update: &Value, ctx: &UpdateContext) {
                     if let Ok(mut ids) = ctx.subscribed_ids.write() {
                         ids.remove(&chat_id);
                     }
-                    let _ = ctx.app.emit("tdlib_event", json!({
-                        "@type": "chatRemovedFromFeed",
-                        "chat_id": chat_id
-                    }));
+                    let _ = ctx.app.emit(
+                        "tdlib_event",
+                        json!({
+                            "@type": "chatRemovedFromFeed",
+                            "chat_id": chat_id
+                        }),
+                    );
                 } else {
                     println!("[TDLib] updateChatPosition: {} ДОБАВЛЕН", chat_id);
                     if let Ok(mut ids) = ctx.subscribed_ids.write() {
@@ -121,7 +139,8 @@ pub fn handle_chat_event(type_str: &str, update: &Value, ctx: &UpdateContext) {
             let mut chat_data = update.clone();
             chat_data["_customType"] = Value::String(custom_type.to_string());
 
-            let is_subscribed = ctx.subscribed_ids
+            let is_subscribed = ctx
+                .subscribed_ids
                 .read()
                 .map(|w| w.contains(&chat_id))
                 .unwrap_or(false);
@@ -136,7 +155,8 @@ pub fn handle_chat_event(type_str: &str, update: &Value, ctx: &UpdateContext) {
                 is_feed_channel
             );
 
-            ctx.feed_cache.add_chat(chat_id, is_feed_channel, chat_data.clone());
+            ctx.feed_cache
+                .add_chat(chat_id, is_feed_channel, chat_data.clone());
 
             if is_subscribed {
                 let _ = ctx.app.emit(
@@ -160,9 +180,12 @@ pub fn handle_chat_event(type_str: &str, update: &Value, ctx: &UpdateContext) {
         "chats" => {
             let extra = update["@extra"].as_str().unwrap_or("");
             if let Some(chat_ids) = update["chat_ids"].as_array() {
-                let ids: Vec<i64> =
-                    chat_ids.iter().filter_map(|id| id.as_i64()).collect();
-                println!("[TDLib] getChats (sync): {} чатов, extra={}", ids.len(), extra);
+                let ids: Vec<i64> = chat_ids.iter().filter_map(|id| id.as_i64()).collect();
+                println!(
+                    "[TDLib] getChats (sync): {} чатов, extra={}",
+                    ids.len(),
+                    extra
+                );
 
                 if extra == "sync_chats" {
                     if let Ok(mut whitelist) = ctx.subscribed_ids.write() {
@@ -197,7 +220,8 @@ pub fn handle_chat_event(type_str: &str, update: &Value, ctx: &UpdateContext) {
                     if let Ok(folder_id) = id_str.parse::<i32>() {
                         data["_folder_id"] = Value::Number(folder_id.into());
                         if let Some(included) = update["included_chat_ids"].as_array() {
-                            let mapped_ids: Vec<i64> = included.iter().filter_map(|v| v.as_i64()).collect();
+                            let mapped_ids: Vec<i64> =
+                                included.iter().filter_map(|v| v.as_i64()).collect();
                             ctx.feed_cache.update_folder(folder_id, mapped_ids);
                         }
                     }

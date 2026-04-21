@@ -16,9 +16,10 @@ export function ChannelsPage({ setMediaModal }) {
         hiddenPosts: s.hiddenPosts,
         blacklist: s.blacklist
     })));
-    const { markAllAsRead, feedMode } = useUiStore(useShallow((s) => ({
+    const { markAllAsRead, feedMode, scrollToTopSignal } = useUiStore(useShallow((s) => ({
         markAllAsRead: s.markAllAsRead,
-        feedMode: s.feedMode
+        feedMode: s.feedMode,
+        scrollToTopSignal: s.scrollToTopSignal
     })));
 
     const { groups, isLoading, loadInitial, loadMore, currentFolder } = useFeedStore(useShallow((s) => ({
@@ -98,6 +99,7 @@ export function ChannelsPage({ setMediaModal }) {
                         handleToggleFavorite={handleToggleFavorite}
                         setMediaModal={setMediaModal}
                         loadMore={loadMore}
+                        scrollToTopSignal={scrollToTopSignal}
                     />
                 )}
             </div>
@@ -115,25 +117,34 @@ export function ChannelsPage({ setMediaModal }) {
  */
 const START_INDEX = 100000;
 
-function VirtuosoList({ groupedFeed, handleMarkAsRead, handleToggleFavorite, setMediaModal, loadMore }) {
+function VirtuosoList({ groupedFeed, handleMarkAsRead, handleToggleFavorite, setMediaModal, loadMore, scrollToTopSignal }) {
+    const virtuosoRef = useRef(null);
     const firstItemIndexRef = useRef(START_INDEX);
     const prevFeedRef = useRef(groupedFeed);
 
     const prevFeed = prevFeedRef.current;
     if (groupedFeed !== prevFeed) {
+        // Оптимизированный поиск через Map (O(N) вместо O(N^2))
+        const newKeysMap = new Map();
+        groupedFeed.forEach((item, index) => {
+            const key = item.isAlbum 
+                ? `album_${item.mainPost.chat_id}_${item.mainPost.media_album_id}` 
+                : `${item.mainPost.chat_id}_${item.mainPost.id}`;
+            newKeysMap.set(key, index);
+        });
+
         let firstSurvivingItemIndexOld = -1;
         let firstSurvivingItemIndexNew = -1;
 
         for (let i = 0; i < prevFeed.length; i++) {
             const oldItem = prevFeed[i];
-            const oldKey = oldItem.isAlbum ? `album_${oldItem.mainPost.chat_id}_${oldItem.mainPost.media_album_id}` : `${oldItem.mainPost.chat_id}_${oldItem.mainPost.id}`;
+            const oldKey = oldItem.isAlbum 
+                ? `album_${oldItem.mainPost.chat_id}_${oldItem.mainPost.media_album_id}` 
+                : `${oldItem.mainPost.chat_id}_${oldItem.mainPost.id}`;
 
-            const newIdx = groupedFeed.findIndex(newItem => {
-                const newKey = newItem.isAlbum ? `album_${newItem.mainPost.chat_id}_${newItem.mainPost.media_album_id}` : `${newItem.mainPost.chat_id}_${newItem.mainPost.id}`;
-                return newKey === oldKey;
-            });
+            const newIdx = newKeysMap.get(oldKey);
 
-            if (newIdx !== -1) {
+            if (newIdx !== undefined) {
                 firstSurvivingItemIndexOld = i;
                 firstSurvivingItemIndexNew = newIdx;
                 break;
@@ -148,8 +159,15 @@ function VirtuosoList({ groupedFeed, handleMarkAsRead, handleToggleFavorite, set
         prevFeedRef.current = groupedFeed;
     }
 
+    useEffect(() => {
+        if (scrollToTopSignal > 0 && virtuosoRef.current) {
+            virtuosoRef.current.scrollToIndex({ index: 0, behavior: 'smooth' });
+        }
+    }, [scrollToTopSignal]);
+
     return (
         <Virtuoso
+            ref={virtuosoRef}
             style={{ height: '100%' }}
             firstItemIndex={firstItemIndexRef.current}
             initialTopMostItemIndex={0}

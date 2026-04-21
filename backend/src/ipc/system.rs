@@ -1,6 +1,6 @@
-use tauri::State;
-use serde_json::json;
 use crate::AppState;
+use serde_json::json;
+use tauri::State;
 
 #[tauri::command]
 pub async fn optimize_storage(state: State<'_, AppState>) -> Result<(), String> {
@@ -17,20 +17,16 @@ pub async fn optimize_storage(state: State<'_, AppState>) -> Result<(), String> 
             "exclude_chat_ids": [],
             "return_deleted_file_statistics": false,
             "chat_limit": 0
-        })).await;
+        }))
+        .await;
     }
     Ok(())
 }
 
 #[tauri::command]
-pub async fn check_local_update(
-    app_handle: tauri::AppHandle,
-) -> Result<bool, String> {
+pub async fn check_local_update(app_handle: tauri::AppHandle) -> Result<bool, String> {
     let app_version = app_handle.package_info().version.to_string();
-    let src_package_path = format!(
-        "{}/../frontend/package.json",
-        env!("CARGO_MANIFEST_DIR")
-    );
+    let src_package_path = format!("{}/../frontend/package.json", env!("CARGO_MANIFEST_DIR"));
     if let Ok(content) = std::fs::read_to_string(&src_package_path) {
         if let Ok(json) = serde_json::from_str::<serde_json::Value>(&content) {
             if let Some(src_version) = json["version"].as_str() {

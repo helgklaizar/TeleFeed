@@ -12,6 +12,7 @@ import { t } from '../app/i18n';
  */
 export function AuthPage() {
     const authState = useAuthStore((s) => s.state);
+    const storeError = useAuthStore((s) => s.error);
 
     // Check if credentials exist
     const hasCredentials = () => {
@@ -127,13 +128,26 @@ export function AuthPage() {
         );
     }
 
+    const displayError = error || storeError;
+
     // ── Loading / connecting ──
     if (authState === 'init' || authState === 'wait_params') {
         return (
             <div className="auth-page">
                 <div className="auth-spinner-container">
-                    <div className="auth-spinner" />
-                    <div className="auth-spinner-text">{t('startingApp')}</div>
+                    {!displayError && <div className="auth-spinner" />}
+                    <div className="auth-spinner-text">
+                        {displayError ? `Error: ${displayError}` : t('startingApp')}
+                    </div>
+                    {displayError && (
+                        <button className="auth-submit" style={{ marginTop: '16px' }} onClick={() => { 
+                            setError(''); 
+                            useAuthStore.getState().setError(null);
+                            setNeedsSetup(true); 
+                        }}>
+                            {t('back')}
+                        </button>
+                    )}
                 </div>
             </div>
         );

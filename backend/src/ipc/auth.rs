@@ -1,6 +1,6 @@
-use tauri::State;
-use serde_json::json;
 use crate::AppState;
+use serde_json::json;
+use tauri::State;
 
 #[tauri::command]
 pub async fn init_tdlib(
@@ -18,7 +18,7 @@ pub async fn init_tdlib(
         api_id,
         api_hash,
         state.feed_cache.clone(),
-        state.feed_dirty.clone(),
+        state.feed_notify.clone(),
     );
     *client = Some(manager);
     Ok(())
@@ -28,10 +28,7 @@ pub async fn init_tdlib(
 pub async fn submit_phone(phone: String, state: State<'_, AppState>) -> Result<(), String> {
     let client = state.client.lock().await;
     if let Some(c) = client.as_ref() {
-        c.send(json!({
-            "@type": "setAuthenticationPhoneNumber",
-            "phone_number": phone
-        })).await;
+        crate::services::auth::AuthService::new(c).submit_phone(&phone).await;
     }
     Ok(())
 }
@@ -40,7 +37,7 @@ pub async fn submit_phone(phone: String, state: State<'_, AppState>) -> Result<(
 pub async fn submit_code(code: String, state: State<'_, AppState>) -> Result<(), String> {
     let client = state.client.lock().await;
     if let Some(c) = client.as_ref() {
-        c.send(json!({ "@type": "checkAuthenticationCode", "code": code })).await;
+        crate::services::auth::AuthService::new(c).submit_code(&code).await;
     }
     Ok(())
 }
@@ -49,7 +46,7 @@ pub async fn submit_code(code: String, state: State<'_, AppState>) -> Result<(),
 pub async fn submit_password(password: String, state: State<'_, AppState>) -> Result<(), String> {
     let client = state.client.lock().await;
     if let Some(c) = client.as_ref() {
-        c.send(json!({ "@type": "checkAuthenticationPassword", "password": password })).await;
+        crate::services::auth::AuthService::new(c).submit_password(&password).await;
     }
     Ok(())
 }

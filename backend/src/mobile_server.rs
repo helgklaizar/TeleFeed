@@ -52,12 +52,17 @@ pub async fn start_mobile_server(app: AppHandle) {
             }
         }
         Err(e) => {
-            println!("[Mobile] Не удалось запустить сервер (порт 7474 занят?): {}", e);
+            println!(
+                "[Mobile] Не удалось запустить сервер (порт 7474 занят?): {}",
+                e
+            );
         }
     }
 }
 
-async fn serve_pwa() -> Html<&'static str> { Html(PWA_HTML) }
+async fn serve_pwa() -> Html<&'static str> {
+    Html(PWA_HTML)
+}
 
 async fn serve_manifest() -> impl IntoResponse {
     let manifest = serde_json::json!({
@@ -70,22 +75,25 @@ async fn serve_manifest() -> impl IntoResponse {
         "orientation": "portrait",
         "icons": []
     });
-    ([(axum::http::header::CONTENT_TYPE, "application/manifest+json")], manifest.to_string())
+    (
+        [(
+            axum::http::header::CONTENT_TYPE,
+            "application/manifest+json",
+        )],
+        manifest.to_string(),
+    )
 }
 
 async fn ping() -> Json<Value> {
     Json(json!({ "ok": true, "service": "telefeed-mobile" }))
 }
 
-async fn serve_media(
-    State(app): State<AppHandle>,
-    Path(file_id): Path<i64>,
-) -> impl IntoResponse {
+async fn serve_media(State(app): State<AppHandle>, Path(file_id): Path<i64>) -> impl IntoResponse {
     let state = app.state::<AppState>();
-    
+
     // Пытаемся получить путь, если он ещё не скачан — даём запрос на загрузку
     let mut path_opt = state.feed_cache.get_file_path(file_id);
-    
+
     if path_opt.is_none() {
         if let Some(c) = state.client.lock().await.as_ref() {
             c.send(json!({
@@ -95,7 +103,8 @@ async fn serve_media(
                 "offset": 0,
                 "limit": 0,
                 "synchronous": false
-            })).await;
+            }))
+            .await;
         }
 
         // Ждём до 8 секунд пока файл скачается (раз в 200 мс)
@@ -114,20 +123,31 @@ async fn serve_media(
 
     match tokio::fs::read(&path).await {
         Ok(bytes) => {
-            let mime = if path.ends_with(".jpg") || path.ends_with(".jpeg") { "image/jpeg" }
-                else if path.ends_with(".png") { "image/png" }
-                else if path.ends_with(".webp") { "image/webp" }
-                else if path.ends_with(".gif") { "image/gif" }
-                else if path.ends_with(".mp4") { "video/mp4" }
-                else { "image/jpeg" };
+            let mime = if path.ends_with(".jpg") || path.ends_with(".jpeg") {
+                "image/jpeg"
+            } else if path.ends_with(".png") {
+                "image/png"
+            } else if path.ends_with(".webp") {
+                "image/webp"
+            } else if path.ends_with(".gif") {
+                "image/gif"
+            } else if path.ends_with(".mp4") {
+                "video/mp4"
+            } else {
+                "image/jpeg"
+            };
             (
                 StatusCode::OK,
                 [
                     (axum::http::header::CONTENT_TYPE, mime),
-                    (axum::http::header::CACHE_CONTROL, "public, max-age=31536000"),
+                    (
+                        axum::http::header::CACHE_CONTROL,
+                        "public, max-age=31536000",
+                    ),
                 ],
                 bytes,
-            ).into_response()
+            )
+                .into_response()
         }
         Err(_) => StatusCode::NOT_FOUND.into_response(),
     }
@@ -137,18 +157,23 @@ async fn get_feed(
     State(app): State<AppHandle>,
     Query(params): Query<FeedQuery>,
 ) -> Result<Json<Vec<Value>>, StatusCode> {
-    let folder_id = params.folder.as_deref().filter(|s| *s != "all").and_then(|s| s.parse().ok());
+    let folder_id = params
+        .folder
+        .as_deref()
+        .filter(|s| *s != "all")
+        .and_then(|s| s.parse().ok());
     let limit = params.limit.unwrap_or(30).min(100);
     let state = app.state::<AppState>();
-    let result = state.feed_cache.get_feed(folder_id, limit, params.before_date, params.before_msg_id);
+    let result =
+        state
+            .feed_cache
+            .get_feed(folder_id, limit, params.before_date, params.before_msg_id);
     Ok(Json(result))
 }
 
-async fn mark_read(
-    State(app): State<AppHandle>,
-    Json(body): Json<MarkReadBody>,
-) -> Json<Value> {
-    app.state::<AppState>().feed_cache.remove_messages(body.chat_id, &body.message_ids);
+async fn mark_read(State(app): State<AppHandle>, Json(body): Json<MarkReadBody>) -> Json<Value> {
+    app.state::<AppState>()
+        .feed_cache
+        .remove_messages(body.chat_id, &body.message_ids);
     Json(json!({ "ok": true }))
 }
-

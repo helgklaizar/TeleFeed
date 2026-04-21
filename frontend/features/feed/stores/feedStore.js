@@ -4,13 +4,13 @@ import { ipcGetChannelFeed, ipcGetNewFeedSince, ipcFetchMoreFeedHistory } from '
 /** Переводит selectedFolder ('all' | string) в folderId для invoke */
 const parseFolderId = (id) => (id === 'all' ? null : parseInt(id, 10));
 
+const MAX_GROUPS = 200;
+
 export const useFeedStore = create((set, get) => ({
     groups: [],
     isLoading: false,
     hasMore: true,
     currentFolder: 'all',
-    // startupPhase управляется снаружи через startupStore / uiStore
-    // feedStore больше не знает о UI-состоянии
 
     loadInitial: async (folderId, _retryCount = 0) => {
         set({ currentFolder: folderId, isLoading: true });
@@ -36,7 +36,6 @@ export const useFeedStore = create((set, get) => ({
         set({ isLoading: true });
         try {
             const lastGroup = groups[groups.length - 1];
-            // Используем физически самый старый пост в группе, чтобы не залипнуть внутри альбома
             const oldestPost = lastGroup.posts[lastGroup.posts.length - 1] || lastGroup.mainPost;
 
             const newFeed = await ipcGetChannelFeed(
@@ -47,14 +46,11 @@ export const useFeedStore = create((set, get) => ({
             );
 
             if (newFeed.length === 0) {
-                // Кэш исчерпан — запрашиваем историю с TDLib (только локальная БД)
                 ipcFetchMoreFeedHistory(oldestPost.date).catch(() => { });
-                // Даем TDLib время на загрузку данных в кэш и предотвращаем бесконечный цикл загрузки
                 setTimeout(() => set({ isLoading: false }), 2000);
                 return;
             }
 
-            // Жёсткий фильтр дубликатов на случай сбоев TDLib или гонок
             const existingKeys = new Set(groups.map(g =>
                 g.isAlbum && g.mainPost.media_album_id && g.mainPost.media_album_id !== '0'
                     ? `album_${g.mainPost.chat_id}_${g.mainPost.media_album_id}`
@@ -68,7 +64,11 @@ export const useFeedStore = create((set, get) => ({
                 return !existingKeys.has(k);
             });
 
-            const combined = [...groups, ...uniqueNewFeed];
+            let combined = [...groups, ...uniqueNewFeed];
+            // Truncate to save memory
+            if (combined.length > MAX_GROUPS) {
+                combined = combined.slice(combined.length - MAX_GROUPS);
+            }
             set({ groups: combined, isLoading: false, hasMore: newFeed.length === 50 });
         } catch (e) {
             console.error('[feedStore.loadMore]', e);
@@ -85,7 +85,6 @@ export const useFeedStore = create((set, get) => ({
         }
 
         try {
-            // Используем физически самый новый пост для отсчёта since_date
             const newestDate = groups[0]?.posts?.[0]?.date || groups[0]?.mainPost?.date || 0;
             const newFeed = await ipcGetNewFeedSince(parseFolderId(currentFolder), newestDate);
 
@@ -102,13 +101,18 @@ export const useFeedStore = create((set, get) => ({
                     return !existingKeys.has(k);
                 });
                 if (toAdd.length > 0) {
-                    set({ groups: [...toAdd, ...groups] });
+                    let combined = [...toAdd, ...groups];
+                    if (combined.length > MAX_GROUPS) {
+                        combined = combined.slice(0, MAX_GROUPS);
+                    }
+                    set({ groups: combined });
                 }
             }
         } catch (e) {
             console.error('[feedStore.handleFeedUpdated]', e);
         }
     },
+
 
     removeChannel: (chatId) => set((s) => ({
         groups: s.groups.filter(g => g.mainPost?.chat_id !== chatId)

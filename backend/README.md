@@ -1,76 +1,30 @@
-# Backend (Rust / Tauri)
+# TeleFeed Backend (Rust + TDLib)
 
-Rust-бэкенд приложения telefeed. Выступает мостом между TDLib и React-фронтендом через Tauri IPC.
+The Rust processing layer of the TeleFeed application. It acts as a bridge between TDLib (via FFI) and the React frontend via Tauri IPC.
 
-## Структура
+## 🏗 Directory Structure
+- `lib.rs`: AppState setup and IPC command registration.
+- `tdlib.rs`: TDLib Manager – handles FFI, send-loop, and receive-loop.
+- `handlers.rs`: Update handler translating TDLib events into Tauri emits.
+- `feed_cache.rs`: High-performance in-process feed cache using BTreeMap and LRU logic.
+- `mobile_server.rs`: HTTP server for mobile entry points.
 
-```
-src/
-├── lib.rs               # AppState + setup + регистрация IPC-команд
-├── ipc/
-│   ├── mod.rs
-│   ├── auth.rs          # init_tdlib, submit_phone, submit_code, submit_password
-│   ├── feed.rs          # get_channel_feed, get_new_feed_since, fetch_more_feed_history
-│   ├── chat.rs          # mark_as_read, send_reply, load_more_history, get_chat_info,
-│   │                    # forward_to_stena, get_chat_folder, sync_chats,
-│   │                    # get_contacts, get_user, create_private_chat, leave_chat
-│   ├── files.rs         # download_file, delete_local_file
-│   └── system.rs        # optimize_storage, check_local_update, apply_local_update
-├── tdlib.rs (manager)   # TDLib FFI: клиент, send-loop, receive-loop
-├── handlers.rs          # handle_update() → dispatch по типу события → Tauri emit
-├── feed_cache.rs        # In-process кэш ленты (BTreeMap, pending-буфер, LRU)
-└── mobile_server.rs     # HTTP-сервер для мобильной точки входа
-```
+## ⚡ Event Batching
+To optimize performance, we batch feed updates instead of emitting on every message:
+- `handlers.rs` sets a `feed_dirty` flag.
+- `lib.rs` main loop checks this flag every 500ms and emits a single `feed_updated` event if true.
 
-## AppState
-
-```rust
-pub struct AppState {
-    pub client: Mutex<Option<TdlibManager>>,  // TDLib клиент
-    pub feed_cache: Arc<FeedCache>,            // кэш ленты (shared)
-    pub feed_dirty: Arc<AtomicBool>,           // флаг батчинга feed_updated
-}
-```
-
-## Батчинг событий
-
-Вместо emit на каждое новое сообщение:
-- `handlers.rs` ставит `feed_dirty = true`
-- `lib.rs` setup-loop раз в 500ms проверяет флаг и шлёт `feed_updated` фронтенду
-
-## IPC-команды (краткий справочник)
-
-| Команда | Модуль | Описание |
+## 🕹 IPC Command Reference
+| Command | Module | Description |
 |---|---|---|
-| `init_tdlib` | auth | Инициализация TDLib с api_id/api_hash |
-| `submit_phone` | auth | Отправить номер телефона |
-| `submit_code` | auth | Отправить SMS-код |
-| `submit_password` | auth | Отправить 2FA пароль |
-| `get_channel_feed` | feed | Получить порцию ленты (с пагинацией) |
-| `get_new_feed_since` | feed | Получить только новые посты (инкремент) |
-| `fetch_more_feed_history` | feed | Запросить историю у TDLib |
-| `mark_as_read` | chat | Пометить сообщения прочитанными |
-| `send_reply` | chat | Отправить сообщение (с reply) |
-| `load_more_history` | chat | Загрузить историю чата |
-| `leave_chat` | chat | Отписаться от канала |
-| `sync_chats` | chat | Запросить список чатов |
-| `download_file` | files | Скачать медиафайл TDLib |
-| `optimize_storage` | system | Очистить кэш TDLib |
+| `init_tdlib` | auth | Initialize TDLib with api_id/api_hash |
+| `submit_phone` | auth | Submit phone number |
+| `submit_code` | auth | Submit SMS code |
+| `get_channel_feed` | feed | Get feed slice (paginated) |
+| `sync_chats` | chat | Sync chat list from Telegram |
+| `download_file` | files | Download media files via TDLib |
 
-## Сборка
-
-```bash
-# Dev
-npm run tauri dev
-
-# Production
-npm run tauri build
-# → backend/target/release/bundle/macos/TeleFeed.app
-```
-
-## FeedCache
-
-- Хранит до 1500 сообщений в `BTreeMap<(date, msg_id), Value>`
-- Пагинация O(log N) через `.range(..upper).rev()`
-- Pending-буфер для race condition при старте (сообщения до регистрации чата)
-- Группировка альбомов при `get_feed()`
+## 📦 Feed Cache Features
+- Stores up to 1500 messages in a `BTreeMap`.
+- O(log N) pagination via `.range()`.
+- Album grouping logic for unified feed display.

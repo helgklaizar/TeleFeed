@@ -37,7 +37,7 @@ function broadcastVolume(v) {
  * - Автопауза при сворачивании окна (visibilitychange)
  * - Progress bar
  */
-export function VideoPlayer({ src, style = {}, className = '', onClick, onLightboxRequest }) {
+export function VideoPlayer({ src, poster, style = {}, className = '', onClick, onLightboxRequest }) {
     const videoRef = useRef(null);
     const containerRef = useRef(null);
     const progressRef = useRef(null);
@@ -226,6 +226,7 @@ export function VideoPlayer({ src, style = {}, className = '', onClick, onLightb
                     src={src}
                     className="vp-video"
                     preload="metadata"
+                    poster={poster}
                     playsInline
                     muted={muted}
                     onClick={togglePlay}

@@ -33,6 +33,9 @@
     "targets": [
       "app"
     ],
+    "resources": [
+      "../frontend/node_modules/@prebuilt-tdlib/darwin-arm64/libtdjson.dylib"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

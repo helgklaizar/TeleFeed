@@ -1,6 +1,6 @@
-pub mod common;
 pub mod auth;
 pub mod chats;
+pub mod common;
 pub mod feed;
 
 use serde_json::Value;
@@ -21,21 +21,15 @@ pub fn handle_update(update: &Value, ctx: &UpdateContext) {
 
     match type_str {
         "updateAuthorizationState" => auth::handle_auth(update, ctx),
-        
+
         "ok" => chats::handle_ok(update, ctx),
 
-        "updateNewChat"
-        | "updateChatPosition"
-        | "chat"
-        | "chats"
-        | "chatFolder"
-        | "updateChatFolders"
-        | "user" => chats::handle_chat_event(type_str, update, ctx),
+        "updateNewChat" | "updateChatPosition" | "chat" | "chats" | "chatFolder"
+        | "updateChatFolders" | "user" => chats::handle_chat_event(type_str, update, ctx),
 
-        "updateNewMessage"
-        | "updateMessageContent"
-        | "messages"
-        | "updateFile" => feed::handle_feed_event(type_str, update, ctx),
+        "updateNewMessage" | "updateMessageContent" | "messages" | "updateFile" => {
+            feed::handle_feed_event(type_str, update, ctx)
+        }
 
         _ => {
             let _ = ctx.app.emit("tdlib_event", update.clone());

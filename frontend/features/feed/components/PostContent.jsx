@@ -29,9 +29,11 @@ export function PostContent({ message, onMediaClick }) {
         const best = c.photo.sizes[c.photo.sizes.length - 1];
         const caption = c.caption?.text || '';
         const captionEnts = c.caption?.entities || [];
+        const aspectRatio = (best.width && best.height) ? `${best.width} / ${best.height}` : undefined;
+
         return (
             <div className="media-overlay-container">
-                <div className="post-media">
+                <div className="post-media" style={{ aspectRatio }}>
                     <MediaFile
                         fileId={best.photo.id}
                         initialFile={best.photo}
@@ -43,6 +45,7 @@ export function PostContent({ message, onMediaClick }) {
                         })}
                     />
                 </div>
+
                 {caption && (
                     <div className="caption-overlay">
                         <div className="caption-spacer" />
@@ -58,12 +61,18 @@ export function PostContent({ message, onMediaClick }) {
     if (t === 'messageVideo' && c.video?.video) {
         const caption = c.caption?.text || '';
         const captionEnts = c.caption?.entities || [];
+        const aspectRatio = (c.video.width && c.video.height) ? `${c.video.width} / ${c.video.height}` : undefined;
+        let posterStr = undefined;
+        if (c.video.minithumbnail?.data) {
+            posterStr = `data:image/jpeg;base64,${c.video.minithumbnail.data}`;
+        }
 
         return (
             <div className="media-overlay-container">
-                <div className="post-media">
-                    <MediaFile fileId={c.video.video.id} initialFile={c.video.video} type="video" className="media-file" />
+                <div className="post-media" style={{ aspectRatio }}>
+                    <MediaFile fileId={c.video.video.id} initialFile={c.video.video} type="video" poster={posterStr} className="media-file" />
                 </div>
+
                 {caption && (
                     <div className="caption-overlay">
                         <div className="caption-spacer" />
@@ -79,12 +88,14 @@ export function PostContent({ message, onMediaClick }) {
     if (t === 'messageAnimation' && c.animation?.animation) {
         const caption = c.caption?.text || '';
         const captionEnts = c.caption?.entities || [];
+        const aspectRatio = (c.animation.width && c.animation.height) ? `${c.animation.width} / ${c.animation.height}` : undefined;
 
         return (
             <div className="media-overlay-container">
-                <div className="post-media">
+                <div className="post-media" style={{ aspectRatio }}>
                     <MediaFile fileId={c.animation.animation.id} initialFile={c.animation.animation} type="animation" className="media-file" />
                 </div>
+
                 {caption && (
                     <div className="caption-overlay">
                         <div className="caption-spacer" />
@@ -140,15 +151,26 @@ export function PostContent({ message, onMediaClick }) {
         );
     }
 
-    // Fallback для неподдерживаемых типов (стикеры, документы, голосовые и т.д.)
-    const fallbackText = getTextFromContent(c);
-    if (fallbackText) {
-        return (
-            <div className="post-content-placeholder">
-                <span>{fallbackText}</span>
+    // Fallback для неподдерживаемых типов (стикеры, документы, голосовые, аудио и т.д.)
+    let fallbackLabel = '';
+    if (t === 'messageSticker') fallbackLabel = '🖼 Sticker';
+    else if (t === 'messageDocument') fallbackLabel = '📄 Document';
+    else if (t === 'messageVoiceNote') fallbackLabel = '🎤 Voice Message';
+    else if (t === 'messageVideoNote') fallbackLabel = '📹 Video Message';
+    else if (t === 'messageAudio') fallbackLabel = '🎵 Audio';
+    else fallbackLabel = `📎 Attachment`;
+
+    const captionText = c.caption?.text || c.text?.text || '';
+    const captionEnts = c.caption?.entities || c.text?.entities || [];
+
+    return (
+        <div style={{ padding: '0 16px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div className="forward-badge" style={{ margin: 0, marginTop: '8px', alignSelf: 'flex-start' }}>
+                <span className="forward-badge-name">{fallbackLabel}</span>
             </div>
-        );
-    }
+            {captionText && <ExpandableText text={captionText} entities={captionEnts} />}
+        </div>
+    );
 
     return null;
 }

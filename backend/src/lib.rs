@@ -1,29 +1,29 @@
-use tokio::sync::Mutex;
-use tauri::Emitter;
 use serde_json::json;
 use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, Ordering};
+use tauri::Emitter;
+use tokio::sync::{Mutex, Notify};
 
-mod tdlib;
 mod feed_cache;
-mod mobile_server;
 mod ipc;
+mod mobile_server;
+mod models;
+mod services;
+mod tdlib;
 
-use tdlib::TdlibManager;
 use feed_cache::FeedCache;
+use tdlib::TdlibManager;
 
 pub struct AppState {
     pub client: Mutex<Option<TdlibManager>>,
     pub feed_cache: Arc<FeedCache>,
-    /// Флаг: пришли новые посты — нужно уведомить фронтенд.
-    /// Опрашивается каждые 500ms и сбрасывается.
-    pub feed_dirty: Arc<AtomicBool>,
+    /// Уведомление: пришли новые посты — нужно уведомить фронтенд.
+    pub feed_notify: Arc<Notify>,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let feed_dirty: Arc<AtomicBool> = Arc::new(AtomicBool::new(false));
-    let feed_dirty_for_setup = feed_dirty.clone();
+    let feed_notify: Arc<Notify> = Arc::new(Notify::new());
+    let feed_notify_for_setup = feed_notify.clone();
 
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
@@ -31,7 +31,7 @@ pub fn run() {
         .manage(AppState {
             client: Mutex::new(None),
             feed_cache: Arc::new(FeedCache::new()),
-            feed_dirty,
+            feed_notify,
         })
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
@@ -57,15 +57,14 @@ pub fn run() {
                 mobile_server::start_mobile_server(app_handle).await;
             });
 
-            // Батчинг feed_updated: опрашиваем флаг каждые 500ms вместо emit-спама
+            // Батчинг feed_updated с Notify и дебаунсом 150ms.
             let app_handle2 = app.handle().clone();
-            let dirty = feed_dirty_for_setup;
+            let notify = feed_notify_for_setup;
             tauri::async_runtime::spawn(async move {
                 loop {
-                    tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
-                    if dirty.swap(false, Ordering::Relaxed) {
-                        app_handle2.emit("feed_updated", json!({})).ok();
-                    }
+                    notify.notified().await;
+                    app_handle2.emit("feed_updated", json!({})).ok();
+                    tokio::time::sleep(tokio::time::Duration::from_millis(150)).await;
                 }
             });
 
