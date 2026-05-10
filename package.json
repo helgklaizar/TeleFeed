@@ -6,6 +6,10 @@
     "tauri": "cd backend && ../frontend/node_modules/.bin/tauri",
     "install": "cd frontend && npm install",
     "build": "cd backend && ../frontend/node_modules/.bin/tauri build",
-    "test": "cd frontend && npm test"
+    "test": "cd frontend && npm test",
+    "lint:fsd": "depcruise src packages apps --config .dependency-cruiser.cjs"
+  },
+  "devDependencies": {
+    "dependency-cruiser": "^17.3.10"
   }
 }
