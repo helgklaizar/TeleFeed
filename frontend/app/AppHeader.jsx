@@ -68,10 +68,16 @@ export function AppHeader() {
 
     // Toast после успешного апдейта
     useEffect(() => {
+        let timer;
         if (localStorage.getItem('tgfeed_awaiting_update') === 'true') {
             localStorage.removeItem('tgfeed_awaiting_update');
-            setTimeout(() => showToast('Апдейт прошел удачно!', { type: 'success', duration: 3000 }), 500);
+            timer = setTimeout(() => showToast('Апдейт прошел удачно!', { type: 'success', duration: 3000 }), 500);
         }
+        return () => {
+            if (timer) {
+                clearTimeout(timer);
+            }
+        };
     }, []);
 
     const handleApplyUpdate = async (e) => {

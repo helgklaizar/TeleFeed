@@ -1,5 +1,4 @@
 use serde_json::Value;
-use std::sync::atomic::Ordering;
 use tauri::Emitter;
 
 use super::common::UpdateContext;

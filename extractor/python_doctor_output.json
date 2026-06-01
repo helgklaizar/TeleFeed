@@ -1,0 +1,187 @@
+{
+  "version": "2026.5.11",
+  "path": "/Users/klaizar/Projects/prod/tele-feed/extractor",
+  "score": 82,
+  "label": "Good",
+  "categories": {
+    "security": {
+      "score": 23,
+      "max": 25,
+      "deduction": 2.0,
+      "error": null,
+      "findings": [
+        {
+          "rule": "bandit/B404",
+          "message": "Consider possible security implications associated with the subprocess module.",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/ext_groups.py",
+          "line": 6,
+          "severity": "low"
+        },
+        {
+          "rule": "bandit/B603",
+          "message": "subprocess call - check for execution of untrusted input.",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/ext_groups.py",
+          "line": 84,
+          "severity": "low"
+        },
+        {
+          "rule": "bandit/B404",
+          "message": "Consider possible security implications associated with the subprocess module.",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/extract_folder.py",
+          "line": 5,
+          "severity": "low"
+        },
+        {
+          "rule": "bandit/B603",
+          "message": "subprocess call - check for execution of untrusted input.",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/extract_folder.py",
+          "line": 80,
+          "severity": "low"
+        }
+      ]
+    },
+    "lint": {
+      "score": 19,
+      "max": 20,
+      "deduction": 1.0,
+      "error": null,
+      "findings": [
+        {
+          "rule": "ruff/F541",
+          "message": "f-string without any placeholders",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/extract_folder.py",
+          "line": 73,
+          "severity": "error"
+        }
+      ]
+    },
+    "complexity": {
+      "score": 12,
+      "max": 15,
+      "deduction": 3,
+      "error": null,
+      "findings": [
+        {
+          "rule": "radon/CC23",
+          "message": "Function 'main' has complexity 23",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/extract_folder.py",
+          "line": 13,
+          "severity": "medium"
+        },
+        {
+          "rule": "radon/CC31",
+          "message": "Function 'main' has complexity 31",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/ext_groups.py",
+          "line": 13,
+          "severity": "medium"
+        }
+      ]
+    },
+    "structure": {
+      "score": 0,
+      "max": 10,
+      "deduction": 10,
+      "error": null,
+      "findings": [
+        {
+          "rule": "structure/no-tests",
+          "message": "No tests directory or test files found",
+          "file": "",
+          "line": 0,
+          "severity": "medium"
+        },
+        {
+          "rule": "structure/type-hints",
+          "message": "No type hints found in 100% of files",
+          "file": "",
+          "line": 0,
+          "severity": "medium"
+        },
+        {
+          "rule": "structure/no-readme",
+          "message": "No README found",
+          "file": "",
+          "line": 0,
+          "severity": "medium"
+        },
+        {
+          "rule": "structure/no-license",
+          "message": "No LICENSE file found",
+          "file": "",
+          "line": 0,
+          "severity": "medium"
+        },
+        {
+          "rule": "structure/no-gitignore",
+          "message": "No .gitignore found",
+          "file": "",
+          "line": 0,
+          "severity": "medium"
+        },
+        {
+          "rule": "structure/no-linter-config",
+          "message": "No linter configuration found",
+          "file": "",
+          "line": 0,
+          "severity": "medium"
+        },
+        {
+          "rule": "structure/no-type-checker",
+          "message": "No type checker configuration found",
+          "file": "",
+          "line": 0,
+          "severity": "medium"
+        }
+      ]
+    },
+    "imports": {
+      "score": 5,
+      "max": 5,
+      "deduction": 0,
+      "error": null,
+      "findings": []
+    },
+    "exceptions": {
+      "score": 10,
+      "max": 10,
+      "deduction": 0,
+      "error": null,
+      "findings": []
+    },
+    "zen": {
+      "score": 13,
+      "max": 15,
+      "deduction": 2,
+      "error": null,
+      "findings": [
+        {
+          "rule": "zen/deep-nesting",
+          "message": "Function 'main' has nesting depth 6 (max 5)",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/ext_groups.py",
+          "line": 13,
+          "severity": "medium"
+        },
+        {
+          "rule": "zen/long-function",
+          "message": "Function 'main' is 79 lines (max 75)",
+          "file": "/Users/klaizar/Projects/prod/tele-feed/extractor/ext_groups.py",
+          "line": 13,
+          "severity": "medium"
+        }
+      ]
+    }
+  },
+  "delta": {
+    "total": 7,
+    "categories": {
+      "security": 2,
+      "lint": 5,
+      "complexity": 0,
+      "structure": 0,
+      "imports": 0,
+      "exceptions": 0,
+      "zen": 0
+    },
+    "has_previous": true
+  }
+}

@@ -1,0 +1,966 @@
+{
+  "version": 1,
+  "config_hash": "0b3185d680742e6c",
+  "files": {
+    "src/tdlib/handlers/chats.rs": {
+      "hash": "c2664f08bfdd936c",
+      "diagnostics": [
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 21,
+          "column": 22
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 197,
+          "column": 58
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 244,
+          "column": 49
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 12,
+          "column": 47
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 13,
+          "column": 31
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 43,
+          "column": 51
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 53,
+          "column": 48
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 63,
+          "column": 42
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 85,
+          "column": 67
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 97,
+          "column": 46
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 132,
+          "column": 56
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 139,
+          "column": 40
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 159,
+          "column": 63
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 204,
+          "column": 39
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 217,
+          "column": 35
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 234,
+          "column": 56
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 256,
+          "column": 47
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 260,
+          "column": 60
+        },
+        {
+          "file_path": "src/tdlib/handlers/chats.rs",
+          "rule": "high-cyclomatic-complexity",
+          "category": "architecture",
+          "severity": "warning",
+          "message": "Function `handle_chat_event` has cyclomatic complexity of 36 (threshold: 15)",
+          "help": "Extract complex branches into helper functions, use early returns, simplify match arms",
+          "line": 56,
+          "column": 8
+        }
+      ]
+    },
+    "src/tdlib/handlers/common.rs": {
+      "hash": "84bf56f79933fc53",
+      "diagnostics": []
+    },
+    "src/services/auth.rs": {
+      "hash": "39d8e2cf8abfccf7",
+      "diagnostics": []
+    },
+    "src/services/mod.rs": {
+      "hash": "8618b1b7a6e1c846",
+      "diagnostics": []
+    },
+    "src/mobile_server.rs": {
+      "hash": "e0b6f6cc2753bef8",
+      "diagnostics": []
+    },
+    "src/ipc/feed.rs": {
+      "hash": "0d5d69c3be1cf3be",
+      "diagnostics": []
+    },
+    "src/lib.rs": {
+      "hash": "1000d9a8d3a7c0fa",
+      "diagnostics": [
+        {
+          "file_path": "src/lib.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .expect() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 104,
+          "column": 10
+        },
+        {
+          "file_path": "src/lib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 26,
+          "column": 45
+        },
+        {
+          "file_path": "src/lib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 40,
+          "column": 50
+        },
+        {
+          "file_path": "src/lib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 55,
+          "column": 43
+        },
+        {
+          "file_path": "src/lib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 61,
+          "column": 44
+        }
+      ]
+    },
+    "src/services/chat.rs": {
+      "hash": "d9a285fa11c15f38",
+      "diagnostics": []
+    },
+    "src/services/feed.rs": {
+      "hash": "2db35b2eb81db2db",
+      "diagnostics": [
+        {
+          "file_path": "src/services/feed.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 28,
+          "column": 18
+        },
+        {
+          "file_path": "src/services/feed.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 32,
+          "column": 65
+        }
+      ]
+    },
+    "src/tdlib/handlers/feed.rs": {
+      "hash": "499118113836c410",
+      "diagnostics": [
+        {
+          "file_path": "src/tdlib/handlers/feed.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 12,
+          "column": 48
+        },
+        {
+          "file_path": "src/tdlib/handlers/feed.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 22,
+          "column": 60
+        },
+        {
+          "file_path": "src/tdlib/handlers/feed.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 32,
+          "column": 74
+        },
+        {
+          "file_path": "src/tdlib/handlers/feed.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 35,
+          "column": 56
+        },
+        {
+          "file_path": "src/tdlib/handlers/feed.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "warning",
+          "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 42,
+          "column": 52
+        },
+        {
+          "file_path": "src/tdlib/handlers/feed.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 49,
+          "column": 56
+        },
+        {
+          "file_path": "src/tdlib/handlers/feed.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 62,
+          "column": 56
+        }
+      ]
+    },
+    "src/ipc/system.rs": {
+      "hash": "b703787ca10a3632",
+      "diagnostics": []
+    },
+    "src/tdlib/handlers/auth.rs": {
+      "hash": "7cd1dae7fdf2ffd5",
+      "diagnostics": []
+    },
+    "src/tdlib/handlers/mod.rs": {
+      "hash": "2e826c71d8a4148e",
+      "diagnostics": []
+    },
+    "src/main.rs": {
+      "hash": "5c62da190b23151c",
+      "diagnostics": []
+    },
+    "src/ipc/mod.rs": {
+      "hash": "b41dea4cb5474eed",
+      "diagnostics": []
+    },
+    "src/ipc/files.rs": {
+      "hash": "aaeb6a336f0d4966",
+      "diagnostics": []
+    },
+    "src/ipc/auth.rs": {
+      "hash": "f7d9b306fcbe06ba",
+      "diagnostics": []
+    },
+    "src/feed_cache.rs": {
+      "hash": "77cea27a5f2647e8",
+      "diagnostics": [
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 42,
+          "column": 10
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 40,
+          "column": 10
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 63,
+          "column": 37
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 68,
+          "column": 32
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 74,
+          "column": 33
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 77,
+          "column": 40
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 82,
+          "column": 47
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 94,
+          "column": 36
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 97,
+          "column": 14
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 102,
+          "column": 30
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 109,
+          "column": 36
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 111,
+          "column": 47
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 122,
+          "column": 39
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 156,
+          "column": 47
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 180,
+          "column": 43
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 198,
+          "column": 18
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 214,
+          "column": 43
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 215,
+          "column": 46
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 308,
+          "column": 43
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 309,
+          "column": 46
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 413,
+          "column": 31
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "warning",
+          "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 254,
+          "column": 54
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "warning",
+          "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 267,
+          "column": 46
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "warning",
+          "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 338,
+          "column": 54
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "warning",
+          "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 352,
+          "column": 46
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 397,
+          "column": 14
+        },
+        {
+          "file_path": "src/feed_cache.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 400,
+          "column": 36
+        }
+      ]
+    },
+    "src/ipc/chat.rs": {
+      "hash": "89022f324942d5a8",
+      "diagnostics": []
+    },
+    "src/tdlib.rs": {
+      "hash": "fda328812ed24183",
+      "diagnostics": [
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 85,
+          "column": 61
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 87,
+          "column": 59
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 89,
+          "column": 62
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 91,
+          "column": 62
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unwrap-in-production",
+          "category": "error-handling",
+          "severity": "warning",
+          "message": "Use of .unwrap() in production code",
+          "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+          "line": 100,
+          "column": 68
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 29,
+          "column": 26
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 31,
+          "column": 36
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 36,
+          "column": 46
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 103,
+          "column": 47
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 104,
+          "column": 46
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 105,
+          "column": 39
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 108,
+          "column": 50
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 109,
+          "column": 52
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 110,
+          "column": 49
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 112,
+          "column": 49
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "excessive-clone",
+          "category": "performance",
+          "severity": "info",
+          "message": "`.clone()` in non-loop context (cold path)",
+          "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+          "line": 151,
+          "column": 50
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 68,
+          "column": 23
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 85,
+          "column": 17
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 87,
+          "column": 17
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 89,
+          "column": 17
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 91,
+          "column": 17
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 94,
+          "column": 30
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 100,
+          "column": 13
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 119,
+          "column": 31
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 121,
+          "column": 37
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 144,
+          "column": 17
+        },
+        {
+          "file_path": "src/tdlib.rs",
+          "rule": "unsafe-block-audit",
+          "category": "security",
+          "severity": "warning",
+          "message": "unsafe block — review for memory safety",
+          "help": "Document the safety invariant with a // SAFETY: comment",
+          "line": 162,
+          "column": 25
+        }
+      ]
+    },
+    "src/models.rs": {
+      "hash": "d5bfb34959b656ee",
+      "diagnostics": []
+    }
+  }
+}

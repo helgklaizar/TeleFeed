@@ -27,9 +27,9 @@ pub async fn optimize_storage(state: State<'_, AppState>) -> Result<(), String> 
 pub async fn check_local_update(app_handle: tauri::AppHandle) -> Result<bool, String> {
     let app_version = app_handle.package_info().version.to_string();
     let src_package_path = format!("{}/../frontend/package.json", env!("CARGO_MANIFEST_DIR"));
-    if let Ok(content) = std::fs::read_to_string(&src_package_path) {
+    if let Ok(content) = tokio::fs::read_to_string(&src_package_path).await {
         if let Ok(json) = serde_json::from_str::<serde_json::Value>(&content) {
-            if let Some(src_version) = json["version"].as_str() {
+            if let Some(src_version) = json.get("version").and_then(|v| v.as_str()) {
                 return Ok(src_version != app_version);
             }
         }

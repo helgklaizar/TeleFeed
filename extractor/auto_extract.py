@@ -1,5 +1,4 @@
 import sys
-import asyncio
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
 

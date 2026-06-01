@@ -1,0 +1,3316 @@
+{
+  "diagnostics": [
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::cargo_common_metadata",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "package `telefeed` is missing `either package.license or package.license_file` metadata",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cargo_common_metadata",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::cargo_common_metadata",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "package `telefeed` is missing `package.categories` metadata",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cargo_common_metadata",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::cargo_common_metadata",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "package `telefeed` is missing `package.keywords` metadata",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cargo_common_metadata",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::cargo_common_metadata",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "package `telefeed` is missing `package.repository` metadata",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cargo_common_metadata",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `base64`: 0.21.7, 0.22.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `bitflags`: 1.3.2, 2.11.0",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `cookie_store`: 0.21.1, 0.22.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `core-foundation`: 0.9.4, 0.10.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `hashbrown`: 0.12.3, 0.15.5, 0.16.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `heck`: 0.4.1, 0.5.0",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `indexmap`: 1.9.3, 2.13.0",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `libloading`: 0.7.4, 0.9.0",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `phf_macros`: 0.10.0, 0.11.3",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `phf_shared`: 0.8.0, 0.10.0, 0.11.3",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `phf`: 0.8.0, 0.10.1, 0.11.3",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `proc-macro-crate`: 1.3.1, 2.0.2, 3.4.0",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `reqwest`: 0.12.28, 0.13.2",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `schemars`: 0.8.22, 0.9.0, 1.2.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `serde_spanned`: 0.6.9, 1.0.4",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `siphasher`: 0.3.11, 1.0.2",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `syn`: 1.0.109, 2.0.117",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `thiserror-impl`: 1.0.69, 2.0.18",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `thiserror`: 1.0.69, 2.0.18",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `toml_datetime`: 0.6.3, 0.7.5+spec-1.1.0",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `toml_edit`: 0.19.15, 0.20.2, 0.23.10+spec-1.0.0",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `tower-http`: 0.5.2, 0.6.8",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows-core`: 0.61.2, 0.62.2",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows-link`: 0.1.3, 0.2.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows-result`: 0.3.4, 0.4.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows-strings`: 0.4.2, 0.5.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows-sys`: 0.45.0, 0.52.0, 0.59.0, 0.60.2, 0.61.2",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows-targets`: 0.42.2, 0.52.6, 0.53.5",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_aarch64_gnullvm`: 0.42.2, 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_aarch64_msvc`: 0.42.2, 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_i686_gnu`: 0.42.2, 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_i686_gnullvm`: 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_i686_msvc`: 0.42.2, 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_x86_64_gnu`: 0.42.2, 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_x86_64_gnullvm`: 0.42.2, 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `windows_x86_64_msvc`: 0.42.2, 0.52.6, 0.53.1",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "/Users/klaizar/Projects/prod/tele-feed/backend/clippy.toml",
+      "rule": "clippy::multiple_crate_versions",
+      "category": "cargo",
+      "severity": "warning",
+      "message": "multiple versions for dependency `winnow`: 0.5.40, 0.7.14",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#multiple_crate_versions",
+      "line": 1,
+      "column": 1
+    },
+    {
+      "file_path": "Cargo.toml",
+      "rule": "missing-msrv",
+      "category": "cargo",
+      "severity": "info",
+      "message": "No `rust-version` field in Cargo.toml — MSRV not declared",
+      "help": "Add `rust-version = \"1.XX\"` to Cargo.toml for compatibility guarantees"
+    },
+    {
+      "file_path": "Cargo.toml",
+      "rule": "skipped-pass",
+      "category": "cargo",
+      "severity": "info",
+      "message": "No coverage report found. Generate one with: cargo llvm-cov --lcov --output-path target/coverage/lcov.info"
+    },
+    {
+      "file_path": "Cargo.toml",
+      "rule": "skipped-pass",
+      "category": "cargo",
+      "severity": "info",
+      "message": "cargo-audit is not installed — CVE scanning disabled. Install with: cargo install cargo-audit"
+    },
+    {
+      "file_path": "Cargo.toml",
+      "rule": "skipped-pass",
+      "category": "cargo",
+      "severity": "info",
+      "message": "cargo-deny is not installed — supply-chain checking disabled. Install with: cargo install cargo-deny"
+    },
+    {
+      "file_path": "Cargo.toml",
+      "rule": "skipped-pass",
+      "category": "cargo",
+      "severity": "info",
+      "message": "cargo-geiger is not installed — unsafe dependency auditing disabled. Install with: cargo install cargo-geiger"
+    },
+    {
+      "file_path": "Cargo.toml",
+      "rule": "skipped-pass",
+      "category": "cargo",
+      "severity": "info",
+      "message": "cargo-machete is not installed — unused dependency detection disabled. Install with: cargo install cargo-machete"
+    },
+    {
+      "file_path": "Cargo.toml",
+      "rule": "skipped-pass",
+      "category": "cargo",
+      "severity": "info",
+      "message": "cargo-semver-checks is not installed — semver violation detection disabled. Install with: cargo install cargo-semver-checks"
+    },
+    {
+      "file_path": "build.rs",
+      "rule": "clippy::semicolon_if_nothing_returned",
+      "category": "style",
+      "severity": "warning",
+      "message": "consider adding a `;` to the last statement for consistent formatting",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#semicolon_if_nothing_returned",
+      "line": 2,
+      "column": 5
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::assign_op_pattern",
+      "category": "style",
+      "severity": "warning",
+      "message": "manual implementation of an assign operation",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#assign_op_pattern",
+      "line": 44,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::cloned_instead_of_copied",
+      "category": "performance",
+      "severity": "warning",
+      "message": "used `cloned` where `copied` could be used instead",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cloned_instead_of_copied",
+      "line": 412,
+      "column": 52
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 18,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 18,
+      "column": 25
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 21,
+      "column": 16
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 24,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 24,
+      "column": 56
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 24,
+      "column": 70
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 27,
+      "column": 16
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 27,
+      "column": 33
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 31,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 192,
+      "column": 32
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 306,
+      "column": 39
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::if_not_else",
+      "category": "style",
+      "severity": "warning",
+      "message": "unnecessary `!=` operation",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#if_not_else",
+      "line": 250,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::if_not_else",
+      "category": "style",
+      "severity": "warning",
+      "message": "unnecessary `!=` operation",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#if_not_else",
+      "line": 334,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 106,
+      "column": 23
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 127,
+      "column": 24
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 147,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 151,
+      "column": 22
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 152,
+      "column": 20
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 270,
+      "column": 40
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 294,
+      "column": 32
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 341,
+      "column": 44
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 355,
+      "column": 40
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 375,
+      "column": 32
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 391,
+      "column": 25
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 393,
+      "column": 24
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 394,
+      "column": 24
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 396,
+      "column": 25
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 400,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 111,
+      "column": 21
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 156,
+      "column": 21
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 215,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 308,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 309,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::single_option_map",
+      "category": "style",
+      "severity": "warning",
+      "message": "`fn` that only maps over argument",
+      "help": "move the `.map` to the caller or to an `_opt` function",
+      "line": 194,
+      "column": 5
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 251,
+      "column": 29
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 335,
+      "column": 29
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on an `Option` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 37,
+      "column": 22
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 63,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 68,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 74,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 77,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 82,
+      "column": 26
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 94,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 95,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 102,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 109,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 111,
+      "column": 26
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 122,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 156,
+      "column": 25
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 180,
+      "column": 21
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 196,
+      "column": 13
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 214,
+      "column": 22
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 215,
+      "column": 23
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 308,
+      "column": 22
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 309,
+      "column": 23
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 413,
+      "column": 9
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "warning",
+      "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 254,
+      "column": 54
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "warning",
+      "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 267,
+      "column": 46
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "warning",
+      "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 338,
+      "column": 54
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "warning",
+      "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 352,
+      "column": 46
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 397,
+      "column": 14
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 400,
+      "column": 36
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 40,
+      "column": 10
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 42,
+      "column": 10
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 63,
+      "column": 37
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 68,
+      "column": 32
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 74,
+      "column": 33
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 77,
+      "column": 40
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 82,
+      "column": 47
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 94,
+      "column": 36
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 97,
+      "column": 14
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 102,
+      "column": 30
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 109,
+      "column": 36
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 111,
+      "column": 47
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 122,
+      "column": 39
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 156,
+      "column": 47
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 180,
+      "column": 43
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 198,
+      "column": 18
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 214,
+      "column": 43
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 215,
+      "column": 46
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 308,
+      "column": 43
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 309,
+      "column": 46
+    },
+    {
+      "file_path": "src/feed_cache.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 413,
+      "column": 31
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 12,
+      "column": 13
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 29,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 38,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 47,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 11,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 28,
+      "column": 73
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 37,
+      "column": 71
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 46,
+      "column": 79
+    },
+    {
+      "file_path": "src/ipc/auth.rs",
+      "rule": "unused_imports",
+      "category": "style",
+      "severity": "warning",
+      "message": "unused import: `serde_json::json`",
+      "help": "remove the whole `use` item",
+      "line": 2,
+      "column": 5
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 10,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 24,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 37,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 46,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 60,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 69,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 78,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 87,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 96,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 105,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 114,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 9,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 23,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 36,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 45,
+      "column": 73
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 59,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 68,
+      "column": 77
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 77,
+      "column": 56
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 86,
+      "column": 58
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 95,
+      "column": 68
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 104,
+      "column": 79
+    },
+    {
+      "file_path": "src/ipc/chat.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 113,
+      "column": 70
+    },
+    {
+      "file_path": "src/ipc/feed.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 13,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/feed.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 32,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/feed.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 12,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/feed.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 23,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/feed.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 31,
+      "column": 6
+    },
+    {
+      "file_path": "src/ipc/feed.rs",
+      "rule": "unused_variables",
+      "category": "style",
+      "severity": "warning",
+      "message": "unused variable: `fallback`",
+      "help": "if this is intentional, prefix it with an underscore",
+      "line": 14,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/files.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 7,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/files.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 24,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/files.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 6,
+      "column": 73
+    },
+    {
+      "file_path": "src/ipc/files.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 23,
+      "column": 77
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "blocking-in-async",
+      "category": "async",
+      "severity": "error",
+      "message": "Blocking call `std::fs::read_to_string` inside async context",
+      "help": "Use `tokio::fs::read_to_string` instead",
+      "line": 30,
+      "column": 26
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::exit",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "usage of `process::exit`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#exit",
+      "line": 67,
+      "column": 5
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 32,
+      "column": 40
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 7,
+      "column": 9
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 45,
+      "column": 19
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 46,
+      "column": 26
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 48,
+      "column": 23
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 60,
+      "column": 14
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 65,
+      "column": 22
+    },
+    {
+      "file_path": "src/ipc/system.rs",
+      "rule": "clippy::unreachable",
+      "category": "style",
+      "severity": "warning",
+      "message": "usage of the `unreachable!` macro",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unreachable",
+      "line": 6,
+      "column": 62
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "clippy::exit",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "usage of `process::exit`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#exit",
+      "line": 49,
+      "column": 21
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "clippy::exit",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "usage of `process::exit`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#exit",
+      "line": 103,
+      "column": 14
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "clippy::expect_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `expect()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#expect_used",
+      "line": 28,
+      "column": 5
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "clippy::missing_panics_doc",
+      "category": "style",
+      "severity": "warning",
+      "message": "docs for function which may panic missing `# Panics` section",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#missing_panics_doc",
+      "line": 24,
+      "column": 1
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "clippy::significant_drop_tightening",
+      "category": "style",
+      "severity": "warning",
+      "message": "temporary with significant `Drop` can be early dropped",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#significant_drop_tightening",
+      "line": 43,
+      "column": 25
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 26,
+      "column": 45
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 40,
+      "column": 50
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 55,
+      "column": 43
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 61,
+      "column": 44
+    },
+    {
+      "file_path": "src/lib.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .expect() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 104,
+      "column": 10
+    },
+    {
+      "file_path": "src/main.rs",
+      "rule": "clippy::semicolon_if_nothing_returned",
+      "category": "style",
+      "severity": "warning",
+      "message": "consider adding a `;` to the last statement for consistent formatting",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#semicolon_if_nothing_returned",
+      "line": 5,
+      "column": 5
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::case_sensitive_file_extension_comparisons",
+      "category": "style",
+      "severity": "warning",
+      "message": "case-sensitive file extension comparison",
+      "help": "consider using a case-insensitive comparison instead",
+      "line": 126,
+      "column": 27
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::case_sensitive_file_extension_comparisons",
+      "category": "style",
+      "severity": "warning",
+      "message": "case-sensitive file extension comparison",
+      "help": "consider using a case-insensitive comparison instead",
+      "line": 126,
+      "column": 53
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::case_sensitive_file_extension_comparisons",
+      "category": "style",
+      "severity": "warning",
+      "message": "case-sensitive file extension comparison",
+      "help": "consider using a case-insensitive comparison instead",
+      "line": 128,
+      "column": 23
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::case_sensitive_file_extension_comparisons",
+      "category": "style",
+      "severity": "warning",
+      "message": "case-sensitive file extension comparison",
+      "help": "consider using a case-insensitive comparison instead",
+      "line": 130,
+      "column": 23
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::case_sensitive_file_extension_comparisons",
+      "category": "style",
+      "severity": "warning",
+      "message": "case-sensitive file extension comparison",
+      "help": "consider using a case-insensitive comparison instead",
+      "line": 132,
+      "column": 23
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::case_sensitive_file_extension_comparisons",
+      "category": "style",
+      "severity": "warning",
+      "message": "case-sensitive file extension comparison",
+      "help": "consider using a case-insensitive comparison instead",
+      "line": 134,
+      "column": 23
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::option_if_let_else",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "use Option::map_or_else instead of an if let/else",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#option_if_let_else",
+      "line": 124,
+      "column": 5
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 51,
+      "column": 17
+    },
+    {
+      "file_path": "src/mobile_server.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 55,
+      "column": 13
+    },
+    {
+      "file_path": "src/models.rs",
+      "rule": "dead_code",
+      "category": "style",
+      "severity": "warning",
+      "message": "struct `UserProfile` is never constructed",
+      "help": "warning: struct `UserProfile` is never constructed\n --> src/models.rs:6:12\n  |\n6 | pub struct UserProfile {\n  |            ^^^^^^^^^^^\n  |\n  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+      "line": 6,
+      "column": 12
+    },
+    {
+      "file_path": "src/models.rs",
+      "rule": "dead_code",
+      "category": "style",
+      "severity": "warning",
+      "message": "struct `ChatInfo` is never constructed",
+      "help": "warning: struct `ChatInfo` is never constructed\n  --> src/models.rs:16:12\n   |\n16 | pub struct ChatInfo {\n   |            ^^^^^^^^\n\n",
+      "line": 16,
+      "column": 12
+    },
+    {
+      "file_path": "src/models.rs",
+      "rule": "dead_code",
+      "category": "style",
+      "severity": "warning",
+      "message": "struct `SyncChatsCommand` is never constructed",
+      "help": "warning: struct `SyncChatsCommand` is never constructed\n  --> src/models.rs:25:12\n   |\n25 | pub struct SyncChatsCommand {\n   |            ^^^^^^^^^^^^^^^^\n\n",
+      "line": 25,
+      "column": 12
+    },
+    {
+      "file_path": "src/services/auth.rs",
+      "rule": "clippy::missing_const_for_fn",
+      "category": "style",
+      "severity": "warning",
+      "message": "this could be a `const fn`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#missing_const_for_fn",
+      "line": 9,
+      "column": 5
+    },
+    {
+      "file_path": "src/services/chat.rs",
+      "rule": "clippy::missing_const_for_fn",
+      "category": "style",
+      "severity": "warning",
+      "message": "this could be a `const fn`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#missing_const_for_fn",
+      "line": 10,
+      "column": 5
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "clippy::cloned_instead_of_copied",
+      "category": "performance",
+      "severity": "warning",
+      "message": "used `cloned` where `copied` could be used instead",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cloned_instead_of_copied",
+      "line": 30,
+      "column": 18
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "clippy::missing_const_for_fn",
+      "category": "style",
+      "severity": "warning",
+      "message": "this could be a `const fn`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#missing_const_for_fn",
+      "line": 11,
+      "column": 5
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "clippy::needless_collect",
+      "category": "performance",
+      "severity": "warning",
+      "message": "avoid using `collect()` when not needed",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#needless_collect",
+      "line": 31,
+      "column": 18
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 25,
+      "column": 38
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 32,
+      "column": 33
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "dead_code",
+      "category": "style",
+      "severity": "warning",
+      "message": "methods `get_channel_feed` and `get_new_feed_since` are never used",
+      "help": "warning: methods `get_channel_feed` and `get_new_feed_since` are never used\n  --> src/services/feed.rs:15:12\n   |\n10 | impl<'a> FeedService<'a> {\n   | ------------------------ methods in this implementation\n...\n15 |     pub fn get_channel_feed(&self, folder_id: Option<i32>, limit: usize, before_date: Option<i64>, before_msg_id: Option<i64>) -> Ve...\n   |            ^^^^^^^^^^^^^^^^\n...\n19 |     pub fn get_new_feed_since(&self, folder_id: Option<i32>, since_date: i64) -> Vec<Value> {\n   |            ^^^^^^^^^^^^^^^^^^\n   |\n   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+      "line": 15,
+      "column": 12
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 28,
+      "column": 18
+    },
+    {
+      "file_path": "src/services/feed.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 32,
+      "column": 65
+    },
+    {
+      "file_path": "src/tdlib/handlers/auth.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 8,
+      "column": 23
+    },
+    {
+      "file_path": "src/tdlib/handlers/auth.rs",
+      "rule": "clippy::manual_let_else",
+      "category": "style",
+      "severity": "warning",
+      "message": "this could be rewritten as `let...else`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#manual_let_else",
+      "line": 8,
+      "column": 5
+    },
+    {
+      "file_path": "src/tdlib/handlers/auth.rs",
+      "rule": "clippy::redundant_clone",
+      "category": "performance",
+      "severity": "warning",
+      "message": "redundant clone",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#redundant_clone",
+      "line": 24,
+      "column": 49
+    },
+    {
+      "file_path": "src/tdlib/handlers/auth.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 12,
+      "column": 5
+    },
+    {
+      "file_path": "src/tdlib/handlers/auth.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 16,
+      "column": 26
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::cloned_instead_of_copied",
+      "category": "performance",
+      "severity": "warning",
+      "message": "used `cloned` where `copied` could be used instead",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cloned_instead_of_copied",
+      "line": 23,
+      "column": 22
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::cognitive_complexity",
+      "category": "architecture",
+      "severity": "warning",
+      "message": "the function has a cognitive complexity of (26/25)",
+      "help": "you could split it up into multiple smaller functions",
+      "line": 56,
+      "column": 8
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::duration_suboptimal_units",
+      "category": "style",
+      "severity": "warning",
+      "message": "constructing a `Duration` using a smaller unit when a larger unit would be more readable",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#duration_suboptimal_units",
+      "line": 16,
+      "column": 32
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 64,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 71,
+      "column": 29
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 98,
+      "column": 21
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 107,
+      "column": 29
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 108,
+      "column": 25
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 140,
+      "column": 13
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 221,
+      "column": 25
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 257,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::map_unwrap_or",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "called `map(<f>).unwrap_or(false)` on an `Option` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#map_unwrap_or",
+      "line": 67,
+      "column": 36
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::map_unwrap_or",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "called `map(<f>).unwrap_or(false)` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#map_unwrap_or",
+      "line": 142,
+      "column": 33
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::option_if_let_else",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "use Option::map_or instead of an if let/else",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#option_if_let_else",
+      "line": 245,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::redundant_closure_for_method_calls",
+      "category": "style",
+      "severity": "warning",
+      "message": "redundant closure",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#redundant_closure_for_method_calls",
+      "line": 183,
+      "column": 64
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::redundant_closure_for_method_calls",
+      "category": "style",
+      "severity": "warning",
+      "message": "redundant closure",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#redundant_closure_for_method_calls",
+      "line": 224,
+      "column": 60
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::too_many_lines",
+      "category": "architecture",
+      "severity": "warning",
+      "message": "this function has too many lines (180/100)",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#too_many_lines",
+      "line": 56,
+      "column": 1
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 42,
+      "column": 9
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 112,
+      "column": 21
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 125,
+      "column": 21
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 241,
+      "column": 24
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 255,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 18,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 197,
+      "column": 21
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 244,
+      "column": 27
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 12,
+      "column": 47
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 13,
+      "column": 31
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 43,
+      "column": 51
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 53,
+      "column": 48
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 63,
+      "column": 42
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 85,
+      "column": 67
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 97,
+      "column": 46
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 132,
+      "column": 56
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 139,
+      "column": 40
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 159,
+      "column": 63
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 204,
+      "column": 39
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 217,
+      "column": 35
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 234,
+      "column": 56
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 256,
+      "column": 47
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 260,
+      "column": 60
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "high-cyclomatic-complexity",
+      "category": "architecture",
+      "severity": "warning",
+      "message": "Function `handle_chat_event` has cyclomatic complexity of 36 (threshold: 15)",
+      "help": "Extract complex branches into helper functions, use early returns, simplify match arms",
+      "line": 56,
+      "column": 8
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 21,
+      "column": 22
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 197,
+      "column": 58
+    },
+    {
+      "file_path": "src/tdlib/handlers/chats.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 244,
+      "column": 49
+    },
+    {
+      "file_path": "src/tdlib/handlers/common.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 10,
+      "column": 45
+    },
+    {
+      "file_path": "src/tdlib/handlers/common.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 26,
+      "column": 25
+    },
+    {
+      "file_path": "src/tdlib/handlers/common.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 35,
+      "column": 5
+    },
+    {
+      "file_path": "src/tdlib/handlers/common.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 36,
+      "column": 35
+    },
+    {
+      "file_path": "src/tdlib/handlers/common.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 49,
+      "column": 39
+    },
+    {
+      "file_path": "src/tdlib/handlers/common.rs",
+      "rule": "clippy::doc_markdown",
+      "category": "style",
+      "severity": "warning",
+      "message": "item in documentation is missing backticks",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#doc_markdown",
+      "line": 59,
+      "column": 34
+    },
+    {
+      "file_path": "src/tdlib/handlers/common.rs",
+      "rule": "clippy::match_same_arms",
+      "category": "style",
+      "severity": "warning",
+      "message": "these match arms have identical bodies",
+      "help": "if this is unintentional make the arms return different values",
+      "line": 22,
+      "column": 9
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 10,
+      "column": 27
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 56,
+      "column": 24
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "clippy::indexing_slicing",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "indexing may panic",
+      "help": "consider using `.get(n)` or `.get_mut(n)` instead",
+      "line": 57,
+      "column": 24
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "clippy::map_unwrap_or",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "called `map(<f>).unwrap_or(false)` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#map_unwrap_or",
+      "line": 17,
+      "column": 16
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 13,
+      "column": 48
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 23,
+      "column": 60
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 33,
+      "column": 74
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 36,
+      "column": 56
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "warning",
+      "message": "`.clone()` inside a loop — may cause repeated heap allocations",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 43,
+      "column": 52
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 50,
+      "column": 56
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 63,
+      "column": 56
+    },
+    {
+      "file_path": "src/tdlib/handlers/feed.rs",
+      "rule": "unused_imports",
+      "category": "style",
+      "severity": "warning",
+      "message": "unused import: `std::sync::atomic::Ordering`",
+      "help": "remove the whole `use` item",
+      "line": 2,
+      "column": 5
+    },
+    {
+      "file_path": "src/tdlib/handlers/mod.rs",
+      "rule": "clippy::manual_let_else",
+      "category": "style",
+      "severity": "warning",
+      "message": "this could be rewritten as `let...else`",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#manual_let_else",
+      "line": 12,
+      "column": 5
+    },
+    {
+      "file_path": "src/tdlib/handlers/mod.rs",
+      "rule": "clippy::semicolon_if_nothing_returned",
+      "category": "style",
+      "severity": "warning",
+      "message": "consider adding a `;` to the last statement for consistent formatting",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#semicolon_if_nothing_returned",
+      "line": 31,
+      "column": 13
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::redundant_clone",
+      "category": "performance",
+      "severity": "warning",
+      "message": "redundant clone",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#redundant_clone",
+      "line": 36,
+      "column": 45
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::too_many_lines",
+      "category": "architecture",
+      "severity": "warning",
+      "message": "this function has too many lines (111/100)",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#too_many_lines",
+      "line": 21,
+      "column": 5
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::undocumented_unsafe_blocks",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block missing a safety comment",
+      "help": "consider adding a safety comment on the preceding line",
+      "line": 87,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::undocumented_unsafe_blocks",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block missing a safety comment",
+      "help": "consider adding a safety comment on the preceding line",
+      "line": 89,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::undocumented_unsafe_blocks",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block missing a safety comment",
+      "help": "consider adding a safety comment on the preceding line",
+      "line": 91,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::undocumented_unsafe_blocks",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block missing a safety comment",
+      "help": "consider adding a safety comment on the preceding line",
+      "line": 121,
+      "column": 37
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::undocumented_unsafe_blocks",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block missing a safety comment",
+      "help": "consider adding a safety comment on the preceding line",
+      "line": 144,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 65,
+      "column": 13
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 72,
+      "column": 41
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 73,
+      "column": 25
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::uninlined_format_args",
+      "category": "style",
+      "severity": "warning",
+      "message": "variables can be used directly in the `format!` string",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#uninlined_format_args",
+      "line": 158,
+      "column": 21
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 85,
+      "column": 27
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 87,
+      "column": 27
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 89,
+      "column": 27
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 91,
+      "column": 27
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "clippy::unwrap_used",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "used `unwrap()` on a `Result` value",
+      "help": "for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#unwrap_used",
+      "line": 100,
+      "column": 46
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 29,
+      "column": 26
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 31,
+      "column": 36
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 36,
+      "column": 46
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 103,
+      "column": 47
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 104,
+      "column": 46
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 105,
+      "column": 39
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 108,
+      "column": 50
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 109,
+      "column": 52
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 110,
+      "column": 49
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 112,
+      "column": 49
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "excessive-clone",
+      "category": "performance",
+      "severity": "info",
+      "message": "`.clone()` in non-loop context (cold path)",
+      "help": "If the type implements Copy, remove .clone(). Otherwise, consider borrowing or using Cow<T>",
+      "line": 151,
+      "column": 50
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 68,
+      "column": 23
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 85,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 87,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 89,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 91,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 94,
+      "column": 30
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 100,
+      "column": 13
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 119,
+      "column": 31
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 121,
+      "column": 37
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 144,
+      "column": 17
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unsafe-block-audit",
+      "category": "security",
+      "severity": "warning",
+      "message": "unsafe block — review for memory safety",
+      "help": "Document the safety invariant with a // SAFETY: comment",
+      "line": 162,
+      "column": 25
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 85,
+      "column": 61
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 87,
+      "column": 59
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 89,
+      "column": 62
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 91,
+      "column": 62
+    },
+    {
+      "file_path": "src/tdlib.rs",
+      "rule": "unwrap-in-production",
+      "category": "error-handling",
+      "severity": "warning",
+      "message": "Use of .unwrap() in production code",
+      "help": "Use `?` operator, `unwrap_or`, `unwrap_or_else`, or handle the error explicitly",
+      "line": 100,
+      "column": 68
+    }
+  ],
+  "score": 95,
+  "score_label": "Great",
+  "dimension_scores": {
+    "security": 99,
+    "reliability": 93,
+    "maintainability": 84,
+    "performance": 97,
+    "dependencies": 98
+  },
+  "source_file_count": 22,
+  "elapsed": 31.4264925,
+  "skipped_passes": [
+    "coverage (not installed)",
+    "dependencies (cargo-audit) (not installed)",
+    "dependencies (cargo-deny) (not installed)",
+    "dependencies (cargo-machete) (not installed)",
+    "semver (cargo-semver-checks) (not installed)",
+    "unsafe audit (cargo-geiger) (not installed)"
+  ],
+  "error_count": 1,
+  "warning_count": 285,
+  "info_count": 45
+}

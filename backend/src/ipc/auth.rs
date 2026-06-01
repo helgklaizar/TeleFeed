@@ -1,5 +1,4 @@
 use crate::AppState;
-use serde_json::json;
 use tauri::State;
 
 #[tauri::command]

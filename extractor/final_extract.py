@@ -1,6 +1,4 @@
-import sys
 from telethon.sync import TelegramClient
-from telethon.errors import SessionPasswordNeededError
 
 api_id = 39315132
 api_hash = '2c27daddebf6ad26c8640e6d3f8a8d27'
